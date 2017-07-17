@@ -12,7 +12,3 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__).'/lib.php');
-
-function recordrtc_is_annotated( $content ) {
-    return strpos($content, 'recordrtc_annotation');
-}

@@ -1,7 +1,5 @@
 YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 
-YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
-
 /*
 * @package    atto_recordrtc
 * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
@@ -24,6 +22,7 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 var PLUGINNAME = 'atto_recordrtc',
     RECORDRTC = 'recordrtc',
     STATE = false;
+var atto_recordrtc_button;
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     initializer: function() {
@@ -176,8 +175,11 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         var content = e.responseText;
 
         this.recordrtc.setAttribute('srcdoc', content);
-    }
+    },
 
+    _annotate: function(annotation) {
+        // Add annotation
+    }
 }, {
     ATTRS: {
         /**
@@ -211,9 +213,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         }
     }
 });
-
-
-}, '@VERSION@', {"requires": ["moodle-editor_atto-plugin"]});
 
 
 }, '@VERSION@', {"requires": ["moodle-editor_atto-plugin"]});

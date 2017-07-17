@@ -11,7 +11,3 @@
 
 $string['pluginname'] = 'RecordRTC';
 $string['settings'] = 'RecordRTC settings';
-$string['recording_ready'] = 'Recording ready';
-$string['recording_processing'] = 'Processing recording';
-$string['action_annotation_annotate'] = 'Annotate';
-$string['action_annotation_cancel'] = 'Cancel';
