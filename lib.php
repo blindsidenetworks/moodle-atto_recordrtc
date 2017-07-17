@@ -31,10 +31,19 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
         $context = context_system::instance();
     }
     $sesskey = sesskey();
+    $allowedtypes = get_config('atto_recordrtc', 'allowedtypes');
+    $audiobitrate = get_config('atto_recordrtc', 'audiobitrate');
+    $videobitrate = get_config('atto_recordrtc', 'videobitrate');
+    $timelimit = get_config('atto_recordrtc', 'videobitrate');
 
     return array('contextid' => $context->id,
                  'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_URL,
-                 'sesskey' => $sesskey);
+                 'sesskey' => $sesskey,
+                 'allowedtypes' => $allowedtypes,
+                 'audiobitrate' => $audiobitrate,
+                 'videobitrate' => $videobitrate,
+                 'timelimit' => $timelimit
+               );
 }
 
 /**

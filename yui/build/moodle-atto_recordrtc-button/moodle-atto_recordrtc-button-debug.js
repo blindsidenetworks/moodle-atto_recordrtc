@@ -22,24 +22,41 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 var PLUGINNAME = 'atto_recordrtc',
     RECORDRTC = 'recordrtc',
     STATE = false;
-var atto_recordrtc_button;
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     initializer: function() {
-        var button = this.addButton({
-            icon: 'icon',
-            iconComponent: 'atto_recordrtc',
-            callback: this._toggle
-        });
-        button.set('title', M.util.get_string('pluginname', PLUGINNAME));
-        // If there is an event that may resize the editor, adjust the size of the recordrtc.
-        Y.after('windowresize', Y.bind(this._fitToScreen, this));
-        this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-            standAlone: true
-        }, this);
-        this.toolbar.on('click', Y.bind(this._fitToScreen, this));
-        //Object to be used from the iframe
-        Y.namespace('M.atto_recordrtc').atto_recordrtc_button = this;
+        var allowedtypes, button;
+        allowedtypes = this.get('allowedtypes');
+        if ( allowedtypes == 'both' || allowedtypes == 'audio') {
+            console.info('Add button for audio');
+            button = this.addButton({
+                icon: 'icon',
+                iconComponent: 'atto_recordrtc',
+                callback: this._toggle
+            });
+            button.set('title', M.util.get_string('pluginname', PLUGINNAME));
+            // If there is an event that may resize the editor, adjust the size of the recordrtc.
+            Y.after('windowresize', Y.bind(this._fitToScreen, this));
+            this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
+                standAlone: true
+            }, this);
+            this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+        }
+        if ( allowedtypes == 'both' || allowedtypes == 'video') {
+            console.info('Add button for video');
+            button = this.addButton({
+                icon: 'icon',
+                iconComponent: 'atto_recordrtc',
+                callback: this._toggle
+            });
+            button.set('title', M.util.get_string('pluginname', PLUGINNAME));
+            // If there is an event that may resize the editor, adjust the size of the recordrtc.
+            Y.after('windowresize', Y.bind(this._fitToScreen, this));
+            this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
+                standAlone: true
+            }, this);
+            this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+        }
     },
 
     /**
@@ -50,6 +67,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _toggle: function(e) {
+        console.info('Toogle...');
         e.preventDefault();
         this._toggle_action();
     },
@@ -61,6 +79,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _toggle_action: function() {
+        console.info('Toogle action...');
         var button = this.buttons[RECORDRTC];
 
         var id_submitbutton = Y.one('#id_submitbutton');
@@ -84,6 +103,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _fitToScreen: function() {
+        console.info('Fit to screen...');
         var button = this.buttons[RECORDRTC];
         if (!button.getData(STATE)) {
             return;
@@ -107,6 +127,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @param {Boolean} mode Whether the editor display recordrtc * @private
      */
     _setrecordrtc: function(button, mode) {
+        console.info('Set recordRTC...');
         var host = this.get('host');
 
         if (mode) {
@@ -172,14 +193,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _loadContent: function(id, e) {
+        console.info('Load content...');
         var content = e.responseText;
 
         this.recordrtc.setAttribute('srcdoc', content);
-    },
-
-    _annotate: function(annotation) {
-        // Add annotation
     }
+
 }, {
     ATTRS: {
         /**
@@ -209,6 +228,46 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
          * @type String
          */
         sesskey: {
+            value: null
+        },
+
+        /**
+         * The allowedtypes to use when generating this recordrtc.
+         *
+         * @attribute allowedtypes
+         * @type String
+         */
+        allowedtypes: {
+            value: null
+        },
+
+        /**
+         * The audiobitrate to use when generating this recordrtc.
+         *
+         * @attribute audiobitrate
+         * @type String
+         */
+        audiobitrate: {
+            value: null
+        },
+
+        /**
+         * The videobitrate to use when generating this recordrtc.
+         *
+         * @attribute videobitrate
+         * @type String
+         */
+        videobitrate: {
+            value: null
+        },
+
+        /**
+         * The timelimit to use when generating this recordrtc.
+         *
+         * @attribute timelimit
+         * @type String
+         */
+        timelimit: {
             value: null
         }
     }
