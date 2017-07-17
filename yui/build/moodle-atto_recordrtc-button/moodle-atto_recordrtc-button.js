@@ -34,7 +34,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                 iconComponent: 'atto_recordrtc',
                 callback: this._toggle
             });
-            button.set('title', M.util.get_string('pluginname', PLUGINNAME));
+            button.set('title', M.util.get_string('audiortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
             Y.after('windowresize', Y.bind(this._fitToScreen, this));
             this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
@@ -49,7 +49,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                 iconComponent: 'atto_recordrtc',
                 callback: this._toggle
             });
-            button.set('title', M.util.get_string('pluginname', PLUGINNAME));
+            button.set('title', M.util.get_string('videortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
             Y.after('windowresize', Y.bind(this._fitToScreen, this));
             this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {

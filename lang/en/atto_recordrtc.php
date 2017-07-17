@@ -19,14 +19,14 @@
  *
  * @package    atto_recordrtc
  * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
- * @copyright  2016 Blindside Networks Inc.
+ * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'RecordRTC';
 $string['settings'] = 'RecordRTC settings';
-$string['recordrtc:audiortc'] = 'Insert audio recording';
-$string['recordrtc:videortc'] = 'Insert video recording';
+$string['audiortc'] = 'Insert audio recording';
+$string['videortc'] = 'Insert video recording';
 
 $string['onlyaudio'] = 'Audio only';
 $string['onlyvideo'] = 'Video only';
