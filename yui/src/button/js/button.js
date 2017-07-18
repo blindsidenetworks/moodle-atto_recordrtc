@@ -39,67 +39,57 @@ var PLUGINNAME = 'atto_recordrtc',
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     initializer: function() {
-        var allowedtypes, button;
-        allowedtypes = this.get('allowedtypes');
-        console.info(this.get('recordrtcurl'));
+        var allowedtypes = this.get('allowedtypes');
         if ( allowedtypes == 'both' || allowedtypes == 'audio') {
-            console.info('Add button for audio ' + this.get('audiortcicon') + ' ' + M.util.get_string('audiortc', PLUGINNAME));
-            button = this.addButton({
-                icon: this.get('audiortcicon'),
-                iconComponent: PLUGINNAME,
-                buttonName: M.util.get_string('audiortc', PLUGINNAME),
-                callback: this._toggle
-            });
-            button.set('title', M.util.get_string('audiortc', PLUGINNAME));
-            // If there is an event that may resize the editor, adjust the size of the recordrtc.
-            //Y.after('windowresize', Y.bind(this._fitToScreen, this));
-            //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-            //    standAlone: true
-            //}, this);
-            //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+            this._addButton('audio', this._toggleAudio);
         }
         if ( allowedtypes == 'both' || allowedtypes == 'video') {
-            console.info('Add button for video ' + this.get('videortcicon') + ' ' + M.util.get_string('videortc', PLUGINNAME));
-            button = this.addButton({
-                icon: this.get('videortcicon'),
-                iconComponent: PLUGINNAME,
-                buttonName: M.util.get_string('videortc', PLUGINNAME),
-                callback: this._toggleVideoRTC
-            });
-            button.set('title', M.util.get_string('videortc', PLUGINNAME));
-            // If there is an event that may resize the editor, adjust the size of the recordrtc.
-            //Y.after('windowresize', Y.bind(this._fitToScreen, this));
-            //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-            //    standAlone: true
-            //}, this);
-            //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+            this._addButton('video', this._toggleVideo);
         }
+    },
+
+    _addButton: function(type, callback) {
+        this.addButton({
+            icon: this.get(type + 'rtcicon'),
+            iconComponent: PLUGINNAME,
+            callback: callback,
+            title: type + 'rtc',
+            tags: type
+          });
+          // If there is an event that may resize the editor, adjust the size of the recordrtc.
+          //Y.after('windowresize', Y.bind(this._fitToScreen, this));
+          //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
+          //    standAlone: true
+          //}, this);
+          //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
     },
 
     /**
      * Toggle audiortc and normal display mode
      *
-     * @method _toggle
+     * @method _toggleAudio
      * @param {EventFacade} e
      * @private
      */
-    _toggle: function(e) {
+    _toggleAudio: function(e) {
         console.info('Toogle audio...');
+        console.info(e);
         e.preventDefault();
-        this._toggle_action();
+        //this._toggle_action();
     },
 
     /**
      * Toggle videortc and normal display mode
      *
-     * @method _toggle
+     * @method _toggleVideo
      * @param {EventFacade} e
      * @private
      */
-    _toggleVideoRTC: function(e) {
+    _toggleVideo: function(e) {
         console.info('Toogle video...');
+        console.info(e);
         e.preventDefault();
-        this._toggle_action();
+        //this._toggle_action();
     },
 
     /**
