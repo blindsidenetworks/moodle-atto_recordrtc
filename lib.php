@@ -35,8 +35,7 @@ const MOODLE_ATTO_RECORDRTC_ROOT = '/lib/editor/atto/plugins/recordrtc/';
  * @param stdClass $fpoptions - unused.
  */
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
-    global $CFG, $OUTPUT;
-
+    global $CFG;
     $moodleversion = get_moodle_version_major();
     $context = $options['context'];
     if (!$context) {
@@ -53,7 +52,6 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
         $audiortcicon = 'i/audiortc';
         $videortcicon = 'i/videortc';
     }
-
     $params = array('contextid' => $context->id,
                     'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
                     'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT . 'recordrtc.php',
@@ -73,7 +71,6 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
  */
 function atto_recordrtc_strings_for_js() {
     global $PAGE;
-
     $PAGE->requires->strings_for_js(array('pluginname'), 'atto_recordrtc');
     $PAGE->requires->strings_for_js(array('audiortc'), 'atto_recordrtc');
     $PAGE->requires->strings_for_js(array('videortc'), 'atto_recordrtc');
@@ -95,8 +92,6 @@ function atto_recordrtc_get_fontawesome_icon_map() {
  */
 function get_moodle_version_major() {
     global $CFG;
-
     $versionarray = explode('.', $CFG->version);
-
     return $versionarray[0];
 }
