@@ -44,10 +44,10 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         var allowedtypes, button;
         allowedtypes = this.get('allowedtypes');
         if ( allowedtypes == 'both' || allowedtypes == 'audio') {
-            console.info('Add button for audio');
+            console.info('Add button for audio ' + this.get('audiortcicon'));
             button = this.addButton({
-                icon: 'e/insert_edit_video',
-                callback: this._toggle
+                icon: this.get('audiortcicon'),
+                callback: this._toggleAudioRTC
             });
             button.set('title', M.util.get_string('audiortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
@@ -58,11 +58,10 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             this.toolbar.on('click', Y.bind(this._fitToScreen, this));
         }
         if ( allowedtypes == 'both' || allowedtypes == 'video') {
-            console.info('Add button for video');
+            console.info('Add button for video ' + this.get('videortcicon'));
             button = this.addButton({
-                icon: 'icon',
-                iconComponent: 'atto_recordrtc',
-                callback: this._toggle
+                icon: this.get('audiortcicon'),
+                callback: this._toggleVideoRTC
             });
             button.set('title', M.util.get_string('videortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
@@ -75,14 +74,27 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     },
 
     /**
-     * Toggle recordrtc and normal display mode
+     * Toggle audiortc and normal display mode
      *
      * @method _toggle
      * @param {EventFacade} e
      * @private
      */
-    _toggle: function(e) {
-        console.info('Toogle...');
+    _toggleAudioRTC: function(e) {
+        console.info('Toogle audio...');
+        e.preventDefault();
+        this._toggle_action();
+    },
+
+    /**
+     * Toggle videortc and normal display mode
+     *
+     * @method _toggle
+     * @param {EventFacade} e
+     * @private
+     */
+    _toggleVideoRTC: function(e) {
+        console.info('Toogle video...');
         e.preventDefault();
         this._toggle_action();
     },
@@ -284,7 +296,28 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
          */
         timelimit: {
             value: null
+        },
+
+        /**
+         * The audiortcicon to use when generating this recordrtc.
+         *
+         * @attribute audiortcicon
+         * @type String
+         */
+        audiortcicon: {
+            value: null
+        },
+
+        /**
+         * The videortcicon to use when generating this recordrtc.
+         *
+         * @attribute videortcicon
+         * @type String
+         */
+        videortcicon: {
+            value: null
         }
+
     }
 });
 

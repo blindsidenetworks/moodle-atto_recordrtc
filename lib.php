@@ -40,6 +40,7 @@ const MOODLE_ATTO_RECORDRTC_URL = '/lib/editor/atto/plugins/recordrtc/recordrtc.
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
 
+    $moodleversion = get_moodle_version_major();
     $context = $options['context'];
     if (!$context) {
         $context = context_system::instance();
@@ -49,6 +50,12 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $audiobitrate = get_config('atto_recordrtc', 'audiobitrate');
     $videobitrate = get_config('atto_recordrtc', 'videobitrate');
     $timelimit = get_config('atto_recordrtc', 'videobitrate');
+    $audiortcicon = 'e/insert_edit_video';
+    $videortcicon = 'e/insert_edit_video';
+    if ($moodleversion >= '2017051500') {
+        $audiortcicon = 'i/audiortc';
+        $videortcicon = 'i/videortc';
+    }
 
     return array('contextid' => $context->id,
                  'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_URL,
@@ -56,7 +63,9 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
                  'allowedtypes' => $allowedtypes,
                  'audiobitrate' => $audiobitrate,
                  'videobitrate' => $videobitrate,
-                 'timelimit' => $timelimit
+                 'timelimit' => $timelimit,
+                 'audiortcicon' => $audiortcicon,
+                 'videortcicon' => $videortcicon
                );
 }
 
@@ -69,4 +78,26 @@ function atto_recordrtc_strings_for_js() {
     $PAGE->requires->strings_for_js(array('pluginname'), 'atto_recordrtc');
     $PAGE->requires->strings_for_js(array('audiortc'), 'atto_recordrtc');
     $PAGE->requires->strings_for_js(array('videortc'), 'atto_recordrtc');
+}
+
+/**
+ * Get icon mapping for font-awesome.
+ */
+function atto_recordrtc_get_fontawesome_icon_map() {
+    return [
+        'atto_recordrtc:i/audiortc' => 'fa-file-audio-o',
+        'atto_recordrtc:i/videortc' => 'fa-file-video-o'
+    ];
+}
+
+/**
+ * Get Moodle version
+ * @return string
+ */
+function get_moodle_version_major() {
+    global $CFG;
+
+    $versionarray = explode('.', $CFG->version);
+
+    return $versionarray[0];
 }
