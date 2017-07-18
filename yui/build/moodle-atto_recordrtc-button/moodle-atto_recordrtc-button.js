@@ -47,13 +47,13 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         if ( allowedtypes == 'both' || allowedtypes == 'audio') {
             console.info('Add button for audio ' + this.get('audiortcicon') + ' ' + M.util.get_string('audiortc', PLUGINNAME));
             button = this.addButton({
-                //icon: this.get('audiortcicon'),
+                icon: this.get('audiortcicon'),
                 //icon: 'icon',
-                icon: 'i/videortc',
+                //icon: 'i/audiortc',
                 iconComponent: PLUGINNAME,
                 buttonName: M.util.get_string('audiortc', PLUGINNAME),
                 //buttonClass: 'fa fa-file-audio-o',
-                callback: this._toggleAudioRTC
+                callback: this._toggle
             });
             button.set('title', M.util.get_string('audiortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
@@ -66,9 +66,9 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         if ( allowedtypes == 'both' || allowedtypes == 'video') {
             console.info('Add button for video ' + this.get('videortcicon') + ' ' + M.util.get_string('videortc', PLUGINNAME));
             button = this.addButton({
-                //icon: this.get('audiortcicon'),
+                icon: this.get('videortcicon'),
                 //icon: 'icon',
-                icon: 'i/audiortc',
+                //icon: 'i/videortc',
                 iconComponent: PLUGINNAME,
                 buttonName: M.util.get_string('videortc', PLUGINNAME),
                 //buttonClass: 'fa fa-file-video-o',
@@ -91,7 +91,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @param {EventFacade} e
      * @private
      */
-    _toggleAudioRTC: function(e) {
+    _toggle: function(e) {
         console.info('Toogle audio...');
         e.preventDefault();
         this._toggle_action();
