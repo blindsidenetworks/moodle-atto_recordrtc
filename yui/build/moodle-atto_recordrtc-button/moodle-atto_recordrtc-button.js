@@ -43,33 +43,44 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     initializer: function() {
         var allowedtypes, button;
         allowedtypes = this.get('allowedtypes');
+        console.info(this.get('recordrtcurl'));
         if ( allowedtypes == 'both' || allowedtypes == 'audio') {
-            console.info('Add button for audio ' + this.get('audiortcicon'));
+            console.info('Add button for audio ' + this.get('audiortcicon') + ' ' + M.util.get_string('audiortc', PLUGINNAME));
             button = this.addButton({
-                icon: this.get('audiortcicon'),
+                //icon: this.get('audiortcicon'),
+                //icon: 'icon',
+                icon: 'i/videortc',
+                iconComponent: PLUGINNAME,
+                buttonName: M.util.get_string('audiortc', PLUGINNAME),
+                //buttonClass: 'fa fa-file-audio-o',
                 callback: this._toggleAudioRTC
             });
             button.set('title', M.util.get_string('audiortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
-            Y.after('windowresize', Y.bind(this._fitToScreen, this));
-            this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-                standAlone: true
-            }, this);
-            this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+            //Y.after('windowresize', Y.bind(this._fitToScreen, this));
+            //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
+            //    standAlone: true
+            //}, this);
+            //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
         }
         if ( allowedtypes == 'both' || allowedtypes == 'video') {
-            console.info('Add button for video ' + this.get('videortcicon'));
+            console.info('Add button for video ' + this.get('videortcicon') + ' ' + M.util.get_string('videortc', PLUGINNAME));
             button = this.addButton({
-                icon: this.get('audiortcicon'),
+                //icon: this.get('audiortcicon'),
+                //icon: 'icon',
+                icon: 'i/audiortc',
+                iconComponent: PLUGINNAME,
+                buttonName: M.util.get_string('videortc', PLUGINNAME),
+                //buttonClass: 'fa fa-file-video-o',
                 callback: this._toggleVideoRTC
             });
             button.set('title', M.util.get_string('videortc', PLUGINNAME));
             // If there is an event that may resize the editor, adjust the size of the recordrtc.
-            Y.after('windowresize', Y.bind(this._fitToScreen, this));
-            this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-                standAlone: true
-            }, this);
-            this.toolbar.on('click', Y.bind(this._fitToScreen, this));
+            //Y.after('windowresize', Y.bind(this._fitToScreen, this));
+            //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
+            //    standAlone: true
+            //}, this);
+            //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
         }
     },
 
@@ -228,6 +239,16 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
 }, {
     ATTRS: {
+        /**
+         * The root to use when loading the recordrtc.
+         *
+         * @attribute recordrtcroot
+         * @type String
+         */
+        recordrtcroot: {
+            value: null
+        },
+
         /**
          * The url to use when loading the recordrtc.
          *

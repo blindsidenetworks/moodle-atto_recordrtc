@@ -25,10 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-global $CFG;
-
 const MOODLE_ATTO_RECORDRTC_ROOT = '/lib/editor/atto/plugins/recordrtc/';
-const MOODLE_ATTO_RECORDRTC_URL = '/lib/editor/atto/plugins/recordrtc/recordrtc.php';
 
 /**
  * Set params for this plugin.
@@ -38,7 +35,7 @@ const MOODLE_ATTO_RECORDRTC_URL = '/lib/editor/atto/plugins/recordrtc/recordrtc.
  * @param stdClass $fpoptions - unused.
  */
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
-    global $CFG;
+    global $CFG, $OUTPUT;
 
     $moodleversion = get_moodle_version_major();
     $context = $options['context'];
@@ -57,16 +54,18 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
         $videortcicon = 'i/videortc';
     }
 
-    return array('contextid' => $context->id,
-                 'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_URL,
-                 'sesskey' => $sesskey,
-                 'allowedtypes' => $allowedtypes,
-                 'audiobitrate' => $audiobitrate,
-                 'videobitrate' => $videobitrate,
-                 'timelimit' => $timelimit,
-                 'audiortcicon' => $audiortcicon,
-                 'videortcicon' => $videortcicon
-               );
+    $params = array('contextid' => $context->id,
+                    'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
+                    'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT . 'recordrtc.php',
+                    'sesskey' => $sesskey,
+                    'allowedtypes' => $allowedtypes,
+                    'audiobitrate' => $audiobitrate,
+                    'videobitrate' => $videobitrate,
+                    'timelimit' => $timelimit,
+                    'audiortcicon' => $audiortcicon,
+                    'videortcicon' => $videortcicon
+                  );
+    return $params;
 }
 
 /**
@@ -81,7 +80,7 @@ function atto_recordrtc_strings_for_js() {
 }
 
 /**
- * Get icon mapping for font-awesome.
+ * Map icons for font-awesome themes.
  */
 function atto_recordrtc_get_fontawesome_icon_map() {
     return [
