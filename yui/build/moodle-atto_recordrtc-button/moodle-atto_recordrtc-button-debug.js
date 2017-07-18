@@ -35,190 +35,65 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
-var PLUGINNAME = 'atto_recordrtc',
-    RECORDRTC = 'recordrtc',
-    STATE = false;
+var PLUGINNAME = 'atto_recordrtc';
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
+    /**
+     * The current language en by default.
+     * **/
+    _lang: 'en',
+
+    /**
+     * A reference to the dialogue content.
+     *
+     * @property _content
+     * @type Node
+     * @private
+     */
+    _content: null,
+
     initializer: function() {
         var allowedtypes = this.get('allowedtypes');
-        if ( allowedtypes == 'both' || allowedtypes == 'audio') {
-            this._addButton('audio', this._toggleAudio);
+        if (allowedtypes == 'both' || allowedtypes == 'audio') {
+            // Add the audio button.
+            this._addButton('audio', this._audio);
         }
-        if ( allowedtypes == 'both' || allowedtypes == 'video') {
-            this._addButton('video', this._toggleVideo);
+        if (allowedtypes == 'both' || allowedtypes == 'video') {
+            // Add the video button.
+            this._addButton('video', this._video);
         }
     },
 
     _addButton: function(type, callback) {
         this.addButton({
+            buttonName: type,
             icon: this.get(type + 'rtcicon'),
             iconComponent: PLUGINNAME,
             callback: callback,
             title: type + 'rtc',
-            tags: type
+            tags: type + 'rtc',
+            tagMatchRequiresAll: false
           });
-          // If there is an event that may resize the editor, adjust the size of the recordrtc.
-          //Y.after('windowresize', Y.bind(this._fitToScreen, this));
-          //this.editor.on(['gesturemove', 'gesturemoveend'], Y.bind(this._fitToScreen, this), {
-          //    standAlone: true
-          //}, this);
-          //this.toolbar.on('click', Y.bind(this._fitToScreen, this));
     },
 
     /**
      * Toggle audiortc and normal display mode
      *
-     * @method _toggleAudio
-     * @param {EventFacade} e
+     * @method _audio
      * @private
      */
-    _toggleAudio: function(e) {
-        console.info('Toogle audio...');
-        console.info(e);
-        e.preventDefault();
-        //this._toggle_action();
+    _audio: function() {
+        console.info('audio');
     },
 
     /**
      * Toggle videortc and normal display mode
      *
-     * @method _toggleVideo
-     * @param {EventFacade} e
+     * @method _video
      * @private
      */
-    _toggleVideo: function(e) {
-        console.info('Toogle video...');
-        console.info(e);
-        e.preventDefault();
-        //this._toggle_action();
-    },
-
-    /**
-     * Toggle recordrtc and normal display mode (actual action)
-     *
-     * @method _toggle_action
-     * @private
-     */
-    _toggle_action: function() {
-        console.info('Toogle action...');
-        var button = this.buttons[RECORDRTC];
-
-        var id_submitbutton = Y.one('#id_submitbutton');
-        if (button.getData(STATE)) {
-            this.unHighlightButtons(RECORDRTC);
-            this._setrecordrtc(button);
-            id_submitbutton.set('disabled', false);
-            id_submitbutton.removeClass('disabled');
-        } else {
-            this.highlightButtons(RECORDRTC);
-            this._setrecordrtc(button, true);
-            id_submitbutton.set('disabled', true);
-            id_submitbutton.addClass('disabled');
-        }
-    },
-
-    /**
-     * Adjust editor to screen size
-     *
-     * @method _fitToScreen
-     * @private
-     */
-    _fitToScreen: function() {
-        console.info('Fit to screen...');
-        var button = this.buttons[RECORDRTC];
-        if (!button.getData(STATE)) {
-            return;
-        }
-        var host = this.get('host');
-        this.recordrtc.setStyles({
-            position: "absolute",
-            height: host.editor.getComputedStyle('height'),
-            width: host.editor.getComputedStyle('width'),
-            top: host.editor.getComputedStyle('top'),
-            left: host.editor.getComputedStyle('left')
-        });
-        this.recordrtc.setY(this.editor.getY());
-    },
-
-    /**
-     * Change recordrtc display state
-     *
-     * @method _setrecordrtc
-     * @param {Node} button The recordrtc button
-     * @param {Boolean} mode Whether the editor display recordrtc * @private
-     */
-    _setrecordrtc: function(button, mode) {
-        console.info('Set recordRTC...');
-        var host = this.get('host');
-
-        if (mode) {
-            this.recordrtc = Y.Node.create('<iframe src="'
-                + this.get('recordrtcurl') + '?sesskey='
-                + this.get('sesskey')
-                + '&contextid=' + this.get('contextid')
-                + '&content=' + encodeURIComponent(host.textarea.get('value'))
-                + '" srcdoc=""></iframe');
-            this.recordrtc.setStyles({
-                backgroundColor: Y.one('body').getComputedStyle('backgroundColor'),
-                backgroundImage: 'url(' + M.util.image_url('i/loading', 'core') + ')',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center center'
-            });
-            host._wrapper.appendChild(this.recordrtc);
-
-            // Now we try this using the io module.
-            var params = {
-                    sesskey: this.get('sesskey'),
-                    contextid: this.get('contextid'),
-                    content: host.textarea.get('value')
-                };
-
-            // Fetch content and load asynchronously.
-            Y.io(this.get('recordrtcurl'), {
-                    context: this,
-                    data: params,
-                    on: {
-                            complete: this._loadContent
-                        },
-                    method: 'POST'
-                });
-
-            // Disable all plugins.
-            host.disablePlugins();
-
-            // And then re-enable this one.
-            host.enablePlugins(this.name);
-
-            // Enable fullscreen plugin if present.
-            if (typeof Y.M.atto_fullscreen !== 'undefined') {
-                host.enablePlugins('fullscreen');
-            }
-
-        } else {
-            this.recordrtc.remove(true);
-
-            // Enable all plugins.
-            host.enablePlugins();
-        }
-        button.setData(STATE, !!mode);
-        this._fitToScreen();
-
-    },
-
-    /**
-     * Load filtered content into iframe
-     *
-     * @param {String} id
-     * @param {EventFacade} e
-     * @method _loadContent
-     * @private
-     */
-    _loadContent: function(id, e) {
-        console.info('Load content...');
-        var content = e.responseText;
-
-        this.recordrtc.setAttribute('srcdoc', content);
+    _video: function() {
+        console.info('video');
     }
 
 }, {
