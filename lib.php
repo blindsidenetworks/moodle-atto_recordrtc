@@ -67,4 +67,6 @@ function atto_recordrtc_strings_for_js() {
     global $PAGE;
 
     $PAGE->requires->strings_for_js(array('pluginname'), 'atto_recordrtc');
+    $PAGE->requires->strings_for_js(array('audiortc'), 'atto_recordrtc');
+    $PAGE->requires->strings_for_js(array('videortc'), 'atto_recordrtc');
 }

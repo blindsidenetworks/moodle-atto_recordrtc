@@ -46,8 +46,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         if ( allowedtypes == 'both' || allowedtypes == 'audio') {
             console.info('Add button for audio');
             button = this.addButton({
-                icon: 'icon',
-                iconComponent: 'atto_recordrtc',
+                icon: 'e/insert_edit_video',
                 callback: this._toggle
             });
             button.set('title', M.util.get_string('audiortc', PLUGINNAME));
