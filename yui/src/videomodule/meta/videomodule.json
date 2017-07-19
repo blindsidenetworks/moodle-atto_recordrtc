@@ -1,7 +1,0 @@
-{
-    "moodle-atto_recordrtc-videomodule": {
-        "requires": [
-            "moodle-atto_recordrtc-commonmodule"
-        ]
-    }
-}
