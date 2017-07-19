@@ -97,6 +97,16 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 }, {
     ATTRS: {
         /**
+         * The contextid to use when generating this recordrtc.
+         *
+         * @attribute contextid
+         * @type String
+         */
+        contextid: {
+            value: null
+        },
+
+        /**
          * The root to use when loading the recordrtc.
          *
          * @attribute recordrtcroot
@@ -113,16 +123,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
          * @type String
          */
         recordrtcurl: {
-            value: null
-        },
-
-        /**
-         * The contextid to use when generating this recordrtc.
-         *
-         * @attribute contextid
-         * @type String
-         */
-        contextid: {
             value: null
         },
 
