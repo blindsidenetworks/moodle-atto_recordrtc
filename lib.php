@@ -63,7 +63,7 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
                     'timelimit' => $timelimit,
                     'audiortcicon' => $audiortcicon,
                     'videortcicon' => $videortcicon
-                  );
+              );
 
     return $params;
 }

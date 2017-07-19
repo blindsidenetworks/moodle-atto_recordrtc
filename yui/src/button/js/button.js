@@ -71,7 +71,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             title: type + 'rtc',
             tags: type + 'rtc',
             tagMatchRequiresAll: false
-          });
+        });
     },
 
     /**
