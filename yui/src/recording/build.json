@@ -3,7 +3,6 @@
     "builds": {
         "moodle-atto_recordrtc-recording": {
             "jsfiles": [
-                "recording.js",
                 "commonmodule.js",
                 "audiomodule.js",
                 "videomodule.js"

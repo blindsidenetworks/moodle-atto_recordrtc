@@ -13,41 +13,6 @@
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.commonmodule = {
-    init: function() {
-        // Extract plugin settings to params hash.
-        var params = {},
-            r = /([^&=]+)=?([^&]*)/g;
-
-        var d = function(s) {
-            return decodeURIComponent(s.replace(/\+/g, ' '));
-        };
-
-        var search = window.location.search,
-            match = r.exec(search.substring(1));
-        while (match) {
-            params[d(match[1])] = d(match[2]);
-
-            if (d(match[2]) === 'true' || d(match[2]) === 'false') {
-                params[d(match[1])] = d(match[2]) === 'true' ? true : false;
-            }
-            match = r.exec(search.substring(1));
-        }
-
-        window.params = params;
-
-        // Initialize some variables.
-        var player = null,
-            startStopBtn = null,
-            uploadBtn = null,
-            countdownSeconds = null,
-            countdownTicker = null,
-            recType = null,
-            mediaRecorder = null,
-            chunks = null,
-            blobSize = null,
-            maxUploadSize = null;
-    },
-
     // Notify and redirect user if plugin is used from insecure location.
     check_secure: function() {
         var isSecureOrigin = (window.location.protocol === 'https:') ||

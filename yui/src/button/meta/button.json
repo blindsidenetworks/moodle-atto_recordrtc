@@ -2,8 +2,7 @@
     "moodle-atto_recordrtc-button": {
         "requires": [
             "moodle-editor_atto-plugin",
-            "moodle-atto_recordrtc-audiomodule",
-            "moodle-atto_recordrtc-videomodule"
+            "moodle-atto_recordrtc-recording"
         ]
     }
 }

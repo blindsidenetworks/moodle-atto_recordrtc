@@ -1,3 +1,5 @@
+YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -211,3 +213,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         }
     }
 });
+
+
+}, '@VERSION@', {"requires": ["moodle-editor_atto-plugin", "moodle-atto_recordrtc-recording"]});

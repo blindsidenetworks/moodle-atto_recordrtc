@@ -1,36 +1,5 @@
 YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/** global: M */
-/** global: Y */
-/** global: event */
-
-M.atto_recordrtc = M.atto_recordrtc || {};
-
-M.atto_recordrtc.recording = {
-    /**
-     * Initialize recording code.
-     *
-     * @method init
-     */
-    init: function() {
-        M.atto_recordrtc.commonmodule.init();
-    },
-};
 // Atto recordrtc library functions.
 // @package    atto_recordrtc.
 // @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com).
@@ -46,41 +15,6 @@ M.atto_recordrtc.recording = {
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.commonmodule = {
-    init: function() {
-        // Extract plugin settings to params hash.
-        var params = {},
-            r = /([^&=]+)=?([^&]*)/g;
-
-        var d = function(s) {
-            return decodeURIComponent(s.replace(/\+/g, ' '));
-        };
-
-        var search = window.location.search,
-            match = r.exec(search.substring(1));
-        while (match) {
-            params[d(match[1])] = d(match[2]);
-
-            if (d(match[2]) === 'true' || d(match[2]) === 'false') {
-                params[d(match[1])] = d(match[2]) === 'true' ? true : false;
-            }
-            match = r.exec(search.substring(1));
-        }
-
-        window.params = params;
-
-        // Initialize some variables.
-        var player = null,
-            startStopBtn = null,
-            uploadBtn = null,
-            countdownSeconds = null,
-            countdownTicker = null,
-            recType = null,
-            mediaRecorder = null,
-            chunks = null,
-            blobSize = null,
-            maxUploadSize = null;
-    },
-
     // Notify and redirect user if plugin is used from insecure location.
     check_secure: function() {
         var isSecureOrigin = (window.location.protocol === 'https:') ||
@@ -340,6 +274,17 @@ M.atto_recordrtc.commonmodule = {
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.audiomodule = {
+    player: null,
+    startStopBtn: null,
+    uploadBtn: null,
+    countdownSeconds: null,
+    countdownTicker: null,
+    recType: null,
+    mediaRecorder: null,
+    chunks: null,
+    blobSize: null,
+    maxUploadSize: null,
+    
     init: function() {
         // Assignment of global variables.
         player = document.querySelector('audio#player');
@@ -562,6 +507,17 @@ M.atto_recordrtc.audiomodule = {
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.videomodule = {
+    player: null,
+    startStopBtn: null,
+    uploadBtn: null,
+    countdownSeconds: null,
+    countdownTicker: null,
+    recType: null,
+    mediaRecorder: null,
+    chunks: null,
+    blobSize: null,
+    maxUploadSize: null,
+
     init: function() {
         // Assignment of global variables.
         player = document.querySelector('video#player');

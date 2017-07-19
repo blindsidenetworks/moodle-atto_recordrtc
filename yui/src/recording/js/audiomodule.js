@@ -22,6 +22,17 @@
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.audiomodule = {
+    player: null,
+    startStopBtn: null,
+    uploadBtn: null,
+    countdownSeconds: null,
+    countdownTicker: null,
+    recType: null,
+    mediaRecorder: null,
+    chunks: null,
+    blobSize: null,
+    maxUploadSize: null,
+    
     init: function() {
         // Assignment of global variables.
         player = document.querySelector('audio#player');
