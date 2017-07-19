@@ -32,7 +32,7 @@ M.atto_recordrtc.audiomodule = {
     chunks: null,
     blobSize: null,
     maxUploadSize: null,
-    
+
     init: function() {
         // Assignment of global variables.
         player = document.querySelector('audio#player');
