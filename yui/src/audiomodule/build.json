@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_recordrtc-audiomodule",
+  "builds": {
+    "moodle-atto_recordrtc-audiomodule": {
+      "jsfiles": [
+        "audiomodule.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_recordrtc-commonmodule",
+  "builds": {
+    "moodle-atto_recordrtc-commonmodule": {
+      "jsfiles": [
+        "commonmodule.js"
+      ]
+    }
+  }
+}

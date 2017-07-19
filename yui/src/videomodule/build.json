@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_recordrtc-videomodule",
+  "builds": {
+    "moodle-atto_recordrtc-videomodule": {
+      "jsfiles": [
+        "videomodule.js"
+      ]
+    }
+  }
+}

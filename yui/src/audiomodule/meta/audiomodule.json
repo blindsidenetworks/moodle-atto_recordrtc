@@ -1,0 +1,7 @@
+{
+    "moodle-atto_recordrtc-audiomodule": {
+        "requires": [
+            "moodle-atto_recordrtc-commonmodule"
+        ]
+    }
+}
