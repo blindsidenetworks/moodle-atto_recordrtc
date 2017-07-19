@@ -52,11 +52,11 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
     initializer: function() {
         var allowedtypes = this.get('allowedtypes');
-        if (allowedtypes == 'both' || allowedtypes == 'audio') {
+        if (allowedtypes === 'both' || allowedtypes === 'audio') {
             // Add the audio button.
             this._addButton('audio', this._audio);
         }
-        if (allowedtypes == 'both' || allowedtypes == 'video') {
+        if (allowedtypes === 'both' || allowedtypes === 'video') {
             // Add the video button.
             this._addButton('video', this._video);
         }
