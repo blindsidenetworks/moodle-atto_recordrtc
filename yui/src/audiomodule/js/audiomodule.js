@@ -24,7 +24,7 @@
  * @param {Object}
  *            Y YUI instance
  */
-M.tinymce_recordrtc.view_init = function() {
+Y.M.atto_recordrtc.view_init = function() {
     // Assignment of global variables.
     player = document.querySelector('audio#player');
     startStopBtn = document.querySelector('button#start-stop');
@@ -34,9 +34,9 @@ M.tinymce_recordrtc.view_init = function() {
     maxUploadSize = parseInt(recordrtc.maxfilesize.match(/\d+/)[0]) * Math.pow(1024, 2);
 
     // Show alert and redirect user if connection is not secure.
-    M.tinymce_recordrtc.check_secure();
+    Y.M.atto_recordrtc.check_secure();
     // Show alert if using non-ideal browser.
-    M.tinymce_recordrtc.check_browser();
+    Y.M.atto_recordrtc.check_browser();
 
     // Run when user clicks on "record" button.
     startStopBtn.onclick = function() {
@@ -115,11 +115,11 @@ M.tinymce_recordrtc.view_init = function() {
             };
 
             // Capture audio stream from microphone.
-            M.tinymce_recordrtc.captureAudio(commonConfig);
+            Y.M.atto_recordrtc.captureAudio(commonConfig);
 
             // When audio stream is successfully captured, start recording.
             btn.mediaCapturedCallback = function() {
-                M.tinymce_recordrtc.startRecording(recType, btn.stream);
+                Y.M.atto_recordrtc.startRecording(recType, btn.stream);
             };
         } else { // If button is displaying "Stop Recording".
             // First of all clears the countdownTicker.
@@ -131,7 +131,7 @@ M.tinymce_recordrtc.view_init = function() {
             }, 1000);
 
             // Stop recording.
-            M.tinymce_recordrtc.stopRecording(btn.stream);
+            Y.M.atto_recordrtc.stopRecording(btn.stream);
 
             // Change button to offer to record again.
             btn.textContent = M.util.get_string('recordagain', 'tinymce_recordrtc');
@@ -144,8 +144,8 @@ M.tinymce_recordrtc.view_init = function() {
 };
 
 // Setup to get audio stream from microphone.
-M.tinymce_recordrtc.captureAudio = function(config) {
-    M.tinymce_recordrtc.captureUserMedia(
+Y.M.atto_recordrtc.captureAudio = function(config) {
+    Y.M.atto_recordrtc.captureUserMedia(
         // Media constraints.
         {
             audio: true
@@ -166,7 +166,7 @@ M.tinymce_recordrtc.captureAudio = function(config) {
     );
 };
 
-M.tinymce_recordrtc.stopRecording = function(stream) {
+Y.M.atto_recordrtc.stopRecording = function(stream) {
     // Stop recording microphone stream.
     mediaRecorder.stop();
 
@@ -199,10 +199,10 @@ M.tinymce_recordrtc.stopRecording = function(stream) {
             btn.disabled = true;
 
             // Upload recording to server.
-            M.tinymce_recordrtc.uploadToServer(recType, function(progress, fileURLOrError) {
+            Y.M.atto_recordrtc.uploadToServer(recType, function(progress, fileURLOrError) {
                 if (progress === 'ended') { // Insert annotation in text.
                     btn.disabled = false;
-                    M.tinymce_recordrtc.insert_annotation(recType, fileURLOrError);
+                    Y.M.atto_recordrtc.insert_annotation(recType, fileURLOrError);
                 } else if (progress === 'upload-failed') { // Show error message in upload button.
                     btn.disabled = false;
                     btn.textContent = M.util.get_string('uploadfailed', 'tinymce_recordrtc') + ' ' + fileURLOrError;

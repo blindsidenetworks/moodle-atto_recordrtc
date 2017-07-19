@@ -10,7 +10,7 @@
 /** global: params */
 /** global: recordrtc */
 
-M.tinymce_recordrtc = M.tinymce_recordrtc || {};
+Y.M.atto_recordrtc = Y.M.atto_recordrtc || {};
 
 // Extract plugin settings to params hash.
 (function() {
@@ -48,7 +48,7 @@ var blobSize = null;
 var maxUploadSize = null;
 
 // Notify and redirect user if plugin is used from insecure location.
-M.tinymce_recordrtc.check_secure = function() {
+Y.M.atto_recordrtc.check_secure = function() {
     var isSecureOrigin = (window.location.protocol === 'https:') ||
                          (window.location.host.indexOf('localhost') !== -1);
 
@@ -62,7 +62,7 @@ M.tinymce_recordrtc.check_secure = function() {
 // - Firefox 29+;
 // - Chrome 49+;
 // - Opera 36+.
-M.tinymce_recordrtc.check_browser = function() {
+Y.M.atto_recordrtc.check_browser = function() {
     if (!((bowser.firefox && bowser.version >= 29) ||
           (bowser.chrome && bowser.version >= 49) ||
           (bowser.opera && bowser.version >= 36))) {
@@ -72,12 +72,12 @@ M.tinymce_recordrtc.check_browser = function() {
 };
 
 // Capture webcam/microphone stream.
-M.tinymce_recordrtc.captureUserMedia = function(mediaConstraints, successCallback, errorCallback) {
+Y.M.atto_recordrtc.captureUserMedia = function(mediaConstraints, successCallback, errorCallback) {
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
 };
 
 // Add chunks of audio/video to array when made available.
-M.tinymce_recordrtc.handleDataAvailable = function(event) {
+Y.M.atto_recordrtc.handleDataAvailable = function(event) {
     // Size of all recorded data so far.
     blobSize += event.data.size;
 
@@ -97,7 +97,7 @@ M.tinymce_recordrtc.handleDataAvailable = function(event) {
 };
 
 // Get everything set up to start recording.
-M.tinymce_recordrtc.startRecording = function(type, stream) {
+Y.M.atto_recordrtc.startRecording = function(type, stream) {
     // The options for the recording codecs and bitrates.
     var options = null;
     if (type === 'audio') {
@@ -139,7 +139,7 @@ M.tinymce_recordrtc.startRecording = function(type, stream) {
                             : new MediaRecorder(stream, options);
 
     // Initialize MediaRecorder events and start recording.
-    mediaRecorder.ondataavailable = M.tinymce_recordrtc.handleDataAvailable;
+    mediaRecorder.ondataavailable = Y.M.atto_recordrtc.handleDataAvailable;
     mediaRecorder.start(1000); // Capture in 10ms chunks. Must be set to work with Firefox.
 
     // Mute audio, distracting while recording.
@@ -149,15 +149,15 @@ M.tinymce_recordrtc.startRecording = function(type, stream) {
     countdownSeconds = params['timelimit'];
     countdownSeconds++;
     startStopBtn.innerHTML = M.util.get_string('stoprecording', 'tinymce_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
-    M.tinymce_recordrtc.setTime();
-    countdownTicker = setInterval(M.tinymce_recordrtc.setTime, 1000);
+    Y.M.atto_recordrtc.setTime();
+    countdownTicker = setInterval(Y.M.atto_recordrtc.setTime, 1000);
 
     // Make button clickable again, to allow stopping recording.
     startStopBtn.disabled = false;
 };
 
 // Upload recorded audio/video to server.
-M.tinymce_recordrtc.uploadToServer = function(type, callback) {
+Y.M.atto_recordrtc.uploadToServer = function(type, callback) {
     var xhr = new XMLHttpRequest();
 
     // Get src media of audio/video tag.
@@ -185,7 +185,7 @@ M.tinymce_recordrtc.uploadToServer = function(type, callback) {
             formData.append(type + '-blob', blob);
 
             // Pass FormData to PHP script using XHR.
-            M.tinymce_recordrtc.makeXMLHttpRequest('save.php', formData, function(progress, responseText) {
+            Y.M.atto_recordrtc.makeXMLHttpRequest('save.php', formData, function(progress, responseText) {
                 if (progress === 'upload-ended') {
                     var initialURL = location.href.replace(location.href.split('/').pop(), '') + 'uploads.php/';
                     callback('ended', initialURL + responseText);
@@ -200,7 +200,7 @@ M.tinymce_recordrtc.uploadToServer = function(type, callback) {
 };
 
 // Handle XHR sending/receiving/status.
-M.tinymce_recordrtc.makeXMLHttpRequest = function(url, data, callback) {
+Y.M.atto_recordrtc.makeXMLHttpRequest = function(url, data, callback) {
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
@@ -229,7 +229,7 @@ M.tinymce_recordrtc.makeXMLHttpRequest = function(url, data, callback) {
 };
 
 // Makes 1min and 2s display as 1:02 on timer instead of 1:2, for example.
-M.tinymce_recordrtc.pad = function(val) {
+Y.M.atto_recordrtc.pad = function(val) {
     var valString = val + "";
 
     if (valString.length < 2) {
@@ -241,11 +241,11 @@ M.tinymce_recordrtc.pad = function(val) {
 
 // Functionality to make recording timer count down.
 // Also makes recording stop when time limit is hit.
-M.tinymce_recordrtc.setTime = function() {
+Y.M.atto_recordrtc.setTime = function() {
     countdownSeconds--;
 
-    startStopBtn.querySelector('span#seconds').textContent = M.tinymce_recordrtc.pad(countdownSeconds % 60);
-    startStopBtn.querySelector('span#minutes').textContent = M.tinymce_recordrtc.pad(parseInt(countdownSeconds / 60));
+    startStopBtn.querySelector('span#seconds').textContent = Y.M.atto_recordrtc.pad(countdownSeconds % 60);
+    startStopBtn.querySelector('span#minutes').textContent = Y.M.atto_recordrtc.pad(parseInt(countdownSeconds / 60));
 
     if (countdownSeconds === 0) {
         startStopBtn.click();
@@ -253,7 +253,7 @@ M.tinymce_recordrtc.setTime = function() {
 };
 
 // Generates link to recorded annotation to be inserted.
-M.tinymce_recordrtc.create_annotation = function(type, recording_url) {
+Y.M.atto_recordrtc.create_annotation = function(type, recording_url) {
     var linkText = window.prompt(M.util.get_string('annotationprompt', 'tinymce_recordrtc'),
                                  M.util.get_string('annotation:' + type, 'tinymce_recordrtc'));
 
@@ -267,8 +267,8 @@ M.tinymce_recordrtc.create_annotation = function(type, recording_url) {
 };
 
 // Inserts link to annotation in editor text area.
-M.tinymce_recordrtc.insert_annotation = function(type, recording_url) {
-    var annotation = M.tinymce_recordrtc.create_annotation(type, recording_url);
+Y.M.atto_recordrtc.insert_annotation = function(type, recording_url) {
+    var annotation = Y.M.atto_recordrtc.create_annotation(type, recording_url);
 
     // Insert annotation link.
     // If user pressed "Cancel", just go back to main recording screen.
