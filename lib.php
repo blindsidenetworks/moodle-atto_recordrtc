@@ -116,6 +116,6 @@ function get_moodle_version_major() {
     global $CFG;
 
     $versionarray = explode('.', $CFG->version);
-    
+
     return $versionarray[0];
 }
