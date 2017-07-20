@@ -1,0 +1,11 @@
+{
+    "name": "moodle-atto_recordrtc-vendor",
+    "builds": {
+        "moodle-atto_recordrtc-vendor": {
+            "jsfiles": [
+                "adapter.js",
+                "bowser.js"
+            ]
+        }
+    }
+}
