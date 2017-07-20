@@ -66,12 +66,11 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                 'timelimit',
                 'oldermoodle',
                 'maxrecsize'
-            ],
-            obj = this;
+            ];
 
-        requiredParams.forEach(function(key) {
-            M.atto_recordrtc.params[key] = obj.get(key);
-        });
+        for (var n in requiredParams) {
+            M.atto_recordrtc.params[requiredParams[n]] = this.get(requiredParams[n]);
+        }
 
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
