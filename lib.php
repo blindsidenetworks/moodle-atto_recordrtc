@@ -46,7 +46,7 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $allowedtypes = get_config('atto_recordrtc', 'allowedtypes');
     $audiobitrate = get_config('atto_recordrtc', 'audiobitrate');
     $videobitrate = get_config('atto_recordrtc', 'videobitrate');
-    $timelimit = get_config('atto_recordrtc', 'videobitrate');
+    $timelimit = get_config('atto_recordrtc', 'timelimit');
     $audiortcicon = 'ed/audiortc';
     $videortcicon = 'ed/videortc';
     if ($moodleversion >= '2017051500') {

@@ -51,6 +51,21 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     _content: null,
 
     initializer: function() {
+        var params = {},
+            requiredParams = [
+                'contextid',
+                'recordrtcroot',
+                'sesskey',
+                'audiobitrate',
+                'videobitrate',
+                'timelimit'
+            ];
+        that = this;
+        requiredParams.forEach(function(key) {
+            params[key] = that.get(key);
+        });
+        window.params = params;
+
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
             // Add the audio button.
@@ -90,7 +105,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         dialogue.set('bodyContent', '<p>Audio</p>').show();
 
-        M.atto_recordrtc.audiomodule.init();
+        M.atto_recordrtc.audiomodule.init(window.params);
     },
 
     /**
@@ -109,7 +124,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         dialogue.set('bodyContent', '<p>Video</p>').show();
 
-        M.atto_recordrtc.videomodule.init();
+        M.atto_recordrtc.videomodule.init(window.params);
     }
 
 }, {

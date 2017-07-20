@@ -33,7 +33,7 @@ M.atto_recordrtc.videomodule = {
     blobSize: null,
     maxUploadSize: null,
 
-    init: function() {
+    init: function(params) {
         // Assignment of global variables.
         player = document.querySelector('video#player');
         startStopBtn = document.querySelector('button#start-stop');
