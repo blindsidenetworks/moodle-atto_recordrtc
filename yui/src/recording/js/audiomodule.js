@@ -5,42 +5,19 @@
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
 /** global: M */
-/** global: Y */
-/** global: bowser */
-/** global: recordrtc */
-/** global: player */
-/** global: startStopBtn */
-/** global: uploadBtn */
-/** global: countdownSeconds */
-/** global: countdownTicker */
-/** global: recType */
-/** global: mediaRecorder */
-/** global: chunks */
-/** global: blobSize */
-/** global: maxUploadSize */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.audiomodule = {
-    player: null,
-    startStopBtn: null,
-    uploadBtn: null,
-    countdownSeconds: null,
-    countdownTicker: null,
-    recType: null,
-    mediaRecorder: null,
-    chunks: null,
-    blobSize: null,
-    maxUploadSize: null,
-
     init: function() {
         // Assignment of global variables.
         player = document.querySelector('audio#player');
         startStopBtn = document.querySelector('button#start-stop');
         uploadBtn = document.querySelector('button#upload');
         recType = 'audio';
+        olderMoodle = M.atto_recordrtc.params['oldermoodle'];
         // Extract the numbers from the string, and convert to bytes.
-        maxUploadSize = parseInt(recordrtc.maxfilesize.match(/\d+/)[0]) * Math.pow(1024, 2);
+        maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0]) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         M.atto_recordrtc.commonmodule.check_secure();
@@ -65,7 +42,7 @@ M.atto_recordrtc.audiomodule = {
                 uploadBtn.parentElement.parentElement.classList.add('hide');
 
                 // Change look of recording button.
-                if (!recordrtc.oldermoodle) {
+                if (!M.atto_recordrtc.oldermoodle) {
                     startStopBtn.classList.remove('btn-outline-danger');
                     startStopBtn.classList.add('btn-danger');
                 }
@@ -144,7 +121,7 @@ M.atto_recordrtc.audiomodule = {
 
                 // Change button to offer to record again.
                 btn.textContent = M.util.get_string('recordagain', 'atto_recordrtc');
-                if (!recordrtc.oldermoodle) {
+                if (!olderMoodle) {
                     startStopBtn.classList.remove('btn-danger');
                     startStopBtn.classList.add('btn-outline-danger');
                 }

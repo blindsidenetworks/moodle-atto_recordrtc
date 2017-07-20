@@ -38,6 +38,9 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
 
     $moodleversion = get_moodle_version_major();
+    $moodle32 = '2016120500';
+    $moodle33 = '2017051500';
+
     $context = $options['context'];
     if (!$context) {
         $context = context_system::instance();
@@ -49,20 +52,22 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $timelimit = get_config('atto_recordrtc', 'timelimit');
     $audiortcicon = 'ed/audiortc';
     $videortcicon = 'ed/videortc';
-    if ($moodleversion >= '2017051500') {
+    $maxrecsize = ini_get('upload_max_filesize');
+    if ($moodleversion >= $moodle33) {
         $audiortcicon = 'i/audiortc';
         $videortcicon = 'i/videortc';
     }
     $params = array('contextid' => $context->id,
-                    'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
-                    'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT . 'recordrtc.php',
                     'sesskey' => $sesskey,
+                    'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
                     'allowedtypes' => $allowedtypes,
                     'audiobitrate' => $audiobitrate,
                     'videobitrate' => $videobitrate,
                     'timelimit' => $timelimit,
                     'audiortcicon' => $audiortcicon,
-                    'videortcicon' => $videortcicon
+                    'videortcicon' => $videortcicon,
+                    'oldermoodle' => $moodleversion < $moodle32,
+                    'maxrecsize' => $maxrecsize
               );
 
     return $params;

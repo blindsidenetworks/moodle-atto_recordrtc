@@ -61,7 +61,9 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                 'recordrtcroot',
                 'audiobitrate',
                 'videobitrate',
-                'timelimit'
+                'timelimit',
+                'oldermoodle',
+                'maxrecsize'
             ],
             obj = this;
 
@@ -143,32 +145,22 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         },
 
         /**
-         * The root to use when loading the recordrtc.
-         *
-         * @attribute recordrtcroot
-         * @type String
-         */
-        recordrtcroot: {
-            value: null
-        },
-
-        /**
-         * The url to use when loading the recordrtc.
-         *
-         * @attribute recordrtcurl
-         * @type String
-         */
-        recordrtcurl: {
-            value: null
-        },
-
-        /**
          * The sesskey to use when generating this recordrtc.
          *
          * @attribute sesskey
          * @type String
          */
         sesskey: {
+            value: null
+        },
+
+        /**
+         * The root to use when loading the recordrtc.
+         *
+         * @attribute recordrtcroot
+         * @type String
+         */
+        recordrtcroot: {
             value: null
         },
 
@@ -229,6 +221,26 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
          * @type String
          */
         videortcicon: {
+            value: null
+        },
+
+        /**
+         * True if Moodle is version < 3.2.
+         *
+         * @attribute oldermoodle
+         * @type Boolean
+         */
+        oldermoodle: {
+            value: null
+        },
+
+        /**
+         * Maximum upload size set on server, in MB.
+         *
+         * @attribute maxrecsize
+         * @type String
+         */
+        maxrecsize: {
             value: null
         }
     }

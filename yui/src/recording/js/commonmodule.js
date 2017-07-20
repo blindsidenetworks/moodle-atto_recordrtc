@@ -5,13 +5,23 @@
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
 /** global: M */
-/** global: Y */
-/** global: bowser */
-/** global: recordrtc */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 M.atto_recordrtc.commonmodule = {
+    // Unitialized variables to be used by the other modules.
+    player: null,
+    startStopBtn: null,
+    uploadBtn: null,
+    countdownSeconds: null,
+    countdownTicker: null,
+    recType: null,
+    mediaRecorder: null,
+    chunks: null,
+    blobSize: null,
+    olderMoodle: null,
+    maxUploadSize: null,
+
     // Notify and redirect user if plugin is used from insecure location.
     check_secure: function() {
         var isSecureOrigin = (window.location.protocol === 'https:') ||
@@ -145,8 +155,8 @@ M.atto_recordrtc.commonmodule = {
 
                 // Create FormData to send to PHP upload/save script.
                 var formData = new FormData();
-                formData.append('contextid', recordrtc.contextid);
-                formData.append('sesskey', parent.M.cfg.sesskey);
+                formData.append('contextid', M.atto_recordrtc.params['contextid']);
+                formData.append('sesskey', M.atto_recordrtc.params['sesskey']);
                 formData.append(type + '-filename', fileName);
                 formData.append(type + '-blob', blob);
 
