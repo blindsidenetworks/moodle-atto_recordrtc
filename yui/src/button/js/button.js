@@ -38,7 +38,7 @@ var PLUGINNAME = 'atto_recordrtc';
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**
      * The current language en by default.
-     * **/
+     */
     _lang: 'en',
 
     /**
