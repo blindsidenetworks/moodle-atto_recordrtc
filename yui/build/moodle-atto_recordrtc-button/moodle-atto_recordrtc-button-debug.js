@@ -53,20 +53,23 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     _content: null,
 
     initializer: function() {
-        var params = {},
-            requiredParams = [
+        // Make necessary params globally accessible.
+        M.atto_recordrtc = M.atto_recordrtc || {};
+        M.atto_recordrtc.params = {};
+
+        var requiredParams = [
                 'contextid',
-                'recordrtcroot',
                 'sesskey',
+                'recordrtcroot',
                 'audiobitrate',
                 'videobitrate',
                 'timelimit'
-            ];
-        that = this;
+            ],
+            obj = this;
+
         requiredParams.forEach(function(key) {
-            params[key] = that.get(key);
+            M.atto_recordrtc.params[key] = obj.get(key);
         });
-        window.params = params;
 
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
@@ -107,7 +110,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         dialogue.set('bodyContent', '<p>Audio</p>').show();
 
-        M.atto_recordrtc.audiomodule.init(window.params);
+        M.atto_recordrtc.audiomodule.init();
     },
 
     /**
@@ -126,7 +129,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         dialogue.set('bodyContent', '<p>Video</p>').show();
 
-        M.atto_recordrtc.videomodule.init(window.params);
+        M.atto_recordrtc.videomodule.init();
     }
 
 }, {

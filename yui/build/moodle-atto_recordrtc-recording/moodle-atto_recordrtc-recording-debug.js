@@ -285,7 +285,7 @@ M.atto_recordrtc.audiomodule = {
     blobSize: null,
     maxUploadSize: null,
 
-    init: function(params) {
+    init: function() {
         // Assignment of global variables.
         player = document.querySelector('audio#player');
         startStopBtn = document.querySelector('button#start-stop');
@@ -518,7 +518,7 @@ M.atto_recordrtc.videomodule = {
     blobSize: null,
     maxUploadSize: null,
 
-    init: function(params) {
+    init: function() {
         // Assignment of global variables.
         player = document.querySelector('video#player');
         startStopBtn = document.querySelector('button#start-stop');
@@ -725,4 +725,4 @@ M.atto_recordrtc.videomodule = {
 };
 
 
-}, '@VERSION@', {"requires": ["moodle-atto_recordrtc-button"]});
+}, '@VERSION@', {"requires": []});
