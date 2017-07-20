@@ -9,7 +9,6 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 /** global: M */
 /** global: Y */
 /** global: bowser */
-/** global: params */
 /** global: recordrtc */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
@@ -72,32 +71,32 @@ M.atto_recordrtc.commonmodule = {
         if (type === 'audio') {
             if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
                 options = {
-                    audioBitsPerSecond: params['audiobitrate'],
+                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
                     mimeType: 'audio/webm;codecs=opus'
                 };
             } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
                 options = {
-                    audioBitsPerSecond: params['audiobitrate'],
+                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
                     mimeType: 'audio/ogg;codecs=opus'
                 };
             }
         } else {
             if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) {
                 options = {
-                    audioBitsPerSecond: params['audiobitrate'],
-                    videoBitsPerSecond: params['videobitrate'],
+                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
+                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
                     mimeType: 'video/webm;codecs=vp9,opus'
                 };
             } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264,opus')) {
                 options = {
-                    audioBitsPerSecond: params['audiobitrate'],
-                    videoBitsPerSecond: params['videobitrate'],
+                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
+                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
                     mimeType: 'video/webm;codecs=h264,opus'
                 };
             } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
                 options = {
-                    audioBitsPerSecond: params['audiobitrate'],
-                    videoBitsPerSecond: params['videobitrate'],
+                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
+                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
                     mimeType: 'video/webm;codecs=vp8,opus'
                 };
             }
@@ -115,7 +114,7 @@ M.atto_recordrtc.commonmodule = {
         player.muted = true;
 
         // Set recording timer to the time specified in the settings.
-        countdownSeconds = params['timelimit'];
+        countdownSeconds = M.atto_recordrtc.params['timelimit'];
         countdownSeconds++;
         startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
         this.set_time();
