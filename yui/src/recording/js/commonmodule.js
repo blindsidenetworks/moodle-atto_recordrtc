@@ -55,20 +55,20 @@ M.atto_recordrtc.commonmodule = {
     // Add chunks of audio/video to array when made available.
     handle_data_available: function(event) {
         // Size of all recorded data so far.
-        blobSize += event.data.size;
+        M.atto_recordrtc.commonmodule.blobSize += event.data.size;
 
         // Push recording slice to array.
         // If total size of recording so far exceeds max upload limit, stop recording.
         // An extra condition exists to avoid displaying alert twice.
-        if ((blobSize >= maxUploadSize) && (!localStorage.getItem('alerted'))) {
+        if ((M.atto_recordrtc.commonmodule.blobSize >= M.atto_recordrtc.commonmodule.maxUploadSize) && (!localStorage.getItem('alerted'))) {
             localStorage.setItem('alerted', 'true');
 
-            startStopBtn.click();
+            M.atto_recordrtc.commonmodule.startStopBtn.click();
             window.alert(M.util.get_string('nearingmaxsize', 'atto_recordrtc'));
-        } else if ((blobSize >= maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
+        } else if ((M.atto_recordrtc.commonmodule.blobSize >= M.atto_recordrtc.commonmodule.maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
             localStorage.removeItem('alerted');
         } else {
-            chunks.push(event.data);
+            M.atto_recordrtc.commonmodule.chunks.push(event.data);
         }
     },
 
@@ -111,25 +111,25 @@ M.atto_recordrtc.commonmodule = {
         }
 
         // If none of the options above are supported, fall back on browser defaults.
-        mediaRecorder = options ? new MediaRecorder(stream)
+        M.atto_recordrtc.commonmodule.mediaRecorder = options ? new MediaRecorder(stream)
                                 : new MediaRecorder(stream, options);
 
         // Initialize MediaRecorder events and start recording.
-        mediaRecorder.ondataavailable = this.handle_data_available;
-        mediaRecorder.start(1000); // Capture in 10ms chunks. Must be set to work with Firefox.
+        M.atto_recordrtc.commonmodule.mediaRecorder.ondataavailable = this.handle_data_available;
+        M.atto_recordrtc.commonmodule.mediaRecorder.start(1000); // Capture in 1s chunks. Must be set to work with Firefox.
 
         // Mute audio, distracting while recording.
-        player.muted = true;
+        M.atto_recordrtc.commonmodule.player.muted = true;
 
         // Set recording timer to the time specified in the settings.
-        countdownSeconds = M.atto_recordrtc.params['timelimit'];
-        countdownSeconds++;
-        startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
+        M.atto_recordrtc.commonmodule.countdownSeconds = M.atto_recordrtc.params['timelimit'];
+        M.atto_recordrtc.commonmodule.countdownSeconds++;
+        M.atto_recordrtc.commonmodule.startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
         this.set_time();
-        countdownTicker = setInterval(this.set_time, 1000);
+        M.atto_recordrtc.commonmodule.countdownTicker = setInterval(this.set_time, 1000);
 
         // Make button clickable again, to allow stopping recording.
-        startStopBtn.disabled = false;
+        M.atto_recordrtc.commonmodule.startStopBtn.disabled = false;
     },
 
     // Upload recorded audio/video to server.
@@ -137,7 +137,7 @@ M.atto_recordrtc.commonmodule = {
         var xhr = new XMLHttpRequest();
 
         // Get src media of audio/video tag.
-        xhr.open('GET', player.src, true);
+        xhr.open('GET', M.atto_recordrtc.commonmodule.player.src, true);
         xhr.responseType = 'blob';
 
         xhr.onload = function() {
@@ -218,13 +218,13 @@ M.atto_recordrtc.commonmodule = {
     // Functionality to make recording timer count down.
     // Also makes recording stop when time limit is hit.
     set_time: function() {
-        countdownSeconds--;
+        M.atto_recordrtc.commonmodule.countdownSeconds--;
 
-        startStopBtn.querySelector('span#seconds').textContent = this.pad(countdownSeconds % 60);
-        startStopBtn.querySelector('span#minutes').textContent = this.pad(parseInt(countdownSeconds / 60));
+        M.atto_recordrtc.commonmodule.startStopBtn.querySelector('span#seconds').textContent = this.pad(countdownSeconds % 60);
+        M.atto_recordrtc.commonmodule.startStopBtn.querySelector('span#minutes').textContent = this.pad(parseInt(countdownSeconds / 60));
 
-        if (countdownSeconds === 0) {
-            startStopBtn.click();
+        if (M.atto_recordrtc.commonmodule.countdownSeconds === 0) {
+            M.atto_recordrtc.commonmodule.startStopBtn.click();
         }
     },
 
@@ -249,7 +249,7 @@ M.atto_recordrtc.commonmodule = {
         // Insert annotation link.
         // If user pressed "Cancel", just go back to main recording screen.
         if (!annotation) {
-            uploadBtn.textContent = M.util.get_string('attachrecording', 'atto_recordrtc');
+            M.atto_recordrtc.commonmodule.uploadBtn.textContent = M.util.get_string('attachrecording', 'atto_recordrtc');
         } else {
             // TODO: Convert TinyMCE to Atto
             //tinyMCEPopup.editor.execCommand('mceInsertContent', false, annotation);
