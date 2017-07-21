@@ -48,6 +48,33 @@ var PLUGINNAME = 'atto_recordrtc',
           '<div id="alert-danger" class="alert {{bs_al_dang}}"></div>' +
         '</div>' +
       '</div>' +
+      '<div class="{{bs_row}} hide">' +
+        '{{#if audio}}' +
+          '<div class="{{bs_col}}1"></div>' +
+          '<div class="{{bs_col}}10">' +
+            '<audio id="player"></audio>' +
+          '</div>' +
+          '<div class="{{bs_col}}1"></div>' +
+          '{{else}}' +
+          '<div class="{{bs_col}}12">' +
+            '<video id="player"></video>' +
+          '</div>' +
+        '{{/if}}' +
+      '</div>' +
+      '<div class="{{bs_row}}">' +
+        '<div class="{{bs_col}}1"></div>' +
+        '<div class="{{bs_col}}10">' +
+          '<button id="start-stop" class="{{bs_ss_btn}}">{{startrecording}}</button>' +
+        '</div>' +
+        '<div class="{{bs_col}}1"></div>' +
+      '</div>' +
+      '<div class="{{bs_row}} hide">' +
+        '<div class="{{bs_col}}3"></div>' +
+        '<div class="{{bs_col}}6">' +
+          '<button id="upload" class="{{bl_ul_btn}}">{{attachrecording}}</button>' +
+        '</div>' +
+        '<div class="{{bs_col}}3"></div>' +
+      '</div>' +
     '</div>';
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
@@ -123,12 +150,17 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         }, true);
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
+            audio: true,
             bs_row: 'row',
             bs_col: 'col-xs-',
             bs_al_warn: 'alert-warning',
             bs_al_dang: 'alert-danger',
+            bs_ss_btn: 'btn btn-lg btn-outline-danger btn-block',
+            bs_ul_btn: 'btn btn-primary btn-block',
             browseralert_title: 'BOBBY',
-            browseralert: 'JOE'
+            browseralert: 'JOE',
+            startrecording: 'AYYY',
+            attachrecording: 'BUHBBAY'
         });
 
         dialogue.set('bodyContent', bodyContent);
@@ -152,12 +184,17 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         }, true);
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
+            audio: false,
             bs_row: 'row',
             bs_col: 'col-xs-',
             bs_al_warn: 'alert-warning',
             bs_al_dang: 'alert-danger',
+            bs_ss_btn: 'btn btn-lg btn-outline-danger btn-block',
+            bs_ul_btn: 'btn btn-primary btn-block',
             browseralert_title: 'BOBBY',
-            browseralert: 'JOE'
+            browseralert: 'JOE',
+            startrecording: 'AYYY',
+            attachrecording: 'BUHBBAY'
         });
 
         dialogue.set('bodyContent', bodyContent);
