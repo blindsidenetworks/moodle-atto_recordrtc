@@ -35,6 +35,8 @@
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '' +
+    '<script type="text/javascript" src="{{vendor_js_path}}/adapter.js"></src>' +
+    '<script type="text/javascript" src="{{vendor_js_path}}/bowser.js"></src>' +
     '<div class="container-fluid">' +
       '<div class="{{bs_row}} hide">' +
         '<div class="{{bs_col}}12">' +
@@ -143,37 +145,16 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      */
     _audio: function() {
         var dialogue = this.getDialogue({
-            height: 500,
+            height: 800,
             width: 1000,
             headerContent: M.util.get_string('audiortc', 'atto_recordrtc'),
             focusAfterHide: true
         }, true);
 
-        var bsRow = this.get('oldermoodle') ? 'row-fluid' : 'row',
-            bsCol = this.get('oldermoodle') ? 'span' : 'col-xs-',
-            bsAlWarn = this.get('oldermoodle') ? '' : 'alert-warning',
-            bsAlDang = this.get('oldermoodle') ? 'alert-error' : 'alert-danger',
-            bsSsBtn = this.get('oldermoodle') ? 'btn btn-large btn-danger btn-block'
-                                              : 'btn btn-lg btn-outline-danger btn-block';
-
-        var bodyContent = Y.Handlebars.compile(TEMPLATE)({
-            audio: true,
-            bs_row: bsRow,
-            bs_col: bsCol,
-            bs_al_warn: bsAlWarn,
-            bs_al_dang: bsAlDang,
-            bs_ss_btn: bsSsBtn,
-            bs_ul_btn: 'btn btn-primary btn-block',
-            browseralert_title: M.util.get_string('browseralert_title', 'atto_recordrtc'),
-            browseralert: M.util.get_string('browseralert', 'atto_recordrtc'),
-            startrecording: M.util.get_string('startrecording', 'atto_recordrtc'),
-            attachrecording: M.util.get_string('attachrecording', 'atto_recordrtc')
-        });
-
-        dialogue.set('bodyContent', bodyContent);
+        dialogue.set('bodyContent', this._createContent('audio'));
         dialogue.show();
 
-        //M.atto_recordrtc.audiomodule.init();
+        M.atto_recordrtc.audiomodule.init();
     },
 
     /**
@@ -184,13 +165,27 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      */
     _video: function() {
         var dialogue = this.getDialogue({
-            height: 500,
+            height: 800,
             width: 1000,
             headerContent: M.util.get_string('videortc', 'atto_recordrtc'),
             focusAfterHide: true
         }, true);
 
-        var bsRow = this.get('oldermoodle') ? 'row-fluid' : 'row',
+        dialogue.set('bodyContent', this._createContent('video'));
+        dialogue.show();
+
+        M.atto_recordrtc.videomodule.init();
+    },
+
+    /**
+     * Create the HTML to be displayed in the dialogue box
+     *
+     * @method _createContent
+     * @private
+     */
+    _createContent: function(type) {
+        var audio = (type === 'audio'),
+            bsRow = this.get('oldermoodle') ? 'row-fluid' : 'row',
             bsCol = this.get('oldermoodle') ? 'span' : 'col-xs-',
             bsAlWarn = this.get('oldermoodle') ? '' : 'alert-warning',
             bsAlDang = this.get('oldermoodle') ? 'alert-error' : 'alert-danger',
@@ -198,7 +193,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                                               : 'btn btn-lg btn-outline-danger btn-block';
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
-            audio: false,
+            vendor_js_path: this.get('recordrtcroot') + 'vendor/js',
+            audio: audio,
             bs_row: bsRow,
             bs_col: bsCol,
             bs_al_warn: bsAlWarn,
@@ -211,12 +207,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             attachrecording: M.util.get_string('attachrecording', 'atto_recordrtc')
         });
 
-        dialogue.set('bodyContent', bodyContent);
-        dialogue.show();
-
-        //M.atto_recordrtc.videomodule.init();
+        return bodyContent;
     }
-
 }, {
     ATTRS: {
         /**

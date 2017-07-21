@@ -364,7 +364,7 @@ M.atto_recordrtc.audiomodule = {
                 };
 
                 // Capture audio stream from microphone.
-                this.capture_audio(commonConfig);
+                M.atto_recordrtc.audiomodule.capture_audio(commonConfig);
 
                 // When audio stream is successfully captured, start recording.
                 btn.mediaCapturedCallback = function() {
