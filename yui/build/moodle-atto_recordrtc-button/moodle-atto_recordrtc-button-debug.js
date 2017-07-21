@@ -35,7 +35,11 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
-var PLUGINNAME = 'atto_recordrtc';
+var PLUGINNAME = 'atto_recordrtc',
+    TEMPLATE = '' +
+    '<p>WERTYUJNBV</p>' +
+    '<button class="btn btn-danger">HI WORLD</button>' +
+    '<{{type}}></{{type}}>';
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**
@@ -109,9 +113,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             focusAfterHide: true
         }, true);
 
-        dialogue.set('bodyContent', '<p>Audio</p>').show();
+        var bodyContent = Y.Handlebars.compile(TEMPLATE)({type: 'audio'});
 
-        M.atto_recordrtc.audiomodule.init();
+        dialogue.set('bodyContent', bodyContent);
+        dialogue.show();
+
+        //M.atto_recordrtc.audiomodule.init();
     },
 
     /**
@@ -128,9 +135,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             focusAfterHide: true
         }, true);
 
-        dialogue.set('bodyContent', '<p>Video</p>').show();
+        var bodyContent = Y.Handlebars.compile(TEMPLATE)({type: 'video'});
 
-        M.atto_recordrtc.videomodule.init();
+        dialogue.set('bodyContent', bodyContent);
+        dialogue.show();
+
+        //M.atto_recordrtc.videomodule.init();
     }
 
 }, {
