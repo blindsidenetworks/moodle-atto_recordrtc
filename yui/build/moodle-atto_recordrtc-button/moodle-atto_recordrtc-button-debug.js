@@ -37,9 +37,20 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '' +
-    '<p>WERTYUJNBV</p>' +
-    '<button class="btn btn-danger">HI WORLD</button>' +
-    '<{{type}}></{{type}}>';
+    '<div class="container-fluid">' +
+      '<div class="{{bs_row}} hide">' +
+        '<div class="{{bs_col}}12">' +
+          '<div id="alert-warning" class="alert {{bs_al_warn}}">' +
+            '<strong>{{browseralert_title}}</strong> {{browseralert}}' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="{{bs_row}} hide">' +
+        '<div class="{{bs_col}}12">' +
+          '<div id="alert-danger" class="alert {{bs_al_dang}}"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**
@@ -113,7 +124,14 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             focusAfterHide: true
         }, true);
 
-        var bodyContent = Y.Handlebars.compile(TEMPLATE)({type: 'audio'});
+        var bodyContent = Y.Handlebars.compile(TEMPLATE)({
+            bs_row: 'row',
+            bs_col: 'col-xs-',
+            bs_al_warn: 'alert-warning',
+            bs_al_dang: 'alert-danger',
+            browseralert_title: 'BOBBY',
+            browseralert: 'JOE'
+        });
 
         dialogue.set('bodyContent', bodyContent);
         dialogue.show();
@@ -135,7 +153,14 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             focusAfterHide: true
         }, true);
 
-        var bodyContent = Y.Handlebars.compile(TEMPLATE)({type: 'video'});
+        var bodyContent = Y.Handlebars.compile(TEMPLATE)({
+            bs_row: 'row',
+            bs_col: 'col-xs-',
+            bs_al_warn: 'alert-warning',
+            bs_al_dang: 'alert-danger',
+            browseralert_title: 'BOBBY',
+            browseralert: 'JOE'
+        });
 
         dialogue.set('bodyContent', bodyContent);
         dialogue.show();
