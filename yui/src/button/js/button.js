@@ -37,6 +37,30 @@ var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '' +
 //    '<script type="text/javascript" src="{{vendor_js_path}}/adapter.js"></src>' +
 //    '<script type="text/javascript" src="{{vendor_js_path}}/bowser.js"></src>' +
+//    '<style>' +
+//      'div {' +
+//        'font-weight: normal;' +
+//        'line-height: 40px;' +
+//        'padding: 3px 0 3px 0;' +
+//      '}' +
+//      '.alert {' +
+//        'line-height: 10px;' +
+//        'text-align: center;' +
+//      '}' +
+//      'audio {' +
+//        'display: block;' +
+//        'width: 100%;' +
+//      '}' +
+//      'video {' +
+//        'display: block;' +
+//        'width: 640px;' +
+//        'height: 480px;' +
+//        'margin: 0 auto;' +
+//      '}' +
+//      '.hide {' +
+//        'display: none !important;' +
+//      '}' +
+//    '</style>' +
     '<div class="container-fluid">' +
       '<div class="{{bs_row}} hide">' +
         '<div class="{{bs_col}}12">' +
