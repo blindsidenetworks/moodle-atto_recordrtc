@@ -16,7 +16,7 @@
 
 /*
  * @package    atto_recordrtc
- * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -176,6 +176,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         }
     },
 
+    /**
+     * Add the buttons to the Atto toolbar.
+     *
+     * @method _addButton
+     * @private
+     */
     _addButton: function(type, callback) {
         this.addButton({
             buttonName: type,
