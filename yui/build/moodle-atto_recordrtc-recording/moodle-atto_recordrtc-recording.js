@@ -429,7 +429,7 @@ M.atto_recordrtc.audiomodule = {
         });
 
         // Set source of audio player.
-        var blob = new Blob(cm.chunks);
+        var blob = new Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
         cm.player.src = URL.createObjectURL(blob);
 
         // Show audio player with controls enabled, and unmute.
@@ -577,8 +577,8 @@ M.atto_recordrtc.videomodule = {
                 };
 
                 // Show video tag without controls to view webcam stream.
-                player.parentElement.parentElement.classList.remove('hide');
-                player.controls = false;
+                cm.player.parentElement.parentElement.classList.remove('hide');
+                cm.player.controls = false;
 
                 // Capture audio+video stream from webcam/microphone.
                 M.atto_recordrtc.videomodule.capture_audio_video(commonConfig);
@@ -647,7 +647,7 @@ M.atto_recordrtc.videomodule = {
         });
 
         // Set source of video player.
-        var blob = new Blob(cm.chunks);
+        var blob = new Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
         cm.player.src = URL.createObjectURL(blob);
 
         // Enable controls for video player, and unmute.

@@ -163,7 +163,7 @@ M.atto_recordrtc.audiomodule = {
         });
 
         // Set source of audio player.
-        var blob = new Blob(cm.chunks);
+        var blob = new Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
         cm.player.src = URL.createObjectURL(blob);
 
         // Show audio player with controls enabled, and unmute.
