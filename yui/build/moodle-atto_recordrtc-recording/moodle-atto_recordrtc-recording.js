@@ -13,8 +13,8 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.commonmodule = {
-    editorScope: null,
     // Unitialized variables to be used by the other modules.
+    editorScope: null,
     player: null,
     startStopBtn: null,
     uploadBtn: null,
@@ -245,7 +245,7 @@ M.atto_recordrtc.commonmodule = {
         if (!linkText) {
             return undefined;
         } else {
-            var annotation = '<div><a target="_blank" href="' + recording_url + '">' + linkText + '</a></div>';
+            var annotation = '<a target="_blank" href="' + recording_url + '">' + linkText + '</a>';
             return annotation;
         }
     },
@@ -277,8 +277,8 @@ var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.audiomodule = {
     init: function(scope) {
-        cm.editorScope = scope;
         // Assignment of global variables.
+        cm.editorScope = scope;
         cm.player = document.querySelector('audio#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
@@ -488,8 +488,8 @@ var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.videomodule = {
     init: function(scope) {
-        cm.editorScope = scope;
         // Assignment of global variables.
+        cm.editorScope = scope;
         cm.player = document.querySelector('video#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
