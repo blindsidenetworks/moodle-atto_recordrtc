@@ -196,7 +196,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      */
     _audio: function() {
         var dialogue = this.getDialogue({
-            height: 800,
+            height: 260,
             width: 1000,
             headerContent: M.util.get_string('audiortc', 'atto_recordrtc'),
             focusAfterHide: true
@@ -216,7 +216,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      */
     _video: function() {
         var dialogue = this.getDialogue({
-            height: 800,
+            height: 700,
             width: 1000,
             headerContent: M.util.get_string('videortc', 'atto_recordrtc'),
             focusAfterHide: true
