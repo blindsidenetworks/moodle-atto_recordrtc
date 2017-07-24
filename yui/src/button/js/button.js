@@ -276,13 +276,13 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @method setLink
      * @public
      */
-    setLink: function(scope) {
+    setLink: function(scope, annotation) {
         scope.getDialogue({
             focusAfterHide: null
         }).hide();
 
         scope.editor.focus();
-        //scope.get('host').insertContentAtFocusPoint('abc');
+        scope.get('host').insertContentAtFocusPoint(annotation);
         scope.markUpdated();
     }
 }, {

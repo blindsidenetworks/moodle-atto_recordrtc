@@ -171,7 +171,7 @@ M.atto_recordrtc.commonmodule = {
                 // Pass FormData to PHP script using XHR.
                 cm.make_xmlhttprequest(M.atto_recordrtc.params['recordrtcroot'] + 'save.php', formData, function(progress, responseText) {
                     if (progress === 'upload-ended') {
-                        var initialURL = location.href.replace(location.href.split('/').pop(), '') + 'uploads.php/';
+                        var initialURL = M.atto_recordrtc.params['recordrtcroot'] + 'uploads.php/';
                         callback('ended', initialURL + responseText);
                     } else {
                         callback(progress);
@@ -259,7 +259,7 @@ M.atto_recordrtc.commonmodule = {
         if (!annotation) {
             cm.uploadBtn.textContent = M.util.get_string('attachrecording', 'atto_recordrtc');
         } else {
-            cm.globalScope.setLink(cm.editorScope);
+            cm.editorScope.setLink(cm.editorScope, annotation);
         }
     }
 };

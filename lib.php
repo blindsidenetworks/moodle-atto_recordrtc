@@ -98,8 +98,8 @@ function atto_recordrtc_strings_for_js() {
                                           'uploadfailed404',
                                           'uploadaborted',
                                           'annotationprompt',
-                                          'annotationaudio',
-                                          'annotationvideo'),
+                                          'annotation:audio',
+                                          'annotation:video'),
                                     'atto_recordrtc');
 }
 
