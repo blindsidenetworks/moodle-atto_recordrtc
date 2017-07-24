@@ -13,6 +13,7 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.commonmodule = {
+    editorScope: null,
     // Unitialized variables to be used by the other modules.
     player: null,
     startStopBtn: null,
@@ -168,7 +169,7 @@ M.atto_recordrtc.commonmodule = {
                 formData.append(type + '-blob', blob);
 
                 // Pass FormData to PHP script using XHR.
-                cm.make_xmlhttprequest('save.php', formData, function(progress, responseText) {
+                cm.make_xmlhttprequest(M.atto_recordrtc.params['recordrtcroot'] + 'save.php', formData, function(progress, responseText) {
                     if (progress === 'upload-ended') {
                         var initialURL = location.href.replace(location.href.split('/').pop(), '') + 'uploads.php/';
                         callback('ended', initialURL + responseText);
@@ -244,7 +245,7 @@ M.atto_recordrtc.commonmodule = {
         if (!linkText) {
             return undefined;
         } else {
-            var annotation = '<div id="recordrtc_annotation" class="text-center"><a target="_blank" href="' + recording_url + '">' + linkText + '</a></div>';
+            var annotation = '<div><a target="_blank" href="' + recording_url + '">' + linkText + '</a></div>';
             return annotation;
         }
     },
@@ -258,9 +259,7 @@ M.atto_recordrtc.commonmodule = {
         if (!annotation) {
             cm.uploadBtn.textContent = M.util.get_string('attachrecording', 'atto_recordrtc');
         } else {
-            // TODO: Convert TinyMCE to Atto
-            //tinyMCEPopup.editor.execCommand('mceInsertContent', false, annotation);
-            //tinyMCEPopup.close();
+            cm.globalScope.setLink(cm.editorScope);
         }
     }
 };
@@ -277,7 +276,8 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.audiomodule = {
-    init: function() {
+    init: function(scope) {
+        cm.editorScope = scope;
         // Assignment of global variables.
         cm.player = document.querySelector('audio#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
@@ -487,7 +487,8 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.videomodule = {
-    init: function() {
+    init: function(scope) {
+        cm.editorScope = scope;
         // Assignment of global variables.
         cm.player = document.querySelector('video#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
@@ -693,4 +694,4 @@ M.atto_recordrtc.videomodule = {
 };
 
 
-}, '@VERSION@', {"requires": []});
+}, '@VERSION@', {"requires": ["moodle-atto_recordrtc-button"]});

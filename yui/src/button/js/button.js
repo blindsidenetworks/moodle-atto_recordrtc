@@ -206,12 +206,13 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             width: 1000,
             headerContent: M.util.get_string('audiortc', 'atto_recordrtc'),
             focusAfterHide: true
-        }, true);
+        });
 
         dialogue.set('bodyContent', this._createContent('audio'));
         dialogue.show();
+        this.markUpdated();
 
-        M.atto_recordrtc.audiomodule.init();
+        M.atto_recordrtc.audiomodule.init(this);
     },
 
     /**
@@ -226,12 +227,13 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             width: 1000,
             headerContent: M.util.get_string('videortc', 'atto_recordrtc'),
             focusAfterHide: true
-        }, true);
+        });
 
         dialogue.set('bodyContent', this._createContent('video'));
         dialogue.show();
+        this.markUpdated();
 
-        M.atto_recordrtc.videomodule.init();
+        M.atto_recordrtc.videomodule.init(this);
     },
 
     /**
@@ -266,6 +268,22 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         });
 
         return bodyContent;
+    },
+
+    /**
+     * Insert the annotation link in the editor.
+     *
+     * @method setLink
+     * @public
+     */
+    setLink: function(scope) {
+        scope.getDialogue({
+            focusAfterHide: null
+        }).hide();
+
+        scope.editor.focus();
+        //scope.get('host').insertContentAtFocusPoint('abc');
+        scope.markUpdated();
     }
 }, {
     ATTRS: {

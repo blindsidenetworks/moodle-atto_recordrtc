@@ -11,7 +11,8 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.videomodule = {
-    init: function() {
+    init: function(scope) {
+        cm.editorScope = scope;
         // Assignment of global variables.
         cm.player = document.querySelector('video#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
