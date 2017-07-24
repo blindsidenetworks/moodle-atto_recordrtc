@@ -18,6 +18,7 @@ M.atto_recordrtc.commonmodule = {
     countdownSeconds: null,
     countdownTicker: null,
     recType: null,
+    stream: null,
     mediaRecorder: null,
     chunks: null,
     blobSize: null,

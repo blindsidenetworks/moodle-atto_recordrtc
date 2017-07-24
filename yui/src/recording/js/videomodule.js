@@ -55,8 +55,8 @@ M.atto_recordrtc.videomodule = {
                 var commonConfig = {
                     // When the stream is captured from the microphone/webcam.
                     onMediaCaptured: function(stream) {
-                        // Make video stream available at a higher level by making it a property of startStopBtn.
-                        cm.startStopBtn.stream = stream;
+                        // Make video stream available at a higher level by making it a property of the common module.
+                        cm.stream = stream;
 
                         if (cm.startStopBtn.mediaCapturedCallback) {
                             cm.startStopBtn.mediaCapturedCallback();
@@ -109,7 +109,7 @@ M.atto_recordrtc.videomodule = {
 
                 // When audio+video stream is successfully captured, start recording.
                 cm.startStopBtn.mediaCapturedCallback = function() {
-                    cm.start_recording(cm.recType, cm.startStopBtn.stream);
+                    cm.start_recording(cm.recType, cm.stream);
                 };
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
@@ -121,7 +121,7 @@ M.atto_recordrtc.videomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.videomodule.stop_recording(cm.startStopBtn.stream);
+                M.atto_recordrtc.videomodule.stop_recording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.textContent = M.util.get_string('recordagain', 'atto_recordrtc');
