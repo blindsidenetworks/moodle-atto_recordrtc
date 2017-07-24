@@ -33,8 +33,7 @@ M.atto_recordrtc.commonmodule = {
 
         if (!isSecureOrigin) {
             window.alert(M.util.get_string('insecurealert', 'atto_recordrtc'));
-            // TODO: Convert TinyMCE to Atto
-            //tinyMCEPopup.close();
+            cm.editorScope.closeDialogue(cm.editorScope);
         }
     },
 

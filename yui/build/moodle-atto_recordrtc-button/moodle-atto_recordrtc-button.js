@@ -273,6 +273,21 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     },
 
     /**
+     * Close the dialogue without further action.
+     *
+     * @method closeDialogue
+     * @public
+     */
+    closeDialogue: function(scope) {
+        scope.getDialogue({
+            focusAfterHide: null
+        }).hide();
+
+        scope.editor.focus();
+        scope.markUpdated();
+    },
+
+    /**
      * Insert the annotation link in the editor.
      *
      * @method setLink
