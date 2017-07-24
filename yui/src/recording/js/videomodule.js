@@ -19,7 +19,7 @@ M.atto_recordrtc.videomodule = {
         cm.recType = 'video';
         cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0]) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();

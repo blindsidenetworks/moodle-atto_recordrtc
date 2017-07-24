@@ -228,7 +228,7 @@ M.atto_recordrtc.commonmodule = {
         cm.countdownSeconds--;
 
         cm.startStopBtn.querySelector('span#seconds').textContent = cm.pad(cm.countdownSeconds % 60);
-        cm.startStopBtn.querySelector('span#minutes').textContent = cm.pad(parseInt(cm.countdownSeconds / 60));
+        cm.startStopBtn.querySelector('span#minutes').textContent = cm.pad(parseInt(cm.countdownSeconds / 60, 10));
 
         if (cm.countdownSeconds === 0) {
             cm.startStopBtn.click();
@@ -285,7 +285,7 @@ M.atto_recordrtc.audiomodule = {
         cm.recType = 'audio';
         cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0]) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
@@ -495,7 +495,7 @@ M.atto_recordrtc.videomodule = {
         cm.recType = 'video';
         cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0]) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();

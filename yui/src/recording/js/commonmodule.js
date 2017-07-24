@@ -226,7 +226,7 @@ M.atto_recordrtc.commonmodule = {
         cm.countdownSeconds--;
 
         cm.startStopBtn.querySelector('span#seconds').textContent = cm.pad(cm.countdownSeconds % 60);
-        cm.startStopBtn.querySelector('span#minutes').textContent = cm.pad(parseInt(cm.countdownSeconds / 60));
+        cm.startStopBtn.querySelector('span#minutes').textContent = cm.pad(parseInt(cm.countdownSeconds / 60, 10));
 
         if (cm.countdownSeconds === 0) {
             cm.startStopBtn.click();
