@@ -35,40 +35,40 @@
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '' +
-    '<div class="container-fluid">' +
-      '<div class="{{bs_row}} hide" style="font-weight: normal; line-height: 40px; padding: 3px 0 3px 0;">' +
+    '<div class="{{PLUGINNAME}} container-fluid">' +
+      '<div class="{{bs_row}} hide">' +
         '<div class="{{bs_col}}12">' +
-          '<div id="alert-warning" class="alert {{bs_al_warn}}" style="line-height: 10px; text-align: center;">' +
+          '<div id="alert-warning" class="alert {{bs_al_warn}}">' +
             '<strong>{{browseralert_title}}</strong> {{browseralert}}' +
           '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="{{bs_row}} hide" style="font-weight: normal; line-height: 40px; padding: 3px 0 3px 0;">' +
+      '<div class="{{bs_row}} hide">' +
         '<div class="{{bs_col}}12">' +
-          '<div id="alert-danger" class="alert {{bs_al_dang}}" style="line-height: 10px; text-align: center;"></div>' +
+          '<div id="alert-danger" class="alert {{bs_al_dang}}"></div>' +
         '</div>' +
       '</div>' +
-      '<div class="{{bs_row}} hide" style="font-weight: normal; line-height: 40px; padding: 3px 0 3px 0;">' +
+      '<div class="{{bs_row}} hide">' +
         '{{#if audio}}' +
           '<div class="{{bs_col}}1"></div>' +
           '<div class="{{bs_col}}10">' +
-            '<audio id="player" style="display: block; width: 100%;"></audio>' +
+            '<audio id="player"></audio>' +
           '</div>' +
           '<div class="{{bs_col}}1"></div>' +
           '{{else}}' +
           '<div class="{{bs_col}}12">' +
-            '<video id="player" style="display: block; width: 640px; height: 480px; margin: 0 auto;"></video>' +
+            '<video id="player"></video>' +
           '</div>' +
         '{{/if}}' +
       '</div>' +
-      '<div class="{{bs_row}}" style="font-weight: normal; line-height: 40px; padding: 3px 0 3px 0;">' +
+      '<div class="{{bs_row}}">' +
         '<div class="{{bs_col}}1"></div>' +
         '<div class="{{bs_col}}10">' +
           '<button id="start-stop" class="{{bs_ss_btn}}">{{startrecording}}</button>' +
         '</div>' +
         '<div class="{{bs_col}}1"></div>' +
       '</div>' +
-      '<div class="{{bs_row}} hide" style="font-weight: normal; line-height: 40px; padding: 3px 0 3px 0;">' +
+      '<div class="{{bs_row}} hide">' +
         '<div class="{{bs_col}}3"></div>' +
         '<div class="{{bs_col}}6">' +
           '<button id="upload" class="btn btn-primary btn-block">{{attachrecording}}</button>' +
@@ -244,6 +244,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                                               : 'btn btn-lg btn-outline-danger btn-block';
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
+            PLUGINNAME: PLUGINNAME,
             vendor_js_path: this.get('recordrtcroot') + 'vendor/js',
             audio: audio,
             bs_row: bsRow,

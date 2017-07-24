@@ -1,26 +1,28 @@
-div {
+div.atto_recordrtc {
     font-weight: normal;
     line-height: 40px;
     padding: 3px 0 3px 0;
 }
 
-.alert {
+.atto_recordrtc div {
+    font-weight: normal;
+    line-height: 40px;
+    padding: 3px 0 3px 0;
+}
+
+.atto_recordrtc .alert {
     line-height: 10px;
     text-align: center;
 }
 
-audio {
+.atto_recordrtc audio {
     display: block;
     width: 100%;
 }
 
-video {
+.atto_recordrtc video {
     display: block;
     width: 640px;
     height: 480px;
     margin: 0 auto;
-}
-
-.hide {
-    display: none !important;
 }
