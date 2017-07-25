@@ -18,7 +18,7 @@
  * Atto recordrtc library functions
  *
  * @package    atto_recordrtc
- * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -36,7 +36,11 @@ const MOODLE_ATTO_RECORDRTC_ROOT = '/lib/editor/atto/plugins/recordrtc/';
  */
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
+
     $moodleversion = get_moodle_version_major();
+    $moodle32 = '2016120500';
+    $moodle33 = '2017051500';
+
     $context = $options['context'];
     if (!$context) {
         $context = context_system::instance();
@@ -45,24 +49,27 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $allowedtypes = get_config('atto_recordrtc', 'allowedtypes');
     $audiobitrate = get_config('atto_recordrtc', 'audiobitrate');
     $videobitrate = get_config('atto_recordrtc', 'videobitrate');
-    $timelimit = get_config('atto_recordrtc', 'videobitrate');
-    $audiortcicon = 'audiortc';
-    $videortcicon = 'videortc';
-    if ($moodleversion >= '2017051500') {
+    $timelimit = get_config('atto_recordrtc', 'timelimit');
+    $audiortcicon = 'ed/audiortc';
+    $videortcicon = 'ed/videortc';
+    $maxrecsize = ini_get('upload_max_filesize');
+    if ($moodleversion >= $moodle33) {
         $audiortcicon = 'i/audiortc';
         $videortcicon = 'i/videortc';
     }
     $params = array('contextid' => $context->id,
-                    'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
-                    'recordrtcurl' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT . 'recordrtc.php',
                     'sesskey' => $sesskey,
+                    'recordrtcroot' => $CFG->wwwroot.MOODLE_ATTO_RECORDRTC_ROOT,
                     'allowedtypes' => $allowedtypes,
                     'audiobitrate' => $audiobitrate,
                     'videobitrate' => $videobitrate,
                     'timelimit' => $timelimit,
                     'audiortcicon' => $audiortcicon,
-                    'videortcicon' => $videortcicon
-                  );
+                    'videortcicon' => $videortcicon,
+                    'oldermoodle' => $moodleversion < $moodle32,
+                    'maxrecsize' => $maxrecsize
+              );
+
     return $params;
 }
 
@@ -71,9 +78,29 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
  */
 function atto_recordrtc_strings_for_js() {
     global $PAGE;
-    $PAGE->requires->strings_for_js(array('pluginname'), 'atto_recordrtc');
-    $PAGE->requires->strings_for_js(array('audiortc'), 'atto_recordrtc');
-    $PAGE->requires->strings_for_js(array('videortc'), 'atto_recordrtc');
+
+    $PAGE->requires->strings_for_js(array('audiortc',
+                                          'videortc',
+                                          'insecurealert',
+                                          'inputdevicealert_title',
+                                          'inputdevicealert',
+                                          'browseralert_title',
+                                          'browseralert',
+                                          'startrecording',
+                                          'recordagain',
+                                          'stoprecording',
+                                          'recordingfailed',
+                                          'attachrecording',
+                                          'norecordingfound',
+                                          'nearingmaxsize',
+                                          'uploadprogress',
+                                          'uploadfailed',
+                                          'uploadfailed404',
+                                          'uploadaborted',
+                                          'annotationprompt',
+                                          'annotation:audio',
+                                          'annotation:video'),
+                                    'atto_recordrtc');
 }
 
 /**
@@ -92,6 +119,8 @@ function atto_recordrtc_get_fontawesome_icon_map() {
  */
 function get_moodle_version_major() {
     global $CFG;
+
     $versionarray = explode('.', $CFG->version);
+
     return $versionarray[0];
 }

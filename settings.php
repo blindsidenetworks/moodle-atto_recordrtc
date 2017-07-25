@@ -18,7 +18,7 @@
  * Settings that allow turning on and off recordrtc features
  *
  * @package    atto_recordrtc
- * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -40,14 +40,14 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect('atto_recordrtc/allowedtypes', $name, $desc, $default, $options);
     $settings->add($setting);
 
-    // Audio bit rate.
+    // Audio bitrate.
     $name = get_string('audiobitrate', 'atto_recordrtc');
     $desc = get_string('audiobitrate_desc', 'atto_recordrtc');
     $default = '128000';
     $setting = new admin_setting_configtext('atto_recordrtc/audiobitrate', $name, $desc, $default, PARAM_RAW, 6);
     $settings->add($setting);
 
-    // Audio video rate.
+    // Video bitrate.
     $name = get_string('videobitrate', 'atto_recordrtc');
     $desc = get_string('videobitrate_desc', 'atto_recordrtc');
     $default = '2500000';

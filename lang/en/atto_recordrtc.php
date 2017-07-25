@@ -18,7 +18,7 @@
  * Strings for component 'atto_recordrtc', language 'en'.
  *
  * @package    atto_recordrtc
- * @author     Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -57,5 +57,5 @@ $string['uploadfailed'] = 'Upload failed:';
 $string['uploadfailed404'] = 'Upload failed: file too large';
 $string['uploadaborted'] = 'Upload aborted:';
 $string['annotationprompt'] = 'What should the annotation appear as?';
-$string['annotationaudio'] = 'Audio annotation';
-$string['annotationvideo'] = 'Video annotation';
+$string['annotation:audio'] = 'Audio annotation';
+$string['annotation:video'] = 'Video annotation';
