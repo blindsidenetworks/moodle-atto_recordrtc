@@ -173,7 +173,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
             PLUGINNAME: PLUGINNAME,
-            vendor_js_path: this.get('recordrtcroot') + 'vendor/js',
             audio: audio,
             bs_row: bsRow,
             bs_col: bsCol,
