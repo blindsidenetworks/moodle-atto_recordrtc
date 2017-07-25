@@ -92,6 +92,11 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         if (allowedtypes === 'both' || allowedtypes === 'video') {
             this._addButton('video', this._video);
         }
+
+        this.getDialogue({
+            width: 1000,
+            focusAfterHide: null
+        });
     },
 
     /**
@@ -119,14 +124,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _audio: function() {
-        var dialogue = this.getDialogue({
-            height: 260,
-            width: 1000,
-            headerContent: M.util.get_string('audiortc', 'atto_recordrtc'),
-            focusAfterHide: true
-        });
+        var dialogue = this.getDialogue();
 
+        dialogue.set('height', 260);
+        dialogue.set('headerContent', M.util.get_string('audiortc', 'atto_recordrtc'));
         dialogue.set('bodyContent', this._createContent('audio'));
+
         dialogue.show();
         this.markUpdated();
 
@@ -140,14 +143,12 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _video: function() {
-        var dialogue = this.getDialogue({
-            height: 700,
-            width: 1000,
-            headerContent: M.util.get_string('videortc', 'atto_recordrtc'),
-            focusAfterHide: true
-        });
+        var dialogue = this.getDialogue();
 
+        dialogue.set('height', 700);
+        dialogue.set('headerContent', M.util.get_string('videortc', 'atto_recordrtc'));
         dialogue.set('bodyContent', this._createContent('video'));
+
         dialogue.show();
         this.markUpdated();
 
@@ -194,9 +195,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @param {Object} scope The "this" context of the editor.
      */
     closeDialogue: function(scope) {
-        scope.getDialogue({
-            focusAfterHide: null
-        }).hide();
+        scope.getDialogue().hide();
 
         scope.editor.focus();
         scope.markUpdated();
@@ -210,9 +209,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @param {String} annotation The HTML link to the recording.
      */
     setLink: function(scope, annotation) {
-        scope.getDialogue({
-            focusAfterHide: null
-        }).hide();
+        scope.getDialogue().hide();
 
         scope.editor.focus();
         scope.get('host').insertContentAtFocusPoint(annotation);
