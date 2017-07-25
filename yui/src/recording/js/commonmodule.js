@@ -8,6 +8,7 @@
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
+// Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
 // Require Bowser and adapter.js libraries.

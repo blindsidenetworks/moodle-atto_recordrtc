@@ -10,6 +10,7 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
+// Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
 // Require Bowser and adapter.js libraries.
@@ -278,12 +279,13 @@ M.atto_recordrtc.commonmodule = {
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
+// Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.audiomodule = {
     init: function(scope) {
         // Assignment of global variables.
-        cm.editorScope = scope;
+        cm.editorScope = scope; // Allows access to the editor's "this" context.
         cm.player = document.querySelector('audio#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
@@ -489,12 +491,13 @@ M.atto_recordrtc.audiomodule = {
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
+// Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
 M.atto_recordrtc.videomodule = {
     init: function(scope) {
         // Assignment of global variables.
-        cm.editorScope = scope;
+        cm.editorScope = scope; // Allows access to the editor's "this" context.
         cm.player = document.querySelector('video#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');

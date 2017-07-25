@@ -79,18 +79,17 @@ var PLUGINNAME = 'atto_recordrtc',
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**
-     * The current language en by default.
+     * The current language by default.
      */
     _lang: 'en',
 
     initializer: function() {
+        // Add audio and/or video buttons depending on the settings.
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
-            // Add the audio button.
             this._addButton('audio', this._audio);
         }
         if (allowedtypes === 'both' || allowedtypes === 'video') {
-            // Add the video button.
             this._addButton('video', this._video);
         }
     },
@@ -193,7 +192,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * Close the dialogue without further action.
      *
      * @method closeDialogue
-     * @public
+     * @param {Object} scope The "this" context of the editor.
      */
     closeDialogue: function(scope) {
         scope.getDialogue({
@@ -208,7 +207,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * Insert the annotation link in the editor.
      *
      * @method setLink
-     * @public
+     * @param {Object} scope The "this" context of the editor.
+     * @param {String} annotation The HTML link to the recording.
      */
     setLink: function(scope, annotation) {
         scope.getDialogue({
