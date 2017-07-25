@@ -35,6 +35,8 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
+/** global: M */
+
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '\
     <div class="{{PLUGINNAME}} container-fluid">\
@@ -108,7 +110,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
             // Stop the media recorder.
             if (M.atto_recordrtc.commonmodule.mediaRecorder && M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
-                console.log('MediaRecorder stopped:', M.atto_recordrtc.commonmodule.mediaRecorder);
                 M.atto_recordrtc.commonmodule.mediaRecorder.stop();
             }
 
@@ -116,7 +117,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             if (M.atto_recordrtc.commonmodule.stream) {
                 M.atto_recordrtc.commonmodule.stream.getTracks().forEach(function(track) {
                     if (track.readyState !== 'ended') {
-                        console.log('MediaTrack stopped:', track);
                         track.stop();
                     }
                 });
