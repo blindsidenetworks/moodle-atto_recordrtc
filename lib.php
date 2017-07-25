@@ -59,7 +59,7 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     }
     $params = array('contextid' => $context->id,
                     'sesskey' => $sesskey,
-                    'recordrtcroot' => $CFG->wwwroot . MOODLE_ATTO_RECORDRTC_ROOT,
+                    'recordrtcroot' => $CFG->wwwroot.MOODLE_ATTO_RECORDRTC_ROOT,
                     'allowedtypes' => $allowedtypes,
                     'audiobitrate' => $audiobitrate,
                     'videobitrate' => $videobitrate,
