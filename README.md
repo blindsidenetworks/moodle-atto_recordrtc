@@ -48,18 +48,17 @@ The plugin can be configured during the initial install, and later by navigating
 ### Common problems
 
 * _For developers_: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:  
-
-Old code:
-```
-!function (root, name, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (typeof define == 'function' && define.amd) define(name, definition)
-  else root[name] = definition()
-}(this, 'bowser', function () {
-```
-New code:
-```
-define([], function() {
-```
+  Old code:
+  ```
+  !function (root, name, definition) {
+    if (typeof module != 'undefined' && module.exports) module.exports = definition()
+    else if (typeof define == 'function' && define.amd) define(name, definition)
+    else root[name] = definition()
+  }(this, 'bowser', function () {
+  ```
+  New code:
+  ```
+  define([], function() {
+  ```
 * The default maximum size of uploads in PHP is very small, it is recommended to set the `upload_max_filesize` setting to `40M` and the `post_max_size` setting to `50M` for a time limit of 2:00 to avoid getting an alert while recording
 * The filesize of recorded video for Firefox will likely be twice that of other browsers, even with the same settings; this is expected as it uses a different writing library for recording video. The audio filesize should be similar across all browsers
