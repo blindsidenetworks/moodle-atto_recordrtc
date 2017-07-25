@@ -47,9 +47,9 @@ The plugin can be configured during the initial install, and later by navigating
 
 ### Common problems
 
-* _For developers_: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:  
+* **For developers**: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:  
 
-  Old code:
+  *Old code*:
   ```
   !function (root, name, definition) {
     if (typeof module != 'undefined' && module.exports) module.exports = definition()
@@ -57,7 +57,7 @@ The plugin can be configured during the initial install, and later by navigating
     else root[name] = definition()
   }(this, 'bowser', function () {
   ```
-  New code:
+  *New code*:
   ```
   define([], function() {
   ```
