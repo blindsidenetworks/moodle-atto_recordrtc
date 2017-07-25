@@ -1,9 +1,4 @@
-.atto_recordrtc {
-    font-weight: normal;
-    line-height: 40px;
-    padding: 3px 0 3px 0;
-}
-
+.atto_recordrtc,
 .atto_recordrtc div {
     font-weight: normal;
     line-height: 40px;
@@ -11,7 +6,7 @@
 }
 
 .atto_recordrtc .alert {
-    line-height: 10px;
+    line-height: 40px;
     text-align: center;
 }
 
