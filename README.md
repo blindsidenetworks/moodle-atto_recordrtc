@@ -32,6 +32,10 @@ Soon, there will also be the possibility to install easily via the Moodle Plugin
 
 To use the plugin, just click on one of the recording buttons (either the microphone or the video camera), and a popup will appear with a big "Start Recording" button. When clicked, the browser will probably ask for permission to use the webcam/microphone.
 
+![Recording buttons](https://user-images.githubusercontent.com/2160185/28581382-0cfd2078-7130-11e7-8181-0d545287a154.png)
+*Or on older versions of Moodle:*
+![Recording buttons](https://user-images.githubusercontent.com/2160185/28581438-31db5748-7130-11e7-96a4-75edf1677601.png)
+
 After the recording starts, a timer will begin counting down, indicating how much time is left to record; when the timer hits 0, the recording will automatically stop (this will also happen if approaching the maximum upload size determined in the server settings).
 
 When the recording is finished, the user can play it back to see/hear if it is what they want. To embed the file, the user must click "Attach Recording as Annotation". A dialog box will pop up asking the user what the link should appear as in the text editor. After that, the file gets embedded right where the cursor was in the text.
