@@ -95,59 +95,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     _content: null,
 
     initializer: function() {
-        //require(['bowser'], function(bowser) {
-        //    console.log('INIT');
-        //    console.log(bowser);
-        //    console.log(bowser.bowser);
-        //    console.log(bowser.firefox);
-        //    console.log(bowser.bowser.firefox);
-
-        //    return {
-        //        init: function(data) {
-        //            console.log(bowser);
-        //            console.log(bowser.bowser);
-        //            console.log(bowser.firefox);
-        //            console.log(bowser.bowser.firefox);
-        //        }
-        //    };
-        //});
-
-        //jQuery.cachedScript = function(url, options) {
-        //    options = jQuery.extend(options || {}, {
-        //        dataType: 'script',
-        //        cache: true,
-        //        url: url
-        //    });
-
-        //    return jQuery.ajax(options);
-        //};
-
-        //jQuery.cachedScript('http://localhost/moodle/lib/editor/atto/plugins/recordrtc/vendor/js/bowser.js')
-        //    .done(function(script, textStatus) {
-        //        console.log(textStatus);
-        //        console.log(script);
-        //    });
-
-        //var script =  document.createElement('script');
-        //script.type = 'text/javascript';
-        //script.onload = function() {
-        //    console.log(bowser);
-        //    console.log(bowser.firefox);
-        //};
-        //script.src = 'http://localhost/moodle/lib/editor/atto/plugins/recordrtc/vendor/js/bowser.js';
-        //document.head.appendChild(script);
-
-        //jQuery.getScript('http://localhost/moodle/lib/editor/atto/plugins/recordrtc/vendor/js/bowser.js')
-        //    .done(function() {
-        //        console.log(bowser.firefox);
-        //    });
-        //jQuery.ajax({
-        //    url: '//localhost/moodle/lib/editor/atto/plugins/recordrtc/vendor/js/bowser.js',
-        //    success: function() {
-        //        console.log(bowser);
-        //    }
-        //});
-
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
             // Add the audio button.
