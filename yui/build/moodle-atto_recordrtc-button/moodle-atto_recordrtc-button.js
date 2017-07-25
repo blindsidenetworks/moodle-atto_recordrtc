@@ -85,15 +85,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      */
     _lang: 'en',
 
-    /**
-     * A reference to the dialogue content.
-     *
-     * @property _content
-     * @type Node
-     * @private
-     */
-    _content: null,
-
     initializer: function() {
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
