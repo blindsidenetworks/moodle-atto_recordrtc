@@ -12,12 +12,11 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 
 var cm = M.atto_recordrtc.commonmodule;
 
+// Require Bowser and adapter.js libraries.
 require(['atto_recordrtc/adapter'], function(adapter) {
-    console.log('ADAPTER LOADED:', adapter);
     window.adapter = adapter;
 });
 require(['atto_recordrtc/bowser'], function(bowser) {
-    console.log('BOWSER LOADED:', bowser);
     window.bowser = bowser;
 });
 
