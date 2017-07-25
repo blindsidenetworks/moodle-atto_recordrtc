@@ -146,25 +146,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         //    }
         //});
 
-        // Make necessary params globally accessible.
-        M.atto_recordrtc = M.atto_recordrtc || {};
-        M.atto_recordrtc.params = {};
-
-        var requiredParams = [
-                'contextid',
-                'sesskey',
-                'recordrtcroot',
-                'audiobitrate',
-                'videobitrate',
-                'timelimit',
-                'oldermoodle',
-                'maxrecsize'
-            ];
-
-        for (var n in requiredParams) {
-            M.atto_recordrtc.params[requiredParams[n]] = this.get(requiredParams[n]);
-        }
-
         var allowedtypes = this.get('allowedtypes');
         if (allowedtypes === 'both' || allowedtypes === 'audio') {
             // Add the audio button.

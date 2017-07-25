@@ -93,32 +93,32 @@ M.atto_recordrtc.commonmodule = {
         if (type === 'audio') {
             if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
                 options = {
-                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
+                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     mimeType: 'audio/webm;codecs=opus'
                 };
             } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
                 options = {
-                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
+                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     mimeType: 'audio/ogg;codecs=opus'
                 };
             }
         } else {
             if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) {
                 options = {
-                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
-                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
+                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
+                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
                     mimeType: 'video/webm;codecs=vp9,opus'
                 };
             } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264,opus')) {
                 options = {
-                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
-                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
+                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
+                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
                     mimeType: 'video/webm;codecs=h264,opus'
                 };
             } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
                 options = {
-                    audioBitsPerSecond: M.atto_recordrtc.params['audiobitrate'],
-                    videoBitsPerSecond: M.atto_recordrtc.params['videobitrate'],
+                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
+                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
                     mimeType: 'video/webm;codecs=vp8,opus'
                 };
             }
@@ -136,7 +136,7 @@ M.atto_recordrtc.commonmodule = {
         cm.player.muted = true;
 
         // Set recording timer to the time specified in the settings.
-        cm.countdownSeconds = M.atto_recordrtc.params['timelimit'];
+        cm.countdownSeconds = cm.editorScope.get('timelimit');
         cm.countdownSeconds++;
         cm.startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
         cm.set_time();
@@ -169,15 +169,15 @@ M.atto_recordrtc.commonmodule = {
 
                 // Create FormData to send to PHP upload/save script.
                 var formData = new FormData();
-                formData.append('contextid', M.atto_recordrtc.params['contextid']);
-                formData.append('sesskey', M.atto_recordrtc.params['sesskey']);
+                formData.append('contextid', cm.editorScope.get('contextid'));
+                formData.append('sesskey', cm.editorScope.get('sesskey'));
                 formData.append(type + '-filename', fileName);
                 formData.append(type + '-blob', blob);
 
                 // Pass FormData to PHP script using XHR.
-                cm.make_xmlhttprequest(M.atto_recordrtc.params['recordrtcroot'] + 'save.php', formData, function(progress, responseText) {
+                cm.make_xmlhttprequest(cm.editorScope.get('recordrtcroot') + 'save.php', formData, function(progress, responseText) {
                     if (progress === 'upload-ended') {
-                        var initialURL = M.atto_recordrtc.params['recordrtcroot'] + 'uploads.php/';
+                        var initialURL = cm.editorScope.get('recordrtcroot') + 'uploads.php/';
                         callback('ended', initialURL + responseText);
                     } else {
                         callback(progress);
@@ -289,9 +289,9 @@ M.atto_recordrtc.audiomodule = {
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
         cm.recType = 'audio';
-        cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
+        cm.olderMoodle = scope.get('oldermoodle');
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
@@ -500,9 +500,9 @@ M.atto_recordrtc.videomodule = {
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
         cm.recType = 'video';
-        cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
+        cm.olderMoodle = scope.get('oldermoodle');
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();

@@ -18,9 +18,9 @@ M.atto_recordrtc.audiomodule = {
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
         cm.recType = 'audio';
-        cm.olderMoodle = M.atto_recordrtc.params['oldermoodle'];
+        cm.olderMoodle = scope.get('oldermoodle');
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(M.atto_recordrtc.params['maxrecsize'].match(/\d+/)[0], 10) * Math.pow(1024, 2);
+        cm.maxUploadSize = parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
