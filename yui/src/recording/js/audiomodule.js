@@ -25,7 +25,7 @@ M.atto_recordrtc.audiomodule = {
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.
-        //cm.check_browser();
+        cm.check_browser();
 
         // Run when user clicks on "record" button.
         cm.startStopBtn.onclick = function() {
@@ -75,7 +75,7 @@ M.atto_recordrtc.audiomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError')) {// && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...

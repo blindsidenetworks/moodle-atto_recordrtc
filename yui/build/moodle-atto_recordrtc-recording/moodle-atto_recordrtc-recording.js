@@ -39,20 +39,25 @@ M.atto_recordrtc.commonmodule = {
         }
     },
 
-    /*
     // Display "consider switching browsers" message if not using:
     // - Firefox 29+;
     // - Chrome 49+;
     // - Opera 36+.
     check_browser: function() {
-        if (!((bowser.firefox && bowser.version >= 29) ||
-              (bowser.chrome && bowser.version >= 49) ||
-              (bowser.opera && bowser.version >= 36))) {
-            var alert = document.querySelector('div[id=alert-warning]');
-            alert.parentElement.parentElement.classList.remove('hide');
-        }
+        require(['atto_recordrtc/bowser'], function(bowser) {
+            console.log('LOADED:', bowser);
+
+            if (!((bowser.firefox && bowser.version >= 29) ||
+                  (bowser.chrome && bowser.version >= 49) ||
+                  (bowser.opera && bowser.version >= 36))) {
+                var alert = document.querySelector('div#alert-warning');
+                alert.parentElement.parentElement.classList.remove('hide');
+            }
+
+            // Make bowser available globally.
+            window.bowser = bowser;
+        });
     },
-    */
 
     // Capture webcam/microphone stream.
     capture_user_media: function(mediaConstraints, successCallback, errorCallback) {
@@ -289,7 +294,7 @@ M.atto_recordrtc.audiomodule = {
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.
-        //cm.check_browser();
+        cm.check_browser();
 
         // Run when user clicks on "record" button.
         cm.startStopBtn.onclick = function() {
@@ -339,7 +344,7 @@ M.atto_recordrtc.audiomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError')) {// && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...
@@ -500,7 +505,7 @@ M.atto_recordrtc.videomodule = {
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.
-        //cm.check_browser();
+        cm.check_browser();
 
         // Run when user clicks on "record" button.
         cm.startStopBtn.onclick = function() {
@@ -549,7 +554,7 @@ M.atto_recordrtc.videomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError')) {// && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...
