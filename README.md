@@ -38,7 +38,13 @@ To use the plugin, just click on one of the recording buttons (either the microp
 
 After the recording starts, a timer will begin counting down, indicating how much time is left to record; when the timer hits 0, the recording will automatically stop (this will also happen if approaching the maximum upload size determined in the server settings).
 
+![Recording started](https://user-images.githubusercontent.com/2160185/28581749-1ab016d4-7131-11e7-919f-d2756da5aec3.png)
+
 When the recording is finished, the user can play it back to see/hear if it is what they want. To embed the file, the user must click "Attach Recording as Annotation". A dialog box will pop up asking the user what the link should appear as in the text editor. After that, the file gets embedded right where the cursor was in the text.
+
+![Name the annotation](https://user-images.githubusercontent.com/2160185/28582017-fe3a64ea-7131-11e7-80ce-3b68bce23cb5.png)
+
+![Annotation in editor](https://user-images.githubusercontent.com/2160185/28582039-0d9a45a4-7132-11e7-8d45-8400a0ef2dd8.png)
 
 ### Configuration
 
