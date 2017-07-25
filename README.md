@@ -1,5 +1,8 @@
 # RecordRTC Atto plugin for Moodle
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/badges/build.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/build-status/master)
+
 ### Features
 
 Add audio and video annotations to text, anywhere an Atto text editor is present. This plugin adds buttons for recording audio or video (with audio) to the editor's toolbar. Using WebRTC technologies, all recording is done instantly in the browser, using nothing but HTML5 and JavaScript (no Flash!). After recording, users can embed the annotation directly into the text they are currently editing. The recording will appear as an audio or video player in the published writing.
