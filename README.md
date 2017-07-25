@@ -47,7 +47,7 @@ The plugin can be configured during the initial install, and later by navigating
 
 ### Common problems
 
-* _For developers_: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:  
+* _For developers_: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:
   Old code:
   ```
   !function (root, name, definition) {
