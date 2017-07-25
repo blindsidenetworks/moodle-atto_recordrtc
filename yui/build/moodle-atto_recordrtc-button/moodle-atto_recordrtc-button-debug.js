@@ -95,9 +95,32 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             this._addButton('video', this._video);
         }
 
-        this.getDialogue({
+        // Initialize the dialogue box.
+        var dialogue = this.getDialogue({
             width: 1000,
             focusAfterHide: null
+        });
+
+        // If dialogue is closed during recording, do the following.
+        dialogue.on('visibleChange', function() {
+            // Clear the countdown timer.
+            clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
+
+            // Stop the media recorder.
+            if (M.atto_recordrtc.commonmodule.mediaRecorder && M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
+                console.log('MediaRecorder stopped:', M.atto_recordrtc.commonmodule.mediaRecorder);
+                M.atto_recordrtc.commonmodule.mediaRecorder.stop();
+            }
+
+            // Stop the getUserMedia audio/video tracks.
+            if (M.atto_recordrtc.commonmodule.stream) {
+                M.atto_recordrtc.commonmodule.stream.getTracks().forEach(function(track) {
+                    if (track.readyState !== 'ended') {
+                        console.log('MediaTrack stopped:', track);
+                        track.stop();
+                    }
+                });
+            }
         });
     },
 
@@ -133,7 +156,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         dialogue.set('bodyContent', this._createContent('audio'));
 
         dialogue.show();
-        this.markUpdated();
 
         M.atto_recordrtc.audiomodule.init(this);
     },
@@ -152,7 +174,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         dialogue.set('bodyContent', this._createContent('video'));
 
         dialogue.show();
-        this.markUpdated();
 
         M.atto_recordrtc.videomodule.init(this);
     },
@@ -200,7 +221,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         scope.getDialogue().hide();
 
         scope.editor.focus();
-        scope.markUpdated();
     },
 
     /**
