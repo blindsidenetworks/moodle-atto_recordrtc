@@ -71,6 +71,7 @@ The plugin can be configured during the initial install, and later by navigating
   ```
   define([], function() {
   ```
+  
   Or so (for Adapter.js):  
 
   *Old code*
