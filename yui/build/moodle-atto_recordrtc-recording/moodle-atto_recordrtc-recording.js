@@ -6,7 +6,13 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -53,9 +59,9 @@ M.atto_recordrtc.commonmodule = {
     // - Chrome 49+;
     // - Opera 36+.
     check_browser: function() {
-        if (!((bowser.firefox && bowser.version >= 29) ||
-              (bowser.chrome && bowser.version >= 49) ||
-              (bowser.opera && bowser.version >= 36))) {
+        if (!((window.bowser.firefox && window.bowser.version >= 29) ||
+              (window.bowser.chrome && window.bowser.version >= 49) ||
+              (window.bowser.opera && window.bowser.version >= 36))) {
             var alert = document.querySelector('div#alert-warning');
             alert.parentElement.parentElement.classList.remove('hide');
         }
@@ -275,7 +281,13 @@ M.atto_recordrtc.commonmodule = {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -347,7 +359,7 @@ M.atto_recordrtc.audiomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && window.bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...
@@ -364,7 +376,8 @@ M.atto_recordrtc.audiomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ' + M.util.get_string('inputdevicealert', 'atto_recordrtc');
+                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ';
+                            alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }
@@ -487,7 +500,13 @@ M.atto_recordrtc.audiomodule = {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -558,7 +577,7 @@ M.atto_recordrtc.videomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && window.bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...
@@ -575,7 +594,8 @@ M.atto_recordrtc.videomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert', 'atto_recordrtc') + ' ' + M.util.get_string('inputdevicealert', 'atto_recordrtc');
+                            alert.textContent = M.util.get_string('inputdevicealert', 'atto_recordrtc') + ' ';
+                            alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }
