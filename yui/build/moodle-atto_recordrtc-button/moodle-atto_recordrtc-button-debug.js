@@ -35,7 +35,9 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
-/** global: M */
+/*jshint multistr: true */
+/*jshint onevar: false */
+/*global M */
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '\

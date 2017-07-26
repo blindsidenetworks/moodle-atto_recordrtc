@@ -33,7 +33,9 @@
  * @extends M.editor_atto.EditorPlugin
  */
 
-/** global: M */
+/*jshint multistr: true */
+/*jshint onevar: false */
+/*global M */
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '\

@@ -4,7 +4,13 @@
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -51,9 +57,9 @@ M.atto_recordrtc.commonmodule = {
     // - Chrome 49+;
     // - Opera 36+.
     check_browser: function() {
-        if (!((bowser.firefox && bowser.version >= 29) ||
-              (bowser.chrome && bowser.version >= 49) ||
-              (bowser.opera && bowser.version >= 36))) {
+        if (!((window.bowser.firefox && window.bowser.version >= 29) ||
+              (window.bowser.chrome && window.bowser.version >= 49) ||
+              (window.bowser.opera && window.bowser.version >= 36))) {
             var alert = document.querySelector('div#alert-warning');
             alert.parentElement.parentElement.classList.remove('hide');
         }
