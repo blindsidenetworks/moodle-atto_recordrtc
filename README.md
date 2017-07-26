@@ -1,7 +1,7 @@
 # RecordRTC Atto plugin for Moodle
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/badges/build.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/blindsidenetworks/moodle-atto_recordrtc/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/blindsidenetworks/moodle-atto_recordrtc/badges/build.png?b=master)](https://scrutinizer-ci.com/g/jacobprudhomme/moodle-atto_recordrtc/build-status/master)
 
 ### Features
 
@@ -57,7 +57,7 @@ The plugin can be configured during the initial install, and later by navigating
 
 ### Common problems
 
-* **For developers**: If trying to update Bowser dependency for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so:  
+* **For developers**: If trying to update Bowser or Adapter.js dependencies for the project, it is necessary to replace the named definition at the top of the file with an anonymous one, like so (for Bowser):  
 
   *Old code*:
   ```
@@ -68,6 +68,17 @@ The plugin can be configured during the initial install, and later by navigating
   }(this, 'bowser', function () {
   ```
   *New code*:
+  ```
+  define([], function() {
+  ```
+  
+  Or so (for Adapter.js):  
+
+  *Old code*
+  ```
+  (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.adapter = f()}})(function(){
+  ```
+  *New code*
   ```
   define([], function() {
   ```
