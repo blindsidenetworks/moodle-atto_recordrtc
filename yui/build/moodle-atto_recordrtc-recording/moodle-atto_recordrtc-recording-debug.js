@@ -6,7 +6,13 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -61,7 +67,7 @@ M.atto_recordrtc.commonmodule = {
             Y.use('moodle-core-notification-alert', function() {
                 new M.core.alert({message: document.querySelector('div#alert-warning')});
             });
-            var alert = document.querySelector('div[id=alert-warning]');
+            var alert = document.querySelector('div#alert-warning');
             alert.parentElement.parentElement.classList.remove('hide');
         }
     },
@@ -144,7 +150,8 @@ M.atto_recordrtc.commonmodule = {
         // Set recording timer to the time specified in the settings.
         cm.countdownSeconds = cm.editorScope.get('timelimit');
         cm.countdownSeconds++;
-        cm.startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc') + ' (<span id="minutes"></span>:<span id="seconds"></span>)';
+        cm.startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc');
+        cm.startStopBtn.innerHTML += ' (<span id="minutes"></span>:<span id="seconds"></span>)';
         cm.set_time();
         cm.countdownTicker = setInterval(cm.set_time, 1000);
 
@@ -181,14 +188,15 @@ M.atto_recordrtc.commonmodule = {
                 formData.append(type + '-blob', blob);
 
                 // Pass FormData to PHP script using XHR.
-                cm.make_xmlhttprequest(cm.editorScope.get('recordrtcroot') + 'save.php', formData, function(progress, responseText) {
-                    if (progress === 'upload-ended') {
-                        var initialURL = cm.editorScope.get('recordrtcroot') + 'uploads.php/';
-                        callback('ended', initialURL + responseText);
-                    } else {
-                        callback(progress);
+                cm.make_xmlhttprequest(cm.editorScope.get('recordrtcroot') + 'save.php', formData,
+                    function(progress, responseText) {
+                        if (progress === 'upload-ended') {
+                            var initialURL = cm.editorScope.get('recordrtcroot') + 'uploads.php/';
+                            return callback('ended', initialURL + responseText);
+                        }
+                        return callback(progress);
                     }
-                });
+                );
             }
         };
 
@@ -281,7 +289,13 @@ M.atto_recordrtc.commonmodule = {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -367,7 +381,8 @@ M.atto_recordrtc.audiomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ' + M.util.get_string('inputdevicealert', 'atto_recordrtc');
+                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ';
+                            alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }
@@ -490,7 +505,13 @@ M.atto_recordrtc.audiomodule = {
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -575,7 +596,8 @@ M.atto_recordrtc.videomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert', 'atto_recordrtc') + ' ' + M.util.get_string('inputdevicealert', 'atto_recordrtc');
+                            alert.textContent = M.util.get_string('inputdevicealert', 'atto_recordrtc') + ' ';
+                            alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }

@@ -4,7 +4,13 @@
 // @copyright  2016 to present, Blindside Networks Inc.
 // @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 
-/** global: M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
+/*global M */
+/*global MediaRecorder */
+/*global URL */
+/*global InstallTrigger */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -90,7 +96,8 @@ M.atto_recordrtc.audiomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ' + M.util.get_string('inputdevicealert', 'atto_recordrtc');
+                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ';
+                            alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }
