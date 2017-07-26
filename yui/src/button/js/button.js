@@ -36,48 +36,48 @@
 /** global: M */
 
 var PLUGINNAME = 'atto_recordrtc',
-    TEMPLATE = '\
-    <div class="{{PLUGINNAME}} container-fluid">\
-      <div class="{{bs_row}} hide">\
-        <div class="{{bs_col}}12">\
-          <div id="alert-warning" class="alert {{bs_al_warn}}">\
-            <strong>{{browseralert_title}}</strong> {{browseralert}}\
-          </div>\
-        </div>\
-      </div>\
-      <div class="{{bs_row}} hide">\
-        <div class="{{bs_col}}12">\
-          <div id="alert-danger" class="alert {{bs_al_dang}}"></div>\
-        </div>\
-      </div>\
-      <div class="{{bs_row}} hide">\
-        {{#if audio}}\
-          <div class="{{bs_col}}1"></div>\
-          <div class="{{bs_col}}10">\
-            <audio id="player"></audio>\
-          </div>\
-          <div class="{{bs_col}}1"></div>\
-          {{else}}\
-          <div class="{{bs_col}}12">\
-            <video id="player"></video>\
-          </div>\
-        {{/if}}\
-      </div>\
-      <div class="{{bs_row}}">\
-        <div class="{{bs_col}}1"></div>\
-        <div class="{{bs_col}}10">\
-          <button id="start-stop" class="{{bs_ss_btn}}">{{startrecording}}</button>\
-        </div>\
-        <div class="{{bs_col}}1"></div>\
-      </div>\
-      <div class="{{bs_row}} hide">\
-        <div class="{{bs_col}}3"></div>\
-        <div class="{{bs_col}}6">\
-          <button id="upload" class="btn btn-primary btn-block">{{attachrecording}}</button>\
-        </div>\
-        <div class="{{bs_col}}3"></div>\
-      </div>\
-    </div>';
+    TEMPLATE = '' +
+    '<div class="{{PLUGINNAME}} container-fluid">' + "\n" +
+    '  <div class="{{bs_row}} hide">' + "\n" +
+    '    <div class="{{bs_col}}12">' + "\n" +
+    '      <div id="alert-warning" class="alert {{bs_al_warn}}">' + "\n" +
+    '        <strong>{{browseralert_title}}</strong> {{browseralert}}' + "\n" +
+    '      </div>' + "\n" +
+    '    </div>' + "\n" +
+    '  </div>' + "\n" +
+    '  <div class="{{bs_row}} hide">' + "\n" +
+    '    <div class="{{bs_col}}12">' + "\n" +
+    '      <div id="alert-danger" class="alert {{bs_al_dang}}"></div>' + "\n" +
+    '    </div>' + "\n" +
+    '  </div>' + "\n" +
+    '  <div class="{{bs_row}} hide">' + "\n" +
+    '    {{#if audio}}' + "\n" +
+    '      <div class="{{bs_col}}1"></div>' + "\n" +
+    '      <div class="{{bs_col}}10">' + "\n" +
+    '        <audio id="player"></audio>' + "\n" +
+    '      </div>' + "\n" +
+    '      <div class="{{bs_col}}1"></div>' + "\n" +
+    '      {{else}}' + "\n" +
+    '      <div class="{{bs_col}}12">' + "\n" +
+    '        <video id="player"></video>' + "\n" +
+    '      </div>' + "\n" +
+    '    {{/if}}' + "\n" +
+    '  </div>' + "\n" +
+    '  <div class="{{bs_row}}">' + "\n" +
+    '    <div class="{{bs_col}}1"></div>' + "\n" +
+    '    <div class="{{bs_col}}10">' + "\n" +
+    '      <button id="start-stop" class="{{bs_ss_btn}}">{{startrecording}}</button>' + "\n" +
+    '    </div>' + "\n" +
+    '    <div class="{{bs_col}}1"></div>' + "\n" +
+    '  </div>' + "\n" +
+    '  <div class="{{bs_row}} hide">' + "\n" +
+    '    <div class="{{bs_col}}3"></div>' + "\n" +
+    '    <div class="{{bs_col}}6">' + "\n" +
+    '      <button id="upload" class="btn btn-primary btn-block">{{attachrecording}}</button>' + "\n" +
+    '    </div>' + "\n" +
+    '    <div class="{{bs_col}}3"></div>' + "\n" +
+    '  </div>' + "\n" +
+    '</div>';
 
 Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**

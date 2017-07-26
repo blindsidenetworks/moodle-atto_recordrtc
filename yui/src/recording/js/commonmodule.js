@@ -41,7 +41,9 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin) {
-            window.alert(M.util.get_string('insecurealert', 'atto_recordrtc'));
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({message: M.util.get_string('insecurealert', 'atto_recordrtc')});
+            });
             cm.editorScope.closeDialogue(cm.editorScope);
         }
     },
@@ -51,10 +53,13 @@ M.atto_recordrtc.commonmodule = {
     // - Chrome 49+;
     // - Opera 36+.
     check_browser: function() {
-        if (!((bowser.firefox && bowser.version >= 29) ||
-              (bowser.chrome && bowser.version >= 49) ||
-              (bowser.opera && bowser.version >= 36))) {
-            var alert = document.querySelector('div#alert-warning');
+        if (!((window.bowser.firefox && window.bowser.version >= 29) ||
+              (window.bowser.chrome && window.bowser.version >= 49) ||
+              (window.bowser.opera && window.bowser.version >= 36))) {
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({message: document.querySelector('div#alert-warning')});
+            });
+            var alert = document.querySelector('div[id=alert-warning]');
             alert.parentElement.parentElement.classList.remove('hide');
         }
     },
@@ -74,9 +79,10 @@ M.atto_recordrtc.commonmodule = {
         // An extra condition exists to avoid displaying alert twice.
         if ((cm.blobSize >= cm.maxUploadSize) && (!localStorage.getItem('alerted'))) {
             localStorage.setItem('alerted', 'true');
-
             cm.startStopBtn.click();
-            window.alert(M.util.get_string('nearingmaxsize', 'atto_recordrtc'));
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')});
+            });
         } else if ((cm.blobSize >= cm.maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
             localStorage.removeItem('alerted');
         } else {

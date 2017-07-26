@@ -8,9 +8,6 @@
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
-// Shorten access to M.atto_recordrtc.commonmodule namespace.
-var cm = M.atto_recordrtc.commonmodule;
-
 M.atto_recordrtc.videomodule = {
     init: function(scope) {
         // Assignment of global variables.
@@ -75,7 +72,7 @@ M.atto_recordrtc.videomodule = {
                         var btnLabel = null;
 
                         // If Firefox and Permission Denied error.
-                        if ((error.name === 'PermissionDeniedError') && bowser.firefox) {
+                        if ((error.name === 'PermissionDeniedError') && window.bowser.firefox) {
                             InstallTrigger.install({
                                 'Foo': {
                                     // Link: https://addons.mozilla.org/firefox/downloads/latest/655146/addon-655146...
