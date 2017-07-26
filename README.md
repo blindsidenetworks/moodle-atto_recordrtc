@@ -70,7 +70,7 @@ The plugin can be configured during the initial install, and later by navigating
   *New code*:
   ```
   define([], function() {
-  ```  
+  ```
   
   Or so (for Adapter.js):  
 
