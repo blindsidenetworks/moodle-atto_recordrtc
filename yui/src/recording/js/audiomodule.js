@@ -189,7 +189,9 @@ M.atto_recordrtc.audiomodule = {
         cm.uploadBtn.onclick = function() {
             // Trigger error if no recording has been made.
             if (!cm.player.src || cm.chunks === []) {
-                return window.alert(M.util.get_string('norecordingfound', 'atto_recordrtc'));
+                Y.use('moodle-core-notification-alert', function() {
+                    new M.core.alert({message: M.util.get_string('norecordingfound', 'atto_recordrtc')});
+                });
             } else {
                 cm.uploadBtn.disabled = true;
 
@@ -211,8 +213,6 @@ M.atto_recordrtc.audiomodule = {
                         cm.uploadBtn.textContent = progress;
                     }
                 });
-
-                return undefined;
             }
         };
     }

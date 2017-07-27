@@ -50,7 +50,6 @@ M.atto_recordrtc.commonmodule = {
             Y.use('moodle-core-notification-alert', function() {
                 new M.core.alert({message: M.util.get_string('insecurealert', 'atto_recordrtc')});
             });
-            cm.editorScope.closeDialogue(cm.editorScope);
         }
     },
 
@@ -82,6 +81,7 @@ M.atto_recordrtc.commonmodule = {
         // An extra condition exists to avoid displaying alert twice.
         if ((cm.blobSize >= cm.maxUploadSize) && (!localStorage.getItem('alerted'))) {
             localStorage.setItem('alerted', 'true');
+            
             cm.startStopBtn.click();
             Y.use('moodle-core-notification-alert', function() {
                 new M.core.alert({message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')});

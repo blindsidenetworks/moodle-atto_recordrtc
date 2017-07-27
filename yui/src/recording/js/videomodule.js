@@ -98,7 +98,7 @@ M.atto_recordrtc.videomodule = {
                                    (error.name === 'NotFoundError')) { // If Device Not Found error.
                             var alert = document.querySelector('div[id=alert-danger]');
                             alert.parentElement.parentElement.classList.remove('hide');
-                            alert.textContent = M.util.get_string('inputdevicealert', 'atto_recordrtc') + ' ';
+                            alert.textContent = M.util.get_string('inputdevicealert_title', 'atto_recordrtc') + ' ';
                             alert.textContent += M.util.get_string('inputdevicealert', 'atto_recordrtc');
 
                             btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
@@ -196,7 +196,9 @@ M.atto_recordrtc.videomodule = {
         cm.uploadBtn.onclick = function() {
             // Trigger error if no recording has been made.
             if (!cm.player.src || cm.chunks === []) {
-                return window.alert(M.util.get_string('norecordingfound', 'atto_recordrtc'));
+                Y.use('moodle-core-notification-alert', function() {
+                    new M.core.alert({message: M.util.get_string('norecordingfound', 'atto_recordrtc')});
+                });
             } else {
                 cm.uploadBtn.disabled = true;
 
@@ -218,8 +220,6 @@ M.atto_recordrtc.videomodule = {
                         cm.uploadBtn.textContent = progress;
                     }
                 });
-
-                return undefined;
             }
         };
     }
