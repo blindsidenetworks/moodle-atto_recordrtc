@@ -62,9 +62,6 @@ M.atto_recordrtc.commonmodule = {
         if (!((window.bowser.firefox && window.bowser.version >= 29) ||
               (window.bowser.chrome && window.bowser.version >= 49) ||
               (window.bowser.opera && window.bowser.version >= 36))) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: document.querySelector('div#alert-warning')});
-            });
             var alert = document.querySelector('div#alert-warning');
             alert.parentElement.parentElement.classList.remove('hide');
         }
