@@ -351,9 +351,7 @@ M.atto_recordrtc.audiomodule = {
                         // Make audio stream available at a higher level by making it a property of the common module.
                         cm.stream = stream;
 
-                        if (cm.startStopBtn.mediaCapturedCallback) {
-                            cm.startStopBtn.mediaCapturedCallback();
-                        }
+                        cm.start_recording(cm.recType, cm.stream);
                     },
 
                     // Revert button to "Record Again" when recording is stopped.
@@ -445,11 +443,6 @@ M.atto_recordrtc.audiomodule = {
 
                 // Capture audio stream from microphone.
                 M.atto_recordrtc.audiomodule.capture_audio(commonConfig);
-
-                // When audio stream is successfully captured, start recording.
-                cm.startStopBtn.mediaCapturedCallback = function() {
-                    cm.start_recording(cm.recType, cm.stream);
-                };
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
                 clearInterval(cm.countdownTicker);
@@ -618,9 +611,7 @@ M.atto_recordrtc.videomodule = {
                         // Make video stream available at a higher level by making it a property of the common module.
                         cm.stream = stream;
 
-                        if (cm.startStopBtn.mediaCapturedCallback) {
-                            cm.startStopBtn.mediaCapturedCallback();
-                        }
+                        cm.start_recording(cm.recType, cm.stream);
                     },
 
                     // Revert button to "Record Again" when recording is stopped.
@@ -716,11 +707,6 @@ M.atto_recordrtc.videomodule = {
 
                 // Capture audio+video stream from webcam/microphone.
                 M.atto_recordrtc.videomodule.capture_audio_video(commonConfig);
-
-                // When audio+video stream is successfully captured, start recording.
-                cm.startStopBtn.mediaCapturedCallback = function() {
-                    cm.start_recording(cm.recType, cm.stream);
-                };
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
                 clearInterval(cm.countdownTicker);
