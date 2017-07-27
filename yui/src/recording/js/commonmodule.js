@@ -48,7 +48,10 @@ M.atto_recordrtc.commonmodule = {
 
         if (!isSecureOrigin) {
             Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: M.util.get_string('insecurealert', 'atto_recordrtc')});
+                new M.core.alert({
+                    title: M.util.get_string('insecurealert_title', 'atto_recordrtc'),
+                    message: M.util.get_string('insecurealert', 'atto_recordrtc')
+                });
             });
         }
     },
@@ -81,10 +84,13 @@ M.atto_recordrtc.commonmodule = {
         // An extra condition exists to avoid displaying alert twice.
         if ((cm.blobSize >= cm.maxUploadSize) && (!localStorage.getItem('alerted'))) {
             localStorage.setItem('alerted', 'true');
-            
+
             cm.startStopBtn.click();
             Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')});
+                new M.core.alert({
+                    title: M.util.get_string('nearingmaxsize_title', 'atto_recordrtc'),
+                    message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
+                });
             });
         } else if ((cm.blobSize >= cm.maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
             localStorage.removeItem('alerted');

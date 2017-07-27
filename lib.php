@@ -81,6 +81,7 @@ function atto_recordrtc_strings_for_js() {
 
     $PAGE->requires->strings_for_js(array('audiortc',
                                           'videortc',
+                                          'insecurealert_title',
                                           'insecurealert',
                                           'inputdevicealert_title',
                                           'inputdevicealert',
@@ -91,7 +92,9 @@ function atto_recordrtc_strings_for_js() {
                                           'stoprecording',
                                           'recordingfailed',
                                           'attachrecording',
+                                          'norecordingfound_title',
                                           'norecordingfound',
+                                          'nearingmaxsize_title',
                                           'nearingmaxsize',
                                           'uploadprogress',
                                           'uploadfailed',
