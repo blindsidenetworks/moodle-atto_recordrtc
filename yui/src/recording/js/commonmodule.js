@@ -47,12 +47,8 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('insecurealert_title', 'atto_recordrtc'),
-                    message: M.util.get_string('insecurealert', 'atto_recordrtc')
-                });
-            });
+            var alert = document.querySelector('div#alert-danger');
+            alert.parentElement.parentElement.classList.remove('hide');
         }
     },
 

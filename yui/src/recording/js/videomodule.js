@@ -42,9 +42,11 @@ M.atto_recordrtc.videomodule = {
             if ((cm.startStopBtn.textContent === M.util.get_string('startrecording', 'atto_recordrtc')) ||
                 (cm.startStopBtn.textContent === M.util.get_string('recordagain', 'atto_recordrtc')) ||
                 (cm.startStopBtn.textContent === M.util.get_string('recordingfailed', 'atto_recordrtc'))) {
-                // Hide alert-danger if it is shown.
-                var alert = document.querySelector('div[id=alert-danger]');
-                alert.parentElement.parentElement.classList.add('hide');
+                // Hide alert-warning and alert-danger if they are shown.
+                var alertWarning = document.querySelector('div#alert-warning');
+                alertWarning.parentElement.parentElement.classList.add('hide');
+                var alertDanger = document.querySelector('div#alert-warning');
+                alertDanger.parentElement.parentElement.classList.add('hide');
 
                 // Make sure the upload button is not shown.
                 cm.uploadBtn.parentElement.parentElement.classList.add('hide');
