@@ -28,6 +28,8 @@ require(['atto_recordrtc/bowser'], function(bowser) {
 M.atto_recordrtc.commonmodule = {
     // Unitialized variables to be used by the other modules.
     editorScope: null,
+    alertWarning: null,
+    alertDanger: null,
     player: null,
     startStopBtn: null,
     uploadBtn: null,
@@ -47,8 +49,7 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin) {
-            var alert = document.querySelector('div#alert-danger');
-            alert.parentElement.parentElement.classList.remove('hide');
+            cm.alertDanger.parentElement.parentElement.classList.remove('hide');
         }
     },
 
@@ -60,8 +61,7 @@ M.atto_recordrtc.commonmodule = {
         if (!((window.bowser.firefox && window.bowser.version >= 29) ||
               (window.bowser.chrome && window.bowser.version >= 49) ||
               (window.bowser.opera && window.bowser.version >= 36))) {
-            var alert = document.querySelector('div#alert-warning');
-            alert.parentElement.parentElement.classList.remove('hide');
+            cm.alertWarning.parentElement.parentElement.classList.remove('hide');
         }
     },
 

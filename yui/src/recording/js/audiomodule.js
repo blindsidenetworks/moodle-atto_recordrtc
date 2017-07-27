@@ -21,6 +21,8 @@ M.atto_recordrtc.audiomodule = {
     init: function(scope) {
         // Assignment of global variables.
         cm.editorScope = scope; // Allows access to the editor's "this" context.
+        cm.alertWarning = document.querySelector('div#alert-warning');
+        cm.alertDanger = document.querySelector('div#alert-danger');
         cm.player = document.querySelector('audio#player');
         cm.startStopBtn = document.querySelector('button#start-stop');
         cm.uploadBtn = document.querySelector('button#upload');
@@ -43,10 +45,8 @@ M.atto_recordrtc.audiomodule = {
                 (cm.startStopBtn.textContent === M.util.get_string('recordagain', 'atto_recordrtc')) ||
                 (cm.startStopBtn.textContent === M.util.get_string('recordingfailed', 'atto_recordrtc'))) {
                 // Hide alert-warning and alert-danger if they are shown.
-                var alertWarning = document.querySelector('div#alert-warning');
-                alertWarning.parentElement.parentElement.classList.add('hide');
-                var alertDanger = document.querySelector('div#alert-warning');
-                alertDanger.parentElement.parentElement.classList.add('hide');
+                cm.alertWarning.parentElement.parentElement.classList.add('hide');
+                cm.alertDanger.parentElement.parentElement.classList.add('hide');
 
                 // Make sure the audio player and upload button are not shown.
                 cm.player.parentElement.parentElement.classList.add('hide');
