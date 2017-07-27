@@ -163,7 +163,7 @@ M.atto_recordrtc.commonmodule = {
         var xhr = new XMLHttpRequest();
 
         // Get src media of audio/video tag.
-        xhr.open('GET', cm.player.getAttribute('src'), true);
+        xhr.open('GET', cm.player.get('src'), true);
         xhr.responseType = 'blob';
 
         xhr.onload = function() {

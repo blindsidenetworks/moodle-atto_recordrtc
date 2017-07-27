@@ -165,7 +165,7 @@ M.atto_recordrtc.commonmodule = {
         var xhr = new XMLHttpRequest();
 
         // Get src media of audio/video tag.
-        xhr.open('GET', cm.player.getAttribute('src'), true);
+        xhr.open('GET', cm.player.get('src'), true);
         xhr.responseType = 'blob';
 
         xhr.onload = function() {
@@ -520,7 +520,7 @@ M.atto_recordrtc.audiomodule = {
         // Handle when upload button is clicked.
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
-            if (!cm.player.getAttribute('src') || cm.chunks === []) {
+            if (!cm.player.get('src') || cm.chunks === []) {
                 Y.use('moodle-core-notification-alert', function() {
                     new M.core.alert({
                         title: M.util.get_string('norecordingfound_title', 'atto_recordrtc'),
@@ -795,7 +795,7 @@ M.atto_recordrtc.videomodule = {
         // Handle when upload button is clicked.
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
-            if (!cm.player.getAttribute('src') || cm.chunks === []) {
+            if (!cm.player.get('src') || cm.chunks === []) {
                 Y.use('moodle-core-notification-alert', function() {
                     new M.core.alert({
                         title: M.util.get_string('norecordingfound_title', 'atto_recordrtc'),
