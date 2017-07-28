@@ -28,7 +28,10 @@ require(['atto_recordrtc/bowser'], function(bowser) {
 M.atto_recordrtc.commonmodule = {
     // Unitialized variables to be used by the other modules.
     editorScope: null,
+    alertWarning: null,
+    alertDanger: null,
     player: null,
+    playerDOM: null, // Used to manipulate DOM directly.
     startStopBtn: null,
     uploadBtn: null,
     countdownSeconds: null,
@@ -47,10 +50,7 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: M.util.get_string('insecurealert', 'atto_recordrtc')});
-            });
-            cm.editorScope.closeDialogue(cm.editorScope);
+            cm.alertDanger.ancestor().ancestor().removeClass('hide');
         }
     },
 
@@ -62,11 +62,7 @@ M.atto_recordrtc.commonmodule = {
         if (!((window.bowser.firefox && window.bowser.version >= 29) ||
               (window.bowser.chrome && window.bowser.version >= 49) ||
               (window.bowser.opera && window.bowser.version >= 36))) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: document.querySelector('div#alert-warning')});
-            });
-            var alert = document.querySelector('div#alert-warning');
-            alert.parentElement.parentElement.classList.remove('hide');
+            cm.alertWarning.ancestor().ancestor().removeClass('hide');
         }
     },
 
@@ -85,9 +81,13 @@ M.atto_recordrtc.commonmodule = {
         // An extra condition exists to avoid displaying alert twice.
         if ((cm.blobSize >= cm.maxUploadSize) && (!localStorage.getItem('alerted'))) {
             localStorage.setItem('alerted', 'true');
-            cm.startStopBtn.click();
+
+            cm.startStopBtn.simulate('click');
             Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')});
+                new M.core.alert({
+                    title: M.util.get_string('nearingmaxsize_title', 'atto_recordrtc'),
+                    message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
+                });
             });
         } else if ((cm.blobSize >= cm.maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
             localStorage.removeItem('alerted');
@@ -143,18 +143,19 @@ M.atto_recordrtc.commonmodule = {
         cm.mediaRecorder.start(1000); // Capture in 1s chunks. Must be set to work with Firefox.
 
         // Mute audio, distracting while recording.
-        cm.player.muted = true;
+        cm.player.set('muted', true);
 
         // Set recording timer to the time specified in the settings.
         cm.countdownSeconds = cm.editorScope.get('timelimit');
         cm.countdownSeconds++;
-        cm.startStopBtn.innerHTML = M.util.get_string('stoprecording', 'atto_recordrtc');
-        cm.startStopBtn.innerHTML += ' (<span id="minutes"></span>:<span id="seconds"></span>)';
+        var timerText = M.util.get_string('stoprecording', 'atto_recordrtc');
+        timerText += ' (<span id="minutes"></span>:<span id="seconds"></span>)';
+        cm.startStopBtn.setHTML(timerText);
         cm.set_time();
         cm.countdownTicker = setInterval(cm.set_time, 1000);
 
         // Make button clickable again, to allow stopping recording.
-        cm.startStopBtn.disabled = false;
+        cm.startStopBtn.set('disabled', false);
     },
 
     // Upload recorded audio/video to server.
@@ -162,7 +163,7 @@ M.atto_recordrtc.commonmodule = {
         var xhr = new XMLHttpRequest();
 
         // Get src media of audio/video tag.
-        xhr.open('GET', cm.player.src, true);
+        xhr.open('GET', cm.player.get('src'), true);
         xhr.responseType = 'blob';
 
         xhr.onload = function() {
@@ -246,11 +247,11 @@ M.atto_recordrtc.commonmodule = {
     set_time: function() {
         cm.countdownSeconds--;
 
-        cm.startStopBtn.querySelector('span#seconds').textContent = cm.pad(cm.countdownSeconds % 60);
-        cm.startStopBtn.querySelector('span#minutes').textContent = cm.pad(parseInt(cm.countdownSeconds / 60, 10));
+        cm.startStopBtn.one('span#seconds').set('textContent', cm.pad(cm.countdownSeconds % 60));
+        cm.startStopBtn.one('span#minutes').set('textContent', cm.pad(parseInt(cm.countdownSeconds / 60, 10)));
 
         if (cm.countdownSeconds === 0) {
-            cm.startStopBtn.click();
+            cm.startStopBtn.simulate('click');
         }
     },
 
@@ -275,7 +276,7 @@ M.atto_recordrtc.commonmodule = {
         // Insert annotation link.
         // If user pressed "Cancel", just go back to main recording screen.
         if (!annotation) {
-            cm.uploadBtn.textContent = M.util.get_string('attachrecording', 'atto_recordrtc');
+            cm.uploadBtn.set('textContent', M.util.get_string('attachrecording', 'atto_recordrtc'));
         } else {
             cm.editorScope.setLink(cm.editorScope, annotation);
         }

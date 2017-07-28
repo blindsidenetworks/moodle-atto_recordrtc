@@ -49,7 +49,9 @@ var PLUGINNAME = 'atto_recordrtc',
     '  </div>' + "\n" +
     '  <div class="{{bs_row}} hide">' + "\n" +
     '    <div class="{{bs_col}}12">' + "\n" +
-    '      <div id="alert-danger" class="alert {{bs_al_dang}}"></div>' + "\n" +
+    '      <div id="alert-danger" class="alert {{bs_al_dang}}">' + "\n" +
+    '        <strong>{{insecurealert_title}}</strong> {{insecurealert}}' + "\n" +
+    '      </div>' + "\n" +
     '    </div>' + "\n" +
     '  </div>' + "\n" +
     '  <div class="{{bs_row}} hide">' + "\n" +
@@ -204,6 +206,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             bs_ul_btn: 'btn btn-primary btn-block',
             browseralert_title: M.util.get_string('browseralert_title', 'atto_recordrtc'),
             browseralert: M.util.get_string('browseralert', 'atto_recordrtc'),
+            insecurealert_title: M.util.get_string('insecurealert_title', 'atto_recordrtc'),
+            insecurealert: M.util.get_string('insecurealert', 'atto_recordrtc'),
             startrecording: M.util.get_string('startrecording', 'atto_recordrtc'),
             attachrecording: M.util.get_string('attachrecording', 'atto_recordrtc')
         });
