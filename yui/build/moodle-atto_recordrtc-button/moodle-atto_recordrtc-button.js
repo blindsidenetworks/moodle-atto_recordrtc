@@ -16,9 +16,12 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-/*
+/**
+ * Atto recordrtc library functions
+ *
  * @package    atto_recordrtc
  * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
+ * @author     Jacob Prud'homme (jacob [dt] prudhomme [at] blindsidenetworks [dt] com)
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
