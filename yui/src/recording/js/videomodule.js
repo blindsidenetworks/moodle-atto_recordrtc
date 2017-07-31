@@ -11,6 +11,8 @@
 /*global MediaRecorder */
 /*global URL */
 /*global InstallTrigger */
+/** global: Y */
+/** global: M */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -145,6 +147,9 @@ M.atto_recordrtc.videomodule = {
                                         message: M.util.get_string('gumtype', 'atto_recordrtc')
                                     });
                                 });
+                                break;
+                            default:
+                                break;
 
                                 btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
                         }
