@@ -34,16 +34,15 @@ function xmldb_atto_recordrtc_install() {
     if (strpos($toolbar, 'recordrtc') === false && $toolbar && $toolbar != '') {
         $groups = explode("\n", $toolbar);
         // Try to put recordrtc in files group.
-        $found = false;
         foreach ($groups as $i => $group) {
             $parts = explode('=', $group);
             if (trim($parts[0]) == 'files') {
                 $groups[$i] = 'files = ' . trim($parts[1]) . ', recordrtc';
-                $found = true;
+                // Update config variable.
+                $toolbar = implode("\n", $groups);
+                set_config('toolbar', $toolbar, 'editor_atto');
+                return;
             }
         }
-        // Update config variable.
-        $toolbar = implode("\n", $groups);
-        set_config('toolbar', $toolbar, 'editor_atto');
     }
 }
