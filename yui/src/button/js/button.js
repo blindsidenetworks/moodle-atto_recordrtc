@@ -33,9 +33,14 @@
  * @extends M.editor_atto.EditorPlugin
  */
 
+// JSHint directives.
 /*jshint multistr: true */
 /*jshint onevar: false */
 /*global M */
+
+// Scrutinizer CI directives.
+/** global: Y */
+/** global: M */
 
 var PLUGINNAME = 'atto_recordrtc',
     TEMPLATE = '' +
@@ -108,7 +113,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         // If dialogue is closed during recording, do the following.
         dialogue.on('visibleChange', function() {
             // Clear the countdown timer.
-            clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
+            window.clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
 
             // Stop the media recorder.
             if (M.atto_recordrtc.commonmodule.mediaRecorder && M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
