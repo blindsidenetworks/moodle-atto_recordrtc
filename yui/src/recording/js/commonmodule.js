@@ -90,7 +90,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Capture webcam/microphone stream.
     capture_user_media: function(mediaConstraints, successCallback, errorCallback) {
-        navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        window.navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
     },
 
     // Add chunks of audio/video to array when made available.
