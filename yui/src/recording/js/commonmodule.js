@@ -24,12 +24,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// JSHint directives.
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
 /*global M */
-/*global MediaRecorder */
-/*global URL */
+
+// Scrutinizer CI directives.
+/** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -87,7 +90,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Capture webcam/microphone stream.
     capture_user_media: function(mediaConstraints, successCallback, errorCallback) {
-        navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        window.navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
     },
 
     // Add chunks of audio/video to array when made available.
@@ -98,8 +101,8 @@ M.atto_recordrtc.commonmodule = {
         // Push recording slice to array.
         // If total size of recording so far exceeds max upload limit, stop recording.
         // An extra condition exists to avoid displaying alert twice.
-        if ((cm.blobSize >= cm.maxUploadSize) && (!localStorage.getItem('alerted'))) {
-            localStorage.setItem('alerted', 'true');
+        if ((cm.blobSize >= cm.maxUploadSize) && (!window.localStorage.getItem('alerted'))) {
+            window.localStorage.setItem('alerted', 'true');
 
             cm.startStopBtn.simulate('click');
             Y.use('moodle-core-notification-alert', function() {
@@ -108,8 +111,8 @@ M.atto_recordrtc.commonmodule = {
                     message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
                 });
             });
-        } else if ((cm.blobSize >= cm.maxUploadSize) && (localStorage.getItem('alerted') === 'true')) {
-            localStorage.removeItem('alerted');
+        } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
+            window.localStorage.removeItem('alerted');
         } else {
             cm.chunks.push(event.data);
         }
@@ -120,31 +123,31 @@ M.atto_recordrtc.commonmodule = {
         // The options for the recording codecs and bitrates.
         var options = null;
         if (type === 'audio') {
-            if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            if (window.MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
                 options = {
                     audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     mimeType: 'audio/webm;codecs=opus'
                 };
-            } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+            } else if (window.MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
                 options = {
                     audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     mimeType: 'audio/ogg;codecs=opus'
                 };
             }
         } else {
-            if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) {
+            if (window.MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) {
                 options = {
                     audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     videoBitsPerSecond: cm.editorScope.get('videobitrate'),
                     mimeType: 'video/webm;codecs=vp9,opus'
                 };
-            } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264,opus')) {
+            } else if (window.MediaRecorder.isTypeSupported('video/webm;codecs=h264,opus')) {
                 options = {
                     audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     videoBitsPerSecond: cm.editorScope.get('videobitrate'),
                     mimeType: 'video/webm;codecs=h264,opus'
                 };
-            } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
+            } else if (window.MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
                 options = {
                     audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
                     videoBitsPerSecond: cm.editorScope.get('videobitrate'),
@@ -154,8 +157,8 @@ M.atto_recordrtc.commonmodule = {
         }
 
         // If none of the options above are supported, fall back on browser defaults.
-        cm.mediaRecorder = options ? new MediaRecorder(stream, options)
-                                   : new MediaRecorder(stream);
+        cm.mediaRecorder = options ? new window.MediaRecorder(stream, options)
+                                   : new window.MediaRecorder(stream);
 
         // Initialize MediaRecorder events and start recording.
         cm.mediaRecorder.ondataavailable = cm.handle_data_available;
@@ -171,7 +174,7 @@ M.atto_recordrtc.commonmodule = {
         timerText += ' (<span id="minutes"></span>:<span id="seconds"></span>)';
         cm.startStopBtn.setHTML(timerText);
         cm.set_time();
-        cm.countdownTicker = setInterval(cm.set_time, 1000);
+        cm.countdownTicker = window.setInterval(cm.set_time, 1000);
 
         // Make button clickable again, to allow stopping recording.
         cm.startStopBtn.set('disabled', false);
@@ -179,7 +182,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Upload recorded audio/video to server.
     upload_to_server: function(type, callback) {
-        var xhr = new XMLHttpRequest();
+        var xhr = new window.XMLHttpRequest();
 
         // Get src media of audio/video tag.
         xhr.open('GET', cm.player.get('src'), true);
@@ -199,7 +202,7 @@ M.atto_recordrtc.commonmodule = {
                 }
 
                 // Create FormData to send to PHP upload/save script.
-                var formData = new FormData();
+                var formData = new window.FormData();
                 formData.append('contextid', cm.editorScope.get('contextid'));
                 formData.append('sesskey', cm.editorScope.get('sesskey'));
                 formData.append(type + '-filename', fileName);
@@ -223,7 +226,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Handle XHR sending/receiving/status.
     make_xmlhttprequest: function(url, data, callback) {
-        var xhr = new XMLHttpRequest();
+        var xhr = new window.XMLHttpRequest();
 
         xhr.onreadystatechange = function() {
             if ((xhr.readyState === 4) && (xhr.status === 200)) { // When request is finished and successful.
@@ -267,7 +270,7 @@ M.atto_recordrtc.commonmodule = {
         cm.countdownSeconds--;
 
         cm.startStopBtn.one('span#seconds').set('textContent', cm.pad(cm.countdownSeconds % 60));
-        cm.startStopBtn.one('span#minutes').set('textContent', cm.pad(parseInt(cm.countdownSeconds / 60, 10)));
+        cm.startStopBtn.one('span#minutes').set('textContent', cm.pad(window.parseInt(cm.countdownSeconds / 60, 10)));
 
         if (cm.countdownSeconds === 0) {
             cm.startStopBtn.simulate('click');

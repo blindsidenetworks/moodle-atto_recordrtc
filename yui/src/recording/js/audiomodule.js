@@ -24,13 +24,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/** global: Y */
-/** global: M */
+// JSHint directives.
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
-/*global MediaRecorder */
-/*global URL */
+/*global M */
+
+// Scrutinizer CI directives.
+/** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -50,7 +52,7 @@ M.atto_recordrtc.audiomodule = {
         cm.recType = 'audio';
         cm.olderMoodle = scope.get('oldermoodle');
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
+        cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
@@ -95,7 +97,7 @@ M.atto_recordrtc.audiomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = null;
+                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
 
                         // Handle getUserMedia-thrown errors.
                         switch (error.name) {
@@ -107,7 +109,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotAllowedError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -117,7 +120,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotFoundError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -127,7 +131,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotReadableError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -137,7 +142,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'OverConstrainedError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -147,7 +153,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'SecurityError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -167,11 +174,12 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
+                                break;
+                            default:
+                                break;
                         }
-
-                        // Proceed to treat as a stopped recording.
-                        commonConfig.onMediaStopped(btnLabel);
                     }
                 };
 
@@ -179,10 +187,10 @@ M.atto_recordrtc.audiomodule = {
                 M.atto_recordrtc.audiomodule.capture_audio(commonConfig);
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
-                clearInterval(cm.countdownTicker);
+                window.clearInterval(cm.countdownTicker);
 
                 // Disable "Record Again" button for 1s to allow background processing (closing streams).
-                setTimeout(function() {
+                window.setTimeout(function() {
                     cm.startStopBtn.set('disabled', false);
                 }, 1000);
 
@@ -231,8 +239,8 @@ M.atto_recordrtc.audiomodule = {
         });
 
         // Set source of audio player.
-        var blob = new Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
-        cm.player.set('src', URL.createObjectURL(blob));
+        var blob = new window.Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
+        cm.player.set('src', window.URL.createObjectURL(blob));
 
         // Show audio player with controls enabled, and unmute.
         cm.player.set('muted', false);
