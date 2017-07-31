@@ -24,10 +24,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/** global: Y */
+/** global: M */
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
-/*global M */
 /*global MediaRecorder */
 /*global URL */
 
