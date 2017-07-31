@@ -14,28 +14,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// JSHint directives.
 /**
  * Atto recordrtc library functions
  *
- * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @package    atto_recordrtc
+ * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @author     Jacob Prud'homme (jacob [dt] prudhomme [at] blindsidenetworks [dt] com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @copyright  2017 Blindside Networks Inc.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// JSHint directives.
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
 /*global M */
-/*global MediaRecorder */
-/*global URL */
-/*global InstallTrigger */
 
 // Scrutinizer CI directives.
-/** global: Y */
 /** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 

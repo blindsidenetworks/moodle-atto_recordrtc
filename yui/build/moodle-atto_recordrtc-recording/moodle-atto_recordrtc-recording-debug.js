@@ -16,7 +16,6 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// JSHint directives.
 /**
  * Atto recordrtc library functions
  *
@@ -27,17 +26,15 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// JSHint directives.
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
 /*global M */
-/*global MediaRecorder */
-/*global URL */
-/*global InstallTrigger */
 
 // Scrutinizer CI directives.
-/** global: Y */
 /** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -325,27 +322,25 @@ M.atto_recordrtc.commonmodule = {
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// JSHint directives.
 /**
- *
  * Atto recordrtc library functions
+ *
  * @package    atto_recordrtc
- * @copyright  2017 Blindside Networks Inc.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Jesus Federico (jesus [at] blindsidenetworks [dt] com)
  * @author     Jacob Prud'homme (jacob [dt] prudhomme [at] blindsidenetworks [dt] com)
-
+ * @copyright  2017 Blindside Networks Inc.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/** global: Y */
-/** global: M */
+
+// JSHint directives.
 /*jshint es5: true */
 /*jshint onevar: false */
 /*jshint shadow: true */
 /*global M */
 
 // Scrutinizer CI directives.
-/** global: Y */
 /** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -629,15 +624,10 @@ M.atto_recordrtc.audiomodule = {
 /*jshint onevar: false */
 /*jshint shadow: true */
 /*global M */
-<<<<<<< HEAD
 
 // Scrutinizer CI directives.
-/** global: Y */
 /** global: M */
-=======
-/*global MediaRecorder */
-/*global URL */
->>>>>>> 8811d8eed54383ec5b6b7b2f521157eb34dc29d2
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
