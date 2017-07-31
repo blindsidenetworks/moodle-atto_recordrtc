@@ -97,7 +97,7 @@ M.atto_recordrtc.audiomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = null;
+                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
 
                         // Handle getUserMedia-thrown errors.
                         switch (error.name) {
@@ -109,7 +109,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotAllowedError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -119,7 +120,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotFoundError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -129,7 +131,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'NotReadableError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -139,7 +142,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'OverConstrainedError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -149,7 +153,8 @@ M.atto_recordrtc.audiomodule = {
                                     });
                                 });
 
-                                btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             case 'SecurityError':
                                 Y.use('moodle-core-notification-alert', function() {
@@ -168,14 +173,13 @@ M.atto_recordrtc.audiomodule = {
                                         message: M.util.get_string('gumtype', 'atto_recordrtc')
                                     });
                                 });
+
+                                // Proceed to treat as a stopped recording.
+                                commonConfig.onMediaStopped(btnLabel);
                                 break;
                             default:
                                 break;
                         }
-
-                        // Proceed to treat as a stopped recording.
-                        btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
-                        commonConfig.onMediaStopped(btnLabel);
                     }
                 };
 
