@@ -93,6 +93,9 @@ M.atto_recordrtc.videomodule = {
                     onMediaStopped: function(btnLabel) {
                         cm.startStopBtn.set('textContent', btnLabel);
                         cm.startStopBtn.set('disabled', false);
+                        if (!cm.olderMoodle) {
+                            cm.startStopBtn.replaceClass('btn-danger', 'btn-outline-danger');
+                        }
                     },
 
                     // Handle recording errors.
