@@ -92,6 +92,7 @@ M.atto_recordrtc.videomodule = {
                     // Revert button to "Record Again" when recording is stopped.
                     onMediaStopped: function(btnLabel) {
                         cm.startStopBtn.set('textContent', btnLabel);
+                        cm.startStopBtn.set('disabled', false);
                     },
 
                     // Handle recording errors.
