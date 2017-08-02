@@ -69,7 +69,7 @@ $fileinfo = array(
     'filepath' => '/',                  // Any path beginning and ending in "/".
     'filename' => $filename,            // Any filename.
     'author' => fullname($USER),
-    'licence' => $CFG->sitedefaultlicense
+    'license' => $CFG->sitedefaultlicense
 );
 $filesaved = $fs->create_file_from_pathname($fileinfo, $filetmp);
 

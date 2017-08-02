@@ -401,6 +401,10 @@ M.atto_recordrtc.audiomodule = {
                     // Revert button to "Record Again" when recording is stopped.
                     onMediaStopped: function(btnLabel) {
                         cm.startStopBtn.set('textContent', btnLabel);
+                        cm.startStopBtn.set('disabled', false);
+                        if (!cm.olderMoodle) {
+                            cm.startStopBtn.replaceClass('btn-danger', 'btn-outline-danger');
+                        }
                     },
 
                     // Handle recording errors.
@@ -691,6 +695,10 @@ M.atto_recordrtc.videomodule = {
                     // Revert button to "Record Again" when recording is stopped.
                     onMediaStopped: function(btnLabel) {
                         cm.startStopBtn.set('textContent', btnLabel);
+                        cm.startStopBtn.set('disabled', false);
+                        if (!cm.olderMoodle) {
+                            cm.startStopBtn.replaceClass('btn-danger', 'btn-outline-danger');
+                        }
                     },
 
                     // Handle recording errors.
