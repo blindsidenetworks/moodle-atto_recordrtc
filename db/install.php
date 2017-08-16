@@ -27,8 +27,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
-  * Enable RecordRTC plugin buttons on installation.
-  */
+ * Enable RecordRTC plugin buttons on installation.
+ */
 function xmldb_atto_recordrtc_install() {
     $toolbar = get_config('editor_atto', 'toolbar');
     if (strpos($toolbar, 'recordrtc') === false && $toolbar && $toolbar != '') {

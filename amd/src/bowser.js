@@ -1,3 +1,6 @@
+/* eslint-env es6 */
+/* eslint-disable curly, no-mixed-spaces-and-tabs, no-tabs, no-unused-expressions, no-unused-vars, semi */
+
 /*!
  * Bowser - a browser detector
  * https://github.com/ded/bowser
