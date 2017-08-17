@@ -118,6 +118,36 @@ function atto_recordrtc_strings_for_js() {
 }
 
 /**
+ * Define file-access behaviour for this plugin.
+ */
+function atto_recordrtc_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+    if ($filearea !== 'annotation') {
+        return false;
+    }
+
+    require_login($course, true);
+
+    // Use itemid to retrieve potential relevant data records (AFAIK, there are none created on save).
+    // With data records, it is possible to perform further security checks, to see if user can view.
+    $itemid = array_shift($args);
+
+    $filename = array_pop($args);
+    if (!$args) {
+        $filepath = '/';
+    } else {
+        $filepath = '/'.implode('/', $args).'/';
+    }
+
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'atto_recordrtc', $filearea, $itemid, $filepath, $filename);
+    if (!$file) {
+        return false;
+    }
+
+    send_file($file, $filename);
+}
+
+/**
  * Map icons for font-awesome themes.
  */
 function atto_recordrtc_get_fontawesome_icon_map() {
