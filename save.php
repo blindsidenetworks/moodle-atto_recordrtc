@@ -29,6 +29,7 @@ define('NO_DEBUG_DISPLAY', true);
 
 require_once(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))).'/config.php');
 
+// Should probably be required_param, as the context to which it is linked is important.
 $contextid = optional_param('contextid', 0, PARAM_INT);
 
 list($context, $course, $cm) = get_context_info_array($contextid);
@@ -42,18 +43,20 @@ if (!(isset($_FILES["audio-blob"]) || isset($_FILES["video-blob"]))) {
     return;
 }
 
-if (!(isset($_POST["audio-filename"]) || isset($_POST["video-filename"]))) {
+$audio_filename = optional_param('audio-filename', NULL, PARAM_FILE);
+$video_filename = optional_param('video-filename', NULL, PARAM_FILE);
+if (!(isset($audio_filename) || isset($video_filename))) {
     $error = "Filename not included";
     debugging($error, DEBUG_DEVELOPER);
     header("HTTP/1.0 400 Bad Request");
     return;
 }
 
-if (!(isset($_POST["video-filename"]) && isset($_FILES["video-blob"]))) {
-    $filename = $_POST["audio-filename"];
+if (!(isset($video_filename) && isset($_FILES["video-blob"]))) {
+    $filename = $audio_filename;
     $filetmp = $_FILES["audio-blob"]["tmp_name"];
 } else {
-    $filename = $_POST["video-filename"];
+    $filename = $video_filename;
     $filetmp = $_FILES["video-blob"]["tmp_name"];
 }
 
