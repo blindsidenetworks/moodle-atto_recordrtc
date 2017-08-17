@@ -121,21 +121,11 @@ function atto_recordrtc_strings_for_js() {
  * Define file-access behaviour for this plugin.
  */
 function atto_recordrtc_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
-    // Needs to be changed depending on the context-based permissions we decide later.
-    //if ($context->contextlevel != CONTEXT_USER) {
-    //    return false;
-    //}
-
     if ($filearea !== 'annotation') {
         return false;
     }
 
     require_login($course, true);
-
-    // Needs to be changed depending on capabilities we decide later.
-    //if (!has_capability('atto/recordrtc:view', $context)) {
-    //    return false;
-    //}
 
     // Use itemid to retrieve potential relevant data records (AFAIK, there are none created on save).
     // With data records, it is possible to perform further security checks, to see if user can view.
