@@ -214,7 +214,7 @@ M.atto_recordrtc.commonmodule = {
                 cm.make_xmlhttprequest(cm.editorScope.get('recordrtcroot') + 'save.php', formData,
                     function(progress, responseText) {
                         if (progress === 'upload-ended') {
-                            var initialURL = cm.editorScope.get('recordrtcroot') + 'uploads.php/';
+                            var initialURL = M.cfg.wwwroot + '/pluginfile.php/';
                             return callback('ended', initialURL + responseText);
                         }
                         return callback(progress);
