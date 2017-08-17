@@ -203,19 +203,33 @@ M.atto_recordrtc.commonmodule = {
                     fileName += '-video.webm';
                 }
 
-                // Create FormData to send to PHP upload/save script.
-                var formData = new window.FormData();
-                formData.append('contextid', cm.editorScope.get('contextid'));
-                formData.append('sesskey', cm.editorScope.get('sesskey'));
-                formData.append(type + '-filename', fileName);
-                formData.append(type + '-blob', blob);
+                // Create FormData to send to PHP filepicker-upload script.
+                var formData = new window.FormData(),
+                    filepickerOptions = cm.editorScope.get('host').get('filepickeroptions').link,
+                    repositoryKeys = Object.keys(filepickerOptions.repositories);
+
+                formData.append('repo_upload_file', blob, fileName);
+                formData.append('itemid', filepickerOptions.itemid);
+
+                for (var i = 0; i < repositoryKeys.length; i++) {
+                    if (filepickerOptions.repositories[repositoryKeys[i]].type === 'upload') {
+                        formData.append('repo_id', filepickerOptions.repositories[repositoryKeys[i]].id);
+                        break;
+                    }
+                }
+
+                formData.append('env', filepickerOptions.env);
+                formData.append('sesskey', M.cfg.sesskey);
+                formData.append('client_id', filepickerOptions.client_id);
+                formData.append('savepath', '/');
+                formData.append('ctx_id', filepickerOptions.context.id);
 
                 // Pass FormData to PHP script using XHR.
-                cm.make_xmlhttprequest(cm.editorScope.get('recordrtcroot') + 'save.php', formData,
+                var uploadEndpoint = M.cfg.wwwroot + '/repository/repository_ajax.php?action=upload';
+                cm.make_xmlhttprequest(uploadEndpoint, formData,
                     function(progress, responseText) {
                         if (progress === 'upload-ended') {
-                            var initialURL = M.cfg.wwwroot + '/pluginfile.php/';
-                            return callback('ended', initialURL + responseText);
+                            return callback('ended', window.JSON.parse(responseText).url);
                         }
                         return callback(progress);
                     }
