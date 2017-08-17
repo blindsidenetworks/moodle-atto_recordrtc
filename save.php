@@ -43,20 +43,20 @@ if (!(isset($_FILES["audio-blob"]) || isset($_FILES["video-blob"]))) {
     return;
 }
 
-$audio_filename = optional_param('audio-filename', NULL, PARAM_FILE);
-$video_filename = optional_param('video-filename', NULL, PARAM_FILE);
-if (!(isset($audio_filename) || isset($video_filename))) {
+$audiofilename = optional_param('audio-filename', null, PARAM_FILE);
+$videofilename = optional_param('video-filename', null, PARAM_FILE);
+if (!(isset($audiofilename) || isset($videofilename))) {
     $error = "Filename not included";
     debugging($error, DEBUG_DEVELOPER);
     header("HTTP/1.0 400 Bad Request");
     return;
 }
 
-if (!(isset($video_filename) && isset($_FILES["video-blob"]))) {
-    $filename = $audio_filename;
+if (!(isset($videofilename) && isset($_FILES["video-blob"]))) {
+    $filename = $audiofilename;
     $filetmp = $_FILES["audio-blob"]["tmp_name"];
 } else {
-    $filename = $video_filename;
+    $filename = $videofilename;
     $filetmp = $_FILES["video-blob"]["tmp_name"];
 }
 
