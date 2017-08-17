@@ -507,7 +507,7 @@ M.atto_recordrtc.audiomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.audiomodule.stop_recording(cm.stream);
+                M.atto_recordrtc.audiomodule.stopRecording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -541,7 +541,7 @@ M.atto_recordrtc.audiomodule = {
         );
     },
 
-    stop_recording: function(stream) {
+    stopRecording: function(stream) {
         // Stop recording microphone stream.
         cm.mediaRecorder.stop();
 
@@ -794,7 +794,7 @@ M.atto_recordrtc.videomodule = {
                 cm.player.set('controls', false);
 
                 // Capture audio+video stream from webcam/microphone.
-                M.atto_recordrtc.videomodule.capture_audio_video(commonConfig);
+                M.atto_recordrtc.videomodule.captureAudioVideo(commonConfig);
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
                 window.clearInterval(cm.countdownTicker);
@@ -805,7 +805,7 @@ M.atto_recordrtc.videomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.videomodule.stop_recording(cm.stream);
+                M.atto_recordrtc.videomodule.stopRecording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -817,7 +817,7 @@ M.atto_recordrtc.videomodule = {
     },
 
     // Setup to get audio+video stream from microphone/webcam.
-    capture_audio_video: function(config) {
+    captureAudioVideo: function(config) {
         cm.capture_user_media(
             // Media constraints.
             {
@@ -844,7 +844,7 @@ M.atto_recordrtc.videomodule = {
         );
     },
 
-    stop_recording: function(stream) {
+    stopRecording: function(stream) {
         // Stop recording microphone stream.
         cm.mediaRecorder.stop();
 

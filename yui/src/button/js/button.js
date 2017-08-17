@@ -138,6 +138,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * Add the buttons to the Atto toolbar.
      *
      * @method _addButton
+     * @param {string} type
+     * @param {callback} callback
      * @private
      */
     _addButton: function(type, callback) {
@@ -192,6 +194,8 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * Create the HTML to be displayed in the dialogue box
      *
      * @method _createContent
+     * @param {string} type
+     * @returns {Object}
      * @private
      */
     _createContent: function(type) {
@@ -240,7 +244,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      *
      * @method setLink
      * @param {Object} scope The "this" context of the editor.
-     * @param {String} annotation The HTML link to the recording.
+     * @param {string} annotation The HTML link to the recording.
      */
     setLink: function(scope, annotation) {
         scope.getDialogue().hide();

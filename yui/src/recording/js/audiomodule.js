@@ -199,7 +199,7 @@ M.atto_recordrtc.audiomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.audiomodule.stop_recording(cm.stream);
+                M.atto_recordrtc.audiomodule.stopRecording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -233,7 +233,7 @@ M.atto_recordrtc.audiomodule = {
         );
     },
 
-    stop_recording: function(stream) {
+    stopRecording: function(stream) {
         // Stop recording microphone stream.
         cm.mediaRecorder.stop();
 
