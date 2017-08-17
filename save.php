@@ -43,8 +43,8 @@ if (!(isset($_FILES["audio-blob"]) || isset($_FILES["video-blob"]))) {
     return;
 }
 
-$audio_filename = optional_param('audio-filename', NULL, PARAM_NOTAGS);
-$video_filename = optional_param('video-filename', NULL, PARAM_NOTAGS);
+$audio_filename = optional_param('audio-filename', NULL, PARAM_FILE);
+$video_filename = optional_param('video-filename', NULL, PARAM_FILE);
 if (!(isset($audio_filename) || isset($video_filename))) {
     $error = "Filename not included";
     debugging($error, DEBUG_DEVELOPER);
