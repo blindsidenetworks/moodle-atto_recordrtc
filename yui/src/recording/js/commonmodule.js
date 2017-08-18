@@ -39,14 +39,6 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 // Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
-// Require Bowser and adapter.js libraries.
-require(['atto_recordrtc/adapter'], function(adapter) {
-    window.adapter = adapter;
-});
-require(['atto_recordrtc/bowser'], function(bowser) {
-    window.bowser = bowser;
-});
-
 M.atto_recordrtc.commonmodule = {
     // Unitialized variables to be used by the other modules.
     editorScope: null,

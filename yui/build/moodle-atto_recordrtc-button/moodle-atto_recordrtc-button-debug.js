@@ -136,6 +136,14 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                     });
                 }
             });
+
+            // Require Bowser and adapter.js libraries.
+            require(['atto_recordrtc/adapter'], function(adapter) {
+                window.adapter = adapter;
+            });
+            require(['atto_recordrtc/bowser'], function(bowser) {
+                window.bowser = bowser;
+            });
         }
     },
 
