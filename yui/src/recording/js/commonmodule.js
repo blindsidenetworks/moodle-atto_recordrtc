@@ -66,6 +66,20 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
+    // Show alert and close plugin if browser does not support WebRTC at all.
+    check_has_gum: function() {
+        if (!navigator.mediaDevices.getUserMedia) {
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({
+                    title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
+                    message: M.util.get_string('nowebrtc', 'atto_recordrtc')
+                });
+            });
+
+            cm.editorScope.closeDialogue(cm.editorScope);
+        }
+    },
+
     // Notify and redirect user if plugin is used from insecure location.
     check_secure: function() {
         var isSecureOrigin = (window.location.protocol === 'https:') ||
