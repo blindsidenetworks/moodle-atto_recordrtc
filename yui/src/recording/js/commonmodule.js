@@ -68,7 +68,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
-        if (!navigator.mediaDevices) {
+        if (!(navigator.mediaDevices || navigator.mediaDevices.getUserMedia)) {
             Y.use('moodle-core-notification-alert', function() {
                 new M.core.alert({
                     title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
