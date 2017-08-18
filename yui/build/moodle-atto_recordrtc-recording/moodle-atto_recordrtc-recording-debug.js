@@ -229,7 +229,7 @@ M.atto_recordrtc.commonmodule = {
                 // Create FormData to send to PHP filepicker-upload script.
                 var formData = new window.FormData(),
                     filepickerOptions = cm.editorScope.get('host').get('filepickeroptions').link,
-                    repositoryKeys = Object.keys(filepickerOptions.repositories);
+                    repositoryKeys = window.Object.keys(filepickerOptions.repositories);
 
                 formData.append('repo_upload_file', blob, fileName);
                 formData.append('itemid', filepickerOptions.itemid);
