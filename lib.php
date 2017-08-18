@@ -80,6 +80,8 @@ function atto_recordrtc_strings_for_js() {
 
     $strings_for_js = array('audiortc',
                             'videortc',
+                            'nowebrtc_title',
+                            'nowebrtc',
                             'gumabort_title',
                             'gumabort',
                             'gumnotallowed_title',
@@ -113,10 +115,9 @@ function atto_recordrtc_strings_for_js() {
                             'uploadaborted',
                             'annotationprompt',
                             'annotation:audio',
-                            'annotation:video',
-                            'nowebrtc',
-                            'nowebrtc_title'
+                            'annotation:video'
                         );
+
     $PAGE->requires->strings_for_js($strings_for_js, 'atto_recordrtc');
 }
 
