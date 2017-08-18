@@ -122,8 +122,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                 window.clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
 
                 // Stop the media recorder.
-                if (M.atto_recordrtc.commonmodule.mediaRecorder &&
-                    M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
+                if (M.atto_recordrtc.commonmodule.mediaRecorder && M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
                     M.atto_recordrtc.commonmodule.mediaRecorder.stop();
                 }
 
