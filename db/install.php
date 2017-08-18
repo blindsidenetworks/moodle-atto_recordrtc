@@ -31,15 +31,20 @@ defined('MOODLE_INTERNAL') || die();
  */
 function xmldb_atto_recordrtc_install() {
     $toolbar = get_config('editor_atto', 'toolbar');
-    if (strpos($toolbar, 'recordrtc') === false && $toolbar && $toolbar != '') {
-        $groups = explode("\n", $toolbar);
+    if (strpos($toolbar, 'recordrtc') === false) {
+        // Newline string changed in one of the latest versions from /n to /r/n.
+        $glue = "\r\n";
+        if (strpos($toolbar, $glue) === false) {
+            $glue = "\n";
+        }
+        $groups = explode($glue, $toolbar);
         // Try to put recordrtc in files group.
         foreach ($groups as $i => $group) {
             $parts = explode('=', $group);
             if (trim($parts[0]) == 'files') {
                 $groups[$i] = 'files = ' . trim($parts[1]) . ', recordrtc';
                 // Update config variable.
-                $toolbar = implode("\n", $groups);
+                $toolbar = implode($glue, $groups);
                 set_config('toolbar', $toolbar, 'editor_atto');
                 return;
             }
