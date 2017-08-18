@@ -54,6 +54,8 @@ M.atto_recordrtc.videomodule = {
         // Extract the numbers from the string, and convert to bytes.
         cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
+        // Show alert and close plugin if WebRTC is not supported.
+        cm.check_has_gum();
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.

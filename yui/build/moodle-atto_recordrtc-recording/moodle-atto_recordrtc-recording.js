@@ -68,6 +68,20 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
+    // Show alert and close plugin if browser does not support WebRTC at all.
+    check_has_gum: function() {
+        if (!navigator.mediaDevices.getUserMedia) {
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({
+                    title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
+                    message: M.util.get_string('nowebrtc', 'atto_recordrtc')
+                });
+            });
+
+            cm.editorScope.closeDialogue(cm.editorScope);
+        }
+    },
+
     // Notify and redirect user if plugin is used from insecure location.
     check_secure: function() {
         var isSecureOrigin = (window.location.protocol === 'https:') ||
@@ -385,6 +399,8 @@ M.atto_recordrtc.audiomodule = {
         // Extract the numbers from the string, and convert to bytes.
         cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
+        // Show alert and close plugin if WebRTC is not supported.
+        cm.check_has_gum();
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.
@@ -680,6 +696,8 @@ M.atto_recordrtc.videomodule = {
         // Extract the numbers from the string, and convert to bytes.
         cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
+        // Show alert and close plugin if WebRTC is not supported.
+        cm.check_has_gum();
         // Show alert and redirect user if connection is not secure.
         cm.check_secure();
         // Show alert if using non-ideal browser.
