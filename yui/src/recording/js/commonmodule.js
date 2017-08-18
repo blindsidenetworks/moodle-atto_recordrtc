@@ -250,9 +250,10 @@ M.atto_recordrtc.commonmodule = {
                 cm.make_xmlhttprequest(uploadEndpoint, formData,
                     function(progress, responseText) {
                         if (progress === 'upload-ended') {
-                            return callback('ended', window.JSON.parse(responseText).url);
+                            callback('ended', window.JSON.parse(responseText).url);
+                        } else {
+                            callback(progress);
                         }
-                        return callback(progress);
                     }
                 );
             }
