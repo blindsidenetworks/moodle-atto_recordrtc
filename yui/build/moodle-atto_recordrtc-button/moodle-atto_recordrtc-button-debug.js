@@ -117,23 +117,25 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             });
 
             // If dialogue is closed during recording, do the following.
-            dialogue.on('visibleChange', function() {
-                // Clear the countdown timer.
-                window.clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
+            var editor = this;
+            dialogue.after('visibleChange', function() {
+                var closed = !dialogue.get('visible'),
+                    m = M.atto_recordrtc.commonmodule;
 
-                // Stop the media recorder.
-                if (M.atto_recordrtc.commonmodule.mediaRecorder &&
-                    M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
-                    M.atto_recordrtc.commonmodule.mediaRecorder.stop();
-                }
+                if (closed) {
+                    window.clearInterval(m.countdownTicker);
 
-                // Stop the getUserMedia audio/video tracks.
-                if (M.atto_recordrtc.commonmodule.stream) {
-                    M.atto_recordrtc.commonmodule.stream.getTracks().forEach(function(track) {
-                        if (track.readyState !== 'ended') {
-                            track.stop();
-                        }
-                    });
+                    if (m.mediaRecorder && m.mediaRecorder.state !== 'inactive') {
+                        m.mediaRecorder.stop();
+                    }
+
+                    if (m.stream) {
+                        m.stream.getTracks().forEach(function(track) {
+                            if (track.readyState !== 'ended') {
+                                track.stop();
+                            }
+                        });
+                    }
                 }
             });
 
