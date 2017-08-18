@@ -58,17 +58,28 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
+    // A helper for making a Moodle alert appear.
+    // Subject is the content of the alert (which error ther alert is for).
+    // Possibility to add on-alert-close event.
+    show_alert: function(subject, onCloseEvent) {
+        Y.use('moodle-core-notification-alert', function() {
+            var dialogue = new M.core.alert({
+                title: M.util.get_string(subject + '_title', 'atto_recordrtc'),
+                message: M.util.get_string(subject, 'atto_recordrtc')
+            });
+
+            if (onCloseEvent) {
+                dialogue.after('complete', onCloseEvent);
+            }
+        });
+    },
+
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
         if (!navigator.mediaDevices || !window.MediaRecorder) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nowebrtc', 'atto_recordrtc')
-                });
+            cm.show_alert('nowebrtc', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
             });
-
-            cm.editorScope.closeDialogue(cm.editorScope);
         }
     },
 
@@ -78,14 +89,9 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin && (window.bowser.chrome || window.bowser.opera)) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
-                    message: M.util.get_string('gumsecurity', 'atto_recordrtc')
-                });
+            cm.show_alert('gumsecurity', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
             });
-
-            cm.editorScope.closeDialogue(cm.editorScope);
         } else if (!isSecureOrigin) {
             cm.alertDanger.ancestor().ancestor().removeClass('hide');
         }
@@ -121,12 +127,7 @@ M.atto_recordrtc.commonmodule = {
             window.localStorage.setItem('alerted', 'true');
 
             cm.startStopBtn.simulate('click');
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nearingmaxsize_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
-                });
-            });
+            cm.show_alert('nearingmaxsize');
         } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
             window.localStorage.removeItem('alerted');
         } else {

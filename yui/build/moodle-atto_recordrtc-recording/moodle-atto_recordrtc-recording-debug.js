@@ -60,17 +60,28 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
+    // A helper for making a Moodle alert appear.
+    // Subject is the content of the alert (which error ther alert is for).
+    // Possibility to add on-alert-close event.
+    show_alert: function(subject, onCloseEvent) {
+        Y.use('moodle-core-notification-alert', function() {
+            var dialogue = new M.core.alert({
+                title: M.util.get_string(subject + '_title', 'atto_recordrtc'),
+                message: M.util.get_string(subject, 'atto_recordrtc')
+            });
+
+            if (onCloseEvent) {
+                dialogue.after('complete', onCloseEvent);
+            }
+        });
+    },
+
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
         if (!navigator.mediaDevices || !window.MediaRecorder) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nowebrtc', 'atto_recordrtc')
-                });
+            cm.show_alert('nowebrtc', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
             });
-
-            cm.editorScope.closeDialogue(cm.editorScope);
         }
     },
 
@@ -80,14 +91,9 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin && (window.bowser.chrome || window.bowser.opera)) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
-                    message: M.util.get_string('gumsecurity', 'atto_recordrtc')
-                });
+            cm.show_alert('gumsecurity', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
             });
-
-            cm.editorScope.closeDialogue(cm.editorScope);
         } else if (!isSecureOrigin) {
             cm.alertDanger.ancestor().ancestor().removeClass('hide');
         }
@@ -123,12 +129,7 @@ M.atto_recordrtc.commonmodule = {
             window.localStorage.setItem('alerted', 'true');
 
             cm.startStopBtn.simulate('click');
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nearingmaxsize_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
-                });
-            });
+            cm.show_alert('nearingmaxsize');
         } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
             window.localStorage.removeItem('alerted');
         } else {
@@ -442,85 +443,36 @@ M.atto_recordrtc.audiomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
+                            treatAsStopped = function() {
+                                commonConfig.onMediaStopped(btnLabel);
+                            };
 
                         // Handle getUserMedia-thrown errors.
+                        // After alert, proceed to treat as stopped recording, or close dialogue.
                         switch (error.name) {
                             case 'AbortError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumabort_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumabort', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumabort', treatAsStopped);
                                 break;
                             case 'NotAllowedError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotallowed_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotallowed', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotallowed', treatAsStopped);
                                 break;
                             case 'NotFoundError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotfound_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotfound', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotfound', treatAsStopped);
                                 break;
                             case 'NotReadableError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotreadable_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotreadable', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotreadable', treatAsStopped);
                                 break;
                             case 'OverConstrainedError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumoverconstrained_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumoverconstrained', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumoverconstrained', treatAsStopped);
                                 break;
                             case 'SecurityError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumsecurity', 'atto_recordrtc')
-                                    });
+                                cm.show_alert('gumsecurity', function() {
+                                    cm.editorScope.closeDialogue(cm.editorScope);
                                 });
-
-                                cm.editorScope.closeDialogue(cm.editorScope);
                                 break;
                             case 'TypeError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumtype_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumtype', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumtype', treatAsStopped);
                                 break;
                             default:
                                 break;
@@ -601,12 +553,7 @@ M.atto_recordrtc.audiomodule = {
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
             if (!cm.player.get('src') || cm.chunks === []) {
-                Y.use('moodle-core-notification-alert', function() {
-                    new M.core.alert({
-                        title: M.util.get_string('norecordingfound_title', 'atto_recordrtc'),
-                        message: M.util.get_string('norecordingfound', 'atto_recordrtc')
-                    });
-                });
+                cm.show_alert('norecordingfound');
             } else {
                 cm.uploadBtn.set('disabled', true);
 
@@ -738,85 +685,36 @@ M.atto_recordrtc.videomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc');
+                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
+                            treatAsStopped = function() {
+                                commonConfig.onMediaStopped(btnLabel);
+                            };
 
                         // Handle getUserMedia-thrown errors.
+                        // After alert, proceed to treat as stopped recording, or close dialogue.
                         switch (error.name) {
                             case 'AbortError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumabort_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumabort', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumabort', treatAsStopped);
                                 break;
                             case 'NotAllowedError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotallowed_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotallowed', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotallowed', treatAsStopped);
                                 break;
                             case 'NotFoundError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotfound_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotfound', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotfound', treatAsStopped);
                                 break;
                             case 'NotReadableError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumnotreadable_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumnotreadable', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumnotreadable', treatAsStopped);
                                 break;
                             case 'OverConstrainedError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumoverconstrained_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumoverconstrained', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumoverconstrained', treatAsStopped);
                                 break;
                             case 'SecurityError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumsecurity', 'atto_recordrtc')
-                                    });
+                                cm.show_alert('gumsecurity', function() {
+                                    cm.editorScope.closeDialogue(cm.editorScope);
                                 });
-
-                                cm.editorScope.closeDialogue(cm.editorScope);
                                 break;
                             case 'TypeError':
-                                Y.use('moodle-core-notification-alert', function() {
-                                    new M.core.alert({
-                                        title: M.util.get_string('gumtype_title', 'atto_recordrtc'),
-                                        message: M.util.get_string('gumtype', 'atto_recordrtc')
-                                    });
-                                });
-
-                                // Proceed to treat as a stopped recording.
-                                commonConfig.onMediaStopped(btnLabel);
+                                cm.show_alert('gumtype', treatAsStopped);
                                 break;
                             default:
                                 break;
@@ -905,12 +803,7 @@ M.atto_recordrtc.videomodule = {
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
             if (!cm.player.get('src') || cm.chunks === []) {
-                Y.use('moodle-core-notification-alert', function() {
-                    new M.core.alert({
-                        title: M.util.get_string('norecordingfound_title', 'atto_recordrtc'),
-                        message: M.util.get_string('norecordingfound', 'atto_recordrtc')
-                    });
-                });
+                cm.show_alert('norecordingfound');
             } else {
                 cm.uploadBtn.set('disabled', true);
 
