@@ -71,7 +71,16 @@ M.atto_recordrtc.commonmodule = {
         var isSecureOrigin = (window.location.protocol === 'https:') ||
                              (window.location.host.indexOf('localhost') !== -1);
 
-        if (!isSecureOrigin) {
+        if (!isSecureOrigin && (window.bowser.chrome || window.bowser.opera)) {
+            Y.use('moodle-core-notification-alert', function() {
+                new M.core.alert({
+                    title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
+                    message: M.util.get_string('gumsecurity', 'atto_recordrtc')
+                });
+            });
+
+            cm.editorScope.closeDialogue(cm.editorScope);
+        } else if (!isSecureOrigin) {
             cm.alertDanger.ancestor().ancestor().removeClass('hide');
         }
     },
