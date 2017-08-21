@@ -76,6 +76,26 @@ M.atto_recordrtc.commonmodule = {
         });
     },
 
+    // Handle getUserMedia errors.
+    handle_gum_errors: function(error, commonConfig) {
+        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
+            treatAsStopped = function() {
+                commonConfig.onMediaStopped(btnLabel);
+            };
+
+        // Changes 'CertainError' -> 'gumcertain' to match language string names.
+        var stringName = 'gum' + error.name.replace('Error', '').toLowerCase();
+
+        // After alert, proceed to treat as stopped recording, or close dialogue.
+        if (stringName !== 'gumsecurity') {
+            cm.show_alert(stringName, treatAsStopped);
+        } else {
+            cm.show_alert(stringName, function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
+            });
+        }
+    },
+
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
         if (!navigator.mediaDevices || !window.MediaRecorder) {
@@ -492,40 +512,7 @@ M.atto_recordrtc.audiomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
-                            treatAsStopped = function() {
-                                commonConfig.onMediaStopped(btnLabel);
-                            };
-
-                        // Handle getUserMedia-thrown errors.
-                        // After alert, proceed to treat as stopped recording, or close dialogue.
-                        switch (error.name) {
-                            case 'AbortError':
-                                cm.show_alert('gumabort', treatAsStopped);
-                                break;
-                            case 'NotAllowedError':
-                                cm.show_alert('gumnotallowed', treatAsStopped);
-                                break;
-                            case 'NotFoundError':
-                                cm.show_alert('gumnotfound', treatAsStopped);
-                                break;
-                            case 'NotReadableError':
-                                cm.show_alert('gumnotreadable', treatAsStopped);
-                                break;
-                            case 'OverConstrainedError':
-                                cm.show_alert('gumoverconstrained', treatAsStopped);
-                                break;
-                            case 'SecurityError':
-                                cm.show_alert('gumsecurity', function() {
-                                    cm.editorScope.closeDialogue(cm.editorScope);
-                                });
-                                break;
-                            case 'TypeError':
-                                cm.show_alert('gumtype', treatAsStopped);
-                                break;
-                            default:
-                                break;
-                        }
+                        cm.handle_gum_errors(error, commonConfig);
                     }
                 };
 
@@ -689,40 +676,7 @@ M.atto_recordrtc.videomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
-                            treatAsStopped = function() {
-                                commonConfig.onMediaStopped(btnLabel);
-                            };
-
-                        // Handle getUserMedia-thrown errors.
-                        // After alert, proceed to treat as stopped recording, or close dialogue.
-                        switch (error.name) {
-                            case 'AbortError':
-                                cm.show_alert('gumabort', treatAsStopped);
-                                break;
-                            case 'NotAllowedError':
-                                cm.show_alert('gumnotallowed', treatAsStopped);
-                                break;
-                            case 'NotFoundError':
-                                cm.show_alert('gumnotfound', treatAsStopped);
-                                break;
-                            case 'NotReadableError':
-                                cm.show_alert('gumnotreadable', treatAsStopped);
-                                break;
-                            case 'OverConstrainedError':
-                                cm.show_alert('gumoverconstrained', treatAsStopped);
-                                break;
-                            case 'SecurityError':
-                                cm.show_alert('gumsecurity', function() {
-                                    cm.editorScope.closeDialogue(cm.editorScope);
-                                });
-                                break;
-                            case 'TypeError':
-                                cm.show_alert('gumtype', treatAsStopped);
-                                break;
-                            default:
-                                break;
-                        }
+                        cm.handle_gum_errors(error, commonConfig);
                     }
                 };
 

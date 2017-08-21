@@ -74,6 +74,26 @@ M.atto_recordrtc.commonmodule = {
         });
     },
 
+    // Handle getUserMedia errors.
+    handle_gum_errors: function(error, commonConfig) {
+        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
+            treatAsStopped = function() {
+                commonConfig.onMediaStopped(btnLabel);
+            };
+
+        // Changes 'CertainError' -> 'gumcertain' to match language string names.
+        var stringName = 'gum' + error.name.replace('Error', '').toLowerCase();
+
+        // After alert, proceed to treat as stopped recording, or close dialogue.
+        if (stringName !== 'gumsecurity') {
+            cm.show_alert(stringName, treatAsStopped);
+        } else {
+            cm.show_alert(stringName, function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
+            });
+        }
+    },
+
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
         if (!navigator.mediaDevices || !window.MediaRecorder) {
