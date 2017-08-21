@@ -142,23 +142,23 @@ M.atto_recordrtc.commonmodule = {
         var types, options;
 
         if (recType === 'audio') {
-            var types = [
-                    'audio/webm;codecs=opus',
-                    'audio/ogg;codecs=opus'
-                ],
-                options = {
-                    audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate'))
-                };
+            types = [
+                'audio/webm;codecs=opus',
+                'audio/ogg;codecs=opus'
+            ];
+            options = {
+                audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate'))
+            };
         } else {
-            var types = [
-                    'video/webm;codecs=vp9,opus',
-                    'video/webm;codecs=h264,opus',
-                    'video/webm;codecs=vp8,opus'
-                ],
-                options = {
-                    audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate')),
-                    videoBitsPerSecond: window.parseInt(cm.editorScope.get('videobitrate'))
-                };
+            types = [
+                'video/webm;codecs=vp9,opus',
+                'video/webm;codecs=h264,opus',
+                'video/webm;codecs=vp8,opus'
+            ];
+            options = {
+                audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate')),
+                videoBitsPerSecond: window.parseInt(cm.editorScope.get('videobitrate'))
+            };
         }
 
         var compatTypes = types.filter(function(type) {
