@@ -96,7 +96,7 @@ M.atto_recordrtc.commonmodule = {
 
     // Show alert and close plugin if browser does not support WebRTC at all.
     check_has_gum: function() {
-        if (!navigator.mediaDevices || !window.MediaRecorder) {
+        if (!(navigator.mediaDevices && window.MediaRecorder)) {
             cm.show_alert('nowebrtc', function() {
                 cm.editorScope.closeDialogue(cm.editorScope);
             });
