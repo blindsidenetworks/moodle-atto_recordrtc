@@ -139,6 +139,8 @@ M.atto_recordrtc.commonmodule = {
 
     // Select best options for the recording codec.
     select_rec_options: function(recType) {
+        var types, options;
+
         if (recType === 'audio') {
             var types = [
                     'audio/webm;codecs=opus',
@@ -430,12 +432,6 @@ M.atto_recordrtc.commonmodule = {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// JSHint directives.
-/*jshint es5: true */
-/*jshint onevar: false */
-/*jshint shadow: true */
-/*global M */
-
 // Scrutinizer CI directives.
 /** global: M */
 /** global: Y */
@@ -594,12 +590,6 @@ M.atto_recordrtc.audiomodule = {
  * @copyright  2017 Blindside Networks Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-// JSHint directives.
-/*jshint es5: true */
-/*jshint onevar: false */
-/*jshint shadow: true */
-/*global M */
 
 // Scrutinizer CI directives.
 /** global: M */

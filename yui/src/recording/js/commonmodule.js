@@ -137,6 +137,8 @@ M.atto_recordrtc.commonmodule = {
 
     // Select best options for the recording codec.
     select_rec_options: function(recType) {
+        var types, options;
+
         if (recType === 'audio') {
             var types = [
                     'audio/webm;codecs=opus',
