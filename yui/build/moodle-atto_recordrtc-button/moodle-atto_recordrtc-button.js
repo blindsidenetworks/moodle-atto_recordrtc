@@ -39,9 +39,9 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
  */
 
 // JSHint directives.
-/* jshint multistr: true */
-/* jshint onevar: false */
-/* global M */
+/*jshint onevar: false */
+/*jshint unused: false */
+/*global M */
 
 // Scrutinizer CI directives.
 /** global: Y */
@@ -117,24 +117,34 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             });
 
             // If dialogue is closed during recording, do the following.
-            dialogue.on('visibleChange', function() {
-                // Clear the countdown timer.
-                window.clearInterval(M.atto_recordrtc.commonmodule.countdownTicker);
+            var editor = this;
+            dialogue.after('visibleChange', function() {
+                var closed = !dialogue.get('visible'),
+                    m = M.atto_recordrtc.commonmodule;
 
-                // Stop the media recorder.
-                if (M.atto_recordrtc.commonmodule.mediaRecorder &&
-                    M.atto_recordrtc.commonmodule.mediaRecorder.state !== 'inactive') {
-                    M.atto_recordrtc.commonmodule.mediaRecorder.stop();
-                }
+                if (closed) {
+                    window.clearInterval(m.countdownTicker);
 
-                // Stop the getUserMedia audio/video tracks.
-                if (M.atto_recordrtc.commonmodule.stream) {
-                    M.atto_recordrtc.commonmodule.stream.getTracks().forEach(function(track) {
-                        if (track.readyState !== 'ended') {
-                            track.stop();
-                        }
-                    });
+                    if (m.mediaRecorder && m.mediaRecorder.state !== 'inactive') {
+                        m.mediaRecorder.stop();
+                    }
+
+                    if (m.stream) {
+                        m.stream.getTracks().forEach(function(track) {
+                            if (track.readyState !== 'ended') {
+                                track.stop();
+                            }
+                        });
+                    }
                 }
+            });
+
+            // Require Bowser and adapter.js libraries.
+            require(['atto_recordrtc/adapter'], function(adapter) {
+                window.adapter = adapter;
+            });
+            require(['atto_recordrtc/bowser'], function(bowser) {
+                window.bowser = bowser;
             });
         }
     },
@@ -168,7 +178,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     _audio: function() {
         var dialogue = this.getDialogue();
 
-        dialogue.set('height', 260);
+        dialogue.set('height', 400);
         dialogue.set('headerContent', M.util.get_string('audiortc', 'atto_recordrtc'));
         dialogue.set('bodyContent', this._createContent('audio'));
 
@@ -186,7 +196,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
     _video: function() {
         var dialogue = this.getDialogue();
 
-        dialogue.set('height', 700);
+        dialogue.set('height', 850);
         dialogue.set('headerContent', M.util.get_string('videortc', 'atto_recordrtc'));
         dialogue.set('bodyContent', this._createContent('video'));
 

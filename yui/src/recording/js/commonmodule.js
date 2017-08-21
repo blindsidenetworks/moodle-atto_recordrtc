@@ -39,14 +39,6 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 // Shorten access to M.atto_recordrtc.commonmodule namespace.
 var cm = M.atto_recordrtc.commonmodule;
 
-// Require Bowser and adapter.js libraries.
-require(['atto_recordrtc/adapter'], function(adapter) {
-    window.adapter = adapter;
-});
-require(['atto_recordrtc/bowser'], function(bowser) {
-    window.bowser = bowser;
-});
-
 M.atto_recordrtc.commonmodule = {
     // Unitialized variables to be used by the other modules.
     editorScope: null,
@@ -66,17 +58,48 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
-    // Show alert and close plugin if browser does not support WebRTC at all.
-    check_has_gum: function() {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nowebrtc_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nowebrtc', 'atto_recordrtc')
-                });
+    // A helper for making a Moodle alert appear.
+    // Subject is the content of the alert (which error ther alert is for).
+    // Possibility to add on-alert-close event.
+    show_alert: function(subject, onCloseEvent) {
+        Y.use('moodle-core-notification-alert', function() {
+            var dialogue = new M.core.alert({
+                title: M.util.get_string(subject + '_title', 'atto_recordrtc'),
+                message: M.util.get_string(subject, 'atto_recordrtc')
             });
 
-            cm.editorScope.closeDialogue(cm.editorScope);
+            if (onCloseEvent) {
+                dialogue.after('complete', onCloseEvent);
+            }
+        });
+    },
+
+    // Handle getUserMedia errors.
+    handle_gum_errors: function(error, commonConfig) {
+        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
+            treatAsStopped = function() {
+                commonConfig.onMediaStopped(btnLabel);
+            };
+
+        // Changes 'CertainError' -> 'gumcertain' to match language string names.
+        var stringName = 'gum' + error.name.replace('Error', '').toLowerCase();
+
+        // After alert, proceed to treat as stopped recording, or close dialogue.
+        if (stringName !== 'gumsecurity') {
+            cm.show_alert(stringName, treatAsStopped);
+        } else {
+            cm.show_alert(stringName, function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
+            });
+        }
+    },
+
+    // Show alert and close plugin if browser does not support WebRTC at all.
+    check_has_gum: function() {
+        if (!(navigator.mediaDevices && window.MediaRecorder)) {
+            cm.show_alert('nowebrtc', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
+            });
         }
     },
 
@@ -86,14 +109,9 @@ M.atto_recordrtc.commonmodule = {
                              (window.location.host.indexOf('localhost') !== -1);
 
         if (!isSecureOrigin && (window.bowser.chrome || window.bowser.opera)) {
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('gumsecurity_title', 'atto_recordrtc'),
-                    message: M.util.get_string('gumsecurity', 'atto_recordrtc')
-                });
+            cm.show_alert('gumsecurity', function() {
+                cm.editorScope.closeDialogue(cm.editorScope);
             });
-
-            cm.editorScope.closeDialogue(cm.editorScope);
         } else if (!isSecureOrigin) {
             cm.alertDanger.ancestor().ancestor().removeClass('hide');
         }
@@ -117,6 +135,41 @@ M.atto_recordrtc.commonmodule = {
         window.navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
     },
 
+    // Select best options for the recording codec.
+    select_rec_options: function(recType) {
+        var types, options;
+
+        if (recType === 'audio') {
+            var types = [
+                    'audio/webm;codecs=opus',
+                    'audio/ogg;codecs=opus'
+                ],
+                options = {
+                    audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate'))
+                };
+        } else {
+            var types = [
+                    'video/webm;codecs=vp9,opus',
+                    'video/webm;codecs=h264,opus',
+                    'video/webm;codecs=vp8,opus'
+                ],
+                options = {
+                    audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate')),
+                    videoBitsPerSecond: window.parseInt(cm.editorScope.get('videobitrate'))
+                };
+        }
+
+        var compatTypes = types.filter(function(type) {
+            return window.MediaRecorder.isTypeSupported(type);
+        });
+
+        if (compatTypes.length !== 0) {
+            options.mimeType = compatTypes[0];
+        }
+
+        return options;
+    },
+
     // Add chunks of audio/video to array when made available.
     handle_data_available: function(event) {
         // Size of all recorded data so far.
@@ -129,12 +182,7 @@ M.atto_recordrtc.commonmodule = {
             window.localStorage.setItem('alerted', 'true');
 
             cm.startStopBtn.simulate('click');
-            Y.use('moodle-core-notification-alert', function() {
-                new M.core.alert({
-                    title: M.util.get_string('nearingmaxsize_title', 'atto_recordrtc'),
-                    message: M.util.get_string('nearingmaxsize', 'atto_recordrtc')
-                });
-            });
+            cm.show_alert('nearingmaxsize');
         } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
             window.localStorage.removeItem('alerted');
         } else {
@@ -142,50 +190,63 @@ M.atto_recordrtc.commonmodule = {
         }
     },
 
+    // Handle recording end.
+    handle_stop: function() {
+        // Set source of audio player.
+        var blob = new window.Blob(cm.chunks, {type: cm.mediaRecorder.mimeType});
+        cm.player.set('src', window.URL.createObjectURL(blob));
+
+        // Show audio player with controls enabled, and unmute.
+        cm.player.set('muted', false);
+        cm.player.set('controls', true);
+        cm.player.ancestor().ancestor().removeClass('hide');
+
+        // Show upload button.
+        cm.uploadBtn.ancestor().ancestor().removeClass('hide');
+        cm.uploadBtn.set('textContent', M.util.get_string('attachrecording', 'atto_recordrtc'));
+        cm.uploadBtn.set('disabled', false);
+
+        // Handle when upload button is clicked.
+        cm.uploadBtn.on('click', function() {
+            // Trigger error if no recording has been made.
+            if (!cm.player.get('src') || cm.chunks === []) {
+                cm.show_alert('norecordingfound');
+            } else {
+                cm.uploadBtn.set('disabled', true);
+
+                // Upload recording to server.
+                cm.upload_to_server(cm.recType, function(progress, fileURLOrError) {
+                    if (progress === 'ended') { // Insert annotation in text.
+                        cm.uploadBtn.set('disabled', false);
+                        cm.insert_annotation(cm.recType, fileURLOrError);
+                    } else if (progress === 'upload-failed') { // Show error message in upload button.
+                        cm.uploadBtn.set('disabled', false);
+                        cm.uploadBtn.set('textContent',
+                            M.util.get_string('uploadfailed', 'atto_recordrtc') + ' ' + fileURLOrError);
+                    } else if (progress === 'upload-failed-404') { // 404 error = File too large in Moodle.
+                        cm.uploadBtn.set('disabled', false);
+                        cm.uploadBtn.set('textContent', M.util.get_string('uploadfailed404', 'atto_recordrtc'));
+                    } else if (progress === 'upload-aborted') {
+                        cm.uploadBtn.set('disabled', false);
+                        cm.uploadBtn.set('textContent',
+                            M.util.get_string('uploadaborted', 'atto_recordrtc') + ' ' + fileURLOrError);
+                    } else {
+                        cm.uploadBtn.set('textContent', progress);
+                    }
+                });
+            }
+        });
+    },
+
     // Get everything set up to start recording.
     start_recording: function(type, stream) {
         // The options for the recording codecs and bitrates.
-        var options = null;
-        if (type === 'audio') {
-            if (window.MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-                options = {
-                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
-                    mimeType: 'audio/webm;codecs=opus'
-                };
-            } else if (window.MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
-                options = {
-                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
-                    mimeType: 'audio/ogg;codecs=opus'
-                };
-            }
-        } else {
-            if (window.MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) {
-                options = {
-                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
-                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
-                    mimeType: 'video/webm;codecs=vp9,opus'
-                };
-            } else if (window.MediaRecorder.isTypeSupported('video/webm;codecs=h264,opus')) {
-                options = {
-                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
-                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
-                    mimeType: 'video/webm;codecs=h264,opus'
-                };
-            } else if (window.MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
-                options = {
-                    audioBitsPerSecond: cm.editorScope.get('audiobitrate'),
-                    videoBitsPerSecond: cm.editorScope.get('videobitrate'),
-                    mimeType: 'video/webm;codecs=vp8,opus'
-                };
-            }
-        }
-
-        // If none of the options above are supported, fall back on browser defaults.
-        cm.mediaRecorder = options ? new window.MediaRecorder(stream, options)
-                                   : new window.MediaRecorder(stream);
+        var options = cm.select_rec_options(type);
+        cm.mediaRecorder = new window.MediaRecorder(stream, options);
 
         // Initialize MediaRecorder events and start recording.
         cm.mediaRecorder.ondataavailable = cm.handle_data_available;
+        cm.mediaRecorder.onstop = cm.handle_stop;
         cm.mediaRecorder.start(1000); // Capture in 1s chunks. Must be set to work with Firefox.
 
         // Mute audio, distracting while recording.
@@ -228,7 +289,7 @@ M.atto_recordrtc.commonmodule = {
                 // Create FormData to send to PHP filepicker-upload script.
                 var formData = new window.FormData(),
                     filepickerOptions = cm.editorScope.get('host').get('filepickeroptions').link,
-                    repositoryKeys = Object.keys(filepickerOptions.repositories);
+                    repositoryKeys = window.Object.keys(filepickerOptions.repositories);
 
                 formData.append('repo_upload_file', blob, fileName);
                 formData.append('itemid', filepickerOptions.itemid);
@@ -251,9 +312,10 @@ M.atto_recordrtc.commonmodule = {
                 cm.make_xmlhttprequest(uploadEndpoint, formData,
                     function(progress, responseText) {
                         if (progress === 'upload-ended') {
-                            return callback('ended', window.JSON.parse(responseText).url);
+                            callback('ended', window.JSON.parse(responseText).url);
+                        } else {
+                            callback(progress);
                         }
-                        return callback(progress);
                     }
                 );
             }
