@@ -164,8 +164,9 @@ M.atto_recordrtc.videomodule = {
         cm.mediaRecorder.stop();
 
         // Stop each individual MediaTrack.
-        stream.getTracks().forEach(function(track) {
-            track.stop();
-        });
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
     }
 };
