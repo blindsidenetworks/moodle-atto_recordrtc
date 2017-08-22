@@ -25,7 +25,7 @@
  */
 
 // ESLint directives.
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, spaced-comment */
 
 // Scrutinizer CI directives.
 /** global: M */

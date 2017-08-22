@@ -27,7 +27,7 @@ YUI.add('moodle-atto_recordrtc-recording', function (Y, NAME) {
  */
 
 // ESLint directives.
-/* eslint-disable camelcase, no-alert */
+/* eslint-disable camelcase, no-alert, spaced-comment */
 
 // JSHint directives.
 /*global M */
@@ -436,7 +436,7 @@ M.atto_recordrtc.commonmodule = {
  */
 
 // ESLint directives.
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, spaced-comment */
 
 // Scrutinizer CI directives.
 /** global: M */
@@ -598,7 +598,7 @@ M.atto_recordrtc.audiomodule = {
  */
 
 // ESLint directives.
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, spaced-comment */
 
 // Scrutinizer CI directives.
 /** global: M */
