@@ -24,14 +24,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// ESLint directives.
+/* eslint-disable camelcase, spaced-comment */
+
 // Scrutinizer CI directives.
 /** global: M */
 /** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
-// Shorten access to M.atto_recordrtc.commonmodule namespace.
-var cm = M.atto_recordrtc.commonmodule;
+// Shorten access to module namespaces.
+var cm = M.atto_recordrtc.commonmodule,
+    am = M.atto_recordrtc.abstractmodule,
+    ccm = M.atto_recordrtc.compatcheckmodule;
 
 M.atto_recordrtc.videomodule = {
     init: function(scope) {
@@ -49,11 +54,11 @@ M.atto_recordrtc.videomodule = {
         cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and close plugin if WebRTC is not supported.
-        cm.check_has_gum();
+        ccm.check_has_gum();
         // Show alert and redirect user if connection is not secure.
-        cm.check_secure();
+        ccm.check_secure();
         // Show alert if using non-ideal browser.
-        cm.check_browser();
+        ccm.check_browser();
 
         // Run when user clicks on "record" button.
         cm.startStopBtn.on('click', function() {
@@ -96,7 +101,7 @@ M.atto_recordrtc.videomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        cm.handle_gum_errors(error, commonConfig);
+                        am.handle_gum_errors(error, commonConfig);
                     }
                 };
 
@@ -105,7 +110,7 @@ M.atto_recordrtc.videomodule = {
                 cm.player.set('controls', false);
 
                 // Capture audio+video stream from webcam/microphone.
-                M.atto_recordrtc.videomodule.captureAudioVideo(commonConfig);
+                M.atto_recordrtc.videomodule.capture_audio_video(commonConfig);
             } else { // If button is displaying "Stop Recording".
                 // First of all clears the countdownTicker.
                 window.clearInterval(cm.countdownTicker);
@@ -116,7 +121,7 @@ M.atto_recordrtc.videomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.videomodule.stopRecording(cm.stream);
+                M.atto_recordrtc.videomodule.stop_recording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -128,7 +133,7 @@ M.atto_recordrtc.videomodule = {
     },
 
     // Setup to get audio+video stream from microphone/webcam.
-    captureAudioVideo: function(config) {
+    capture_audio_video: function(config) {
         cm.capture_user_media(
             // Media constraints.
             {
@@ -155,13 +160,14 @@ M.atto_recordrtc.videomodule = {
         );
     },
 
-    stopRecording: function(stream) {
+    stop_recording: function(stream) {
         // Stop recording microphone stream.
         cm.mediaRecorder.stop();
 
         // Stop each individual MediaTrack.
-        stream.getTracks().forEach(function(track) {
-            track.stop();
-        });
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
     }
 };
