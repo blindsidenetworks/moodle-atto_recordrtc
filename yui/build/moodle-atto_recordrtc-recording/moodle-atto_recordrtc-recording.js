@@ -71,21 +71,24 @@ M.atto_recordrtc.commonmodule = {
 
     // Add chunks of audio/video to array when made available.
     handle_data_available: function(event) {
+        // Push recording slice to array.
+        cm.chunks.push(event.data);
         // Size of all recorded data so far.
         cm.blobSize += event.data.size;
 
-        // Push recording slice to array.
         // If total size of recording so far exceeds max upload limit, stop recording.
         // An extra condition exists to avoid displaying alert twice.
-        if ((cm.blobSize >= cm.maxUploadSize) && (!window.localStorage.getItem('alerted'))) {
-            window.localStorage.setItem('alerted', 'true');
+        if (blobSize >= maxUploadSize) {
+            if (!window.localStorage.getItem('alerted')) {
+                window.localStorage.setItem('alerted', 'true');
 
-            cm.startStopBtn.simulate('click');
-            am.show_alert('nearingmaxsize');
-        } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
-            window.localStorage.removeItem('alerted');
-        } else {
-            cm.chunks.push(event.data);
+                cm.startStopBtn.simulate('click');
+                am.show_alert('nearingmaxsize');
+            } else {
+                window.localStorage.removeItem('alerted');
+            }
+
+            cm.chunks.pop();
         }
     },
 
@@ -108,7 +111,7 @@ M.atto_recordrtc.commonmodule = {
         // Handle when upload button is clicked.
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
-            if (!cm.player.get('src') || cm.chunks === []) {
+            if (cm.chunks.length === 0) {
                 am.show_alert('norecordingfound');
             } else {
                 cm.uploadBtn.set('disabled', true);
@@ -179,11 +182,8 @@ M.atto_recordrtc.commonmodule = {
 
                 // Generate filename with random ID and file extension.
                 var fileName = (Math.random() * 1000).toString().replace('.', '');
-                if (type === 'audio') {
-                    fileName += '-audio.ogg';
-                } else {
-                    fileName += '-video.webm';
-                }
+                fileName += (type === 'audio') ? '-audio.ogg'
+                                               : '-video.webm';
 
                 // Create FormData to send to PHP filepicker-upload script.
                 var formData = new window.FormData(),
