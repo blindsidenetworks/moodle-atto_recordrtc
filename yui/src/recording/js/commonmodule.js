@@ -28,6 +28,10 @@
 /* eslint-disable camelcase, no-alert */
 
 // JSHint directives.
+/*global M */
+/*jshint es5: true */
+/*jshint onevar: false */
+/*jshint shadow: true */
 
 // Scrutinizer CI directives.
 /** global: M */

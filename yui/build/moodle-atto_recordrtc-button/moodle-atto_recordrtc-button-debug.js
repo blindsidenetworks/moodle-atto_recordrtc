@@ -42,6 +42,8 @@ YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 /* eslint-disable camelcase */
 
 // JSHint directives.
+/*global M */
+/*jshint onevar: false */
 
 // Scrutinizer CI directives.
 /** global: Y */
