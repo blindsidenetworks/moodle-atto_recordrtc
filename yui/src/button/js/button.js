@@ -37,7 +37,7 @@
  */
 
 // ESLint directives.
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, spaced-comment */
 
 // JSHint directives.
 /*global M */

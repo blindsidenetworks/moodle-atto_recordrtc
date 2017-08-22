@@ -78,7 +78,7 @@ M.atto_recordrtc.commonmodule = {
 
         // If total size of recording so far exceeds max upload limit, stop recording.
         // An extra condition exists to avoid displaying alert twice.
-        if (blobSize >= maxUploadSize) {
+        if (cm.blobSize >= cm.maxUploadSize) {
             if (!window.localStorage.getItem('alerted')) {
                 window.localStorage.setItem('alerted', 'true');
 
@@ -330,10 +330,10 @@ M.atto_recordrtc.commonmodule = {
  */
 
 // ESLint directives.
-
-// JSHint directives.
+/* eslint-disable camelcase */
 
 // Scrutinizer CI directives.
+/** global: M */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -404,10 +404,11 @@ M.atto_recordrtc.compatcheckmodule = {
  */
 
 // ESLint directives.
-
-// JSHint directives.
+/* eslint-disable camelcase */
 
 // Scrutinizer CI directives.
+/** global: M */
+/** global: Y */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
@@ -524,6 +525,7 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 
 // Shorten access to module namespaces.
 var cm = M.atto_recordrtc.commonmodule,
+    am = M.atto_recordrtc.abstractmodule,
     ccm = M.atto_recordrtc.compatcheckmodule;
 
 M.atto_recordrtc.audiomodule = {
@@ -688,6 +690,7 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 
 // Shorten access to module namespaces.
 var cm = M.atto_recordrtc.commonmodule,
+    am = M.atto_recordrtc.abstractmodule,
     ccm = M.atto_recordrtc.compatcheckmodule;
 
 M.atto_recordrtc.videomodule = {

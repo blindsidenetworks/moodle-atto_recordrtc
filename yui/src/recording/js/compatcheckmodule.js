@@ -25,10 +25,10 @@
  */
 
 // ESLint directives.
-
-// JSHint directives.
+/* eslint-disable camelcase */
 
 // Scrutinizer CI directives.
+/** global: M */
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 

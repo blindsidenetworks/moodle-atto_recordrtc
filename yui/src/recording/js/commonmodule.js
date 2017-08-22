@@ -76,7 +76,7 @@ M.atto_recordrtc.commonmodule = {
 
         // If total size of recording so far exceeds max upload limit, stop recording.
         // An extra condition exists to avoid displaying alert twice.
-        if (blobSize >= maxUploadSize) {
+        if (cm.blobSize >= cm.maxUploadSize) {
             if (!window.localStorage.getItem('alerted')) {
                 window.localStorage.setItem('alerted', 'true');
 

@@ -35,6 +35,7 @@ M.atto_recordrtc = M.atto_recordrtc || {};
 
 // Shorten access to module namespaces.
 var cm = M.atto_recordrtc.commonmodule,
+    am = M.atto_recordrtc.abstractmodule,
     ccm = M.atto_recordrtc.compatcheckmodule;
 
 M.atto_recordrtc.videomodule = {
