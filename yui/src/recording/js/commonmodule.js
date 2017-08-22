@@ -40,7 +40,8 @@
 M.atto_recordrtc = M.atto_recordrtc || {};
 
 // Shorten access to M.atto_recordrtc.commonmodule namespace.
-var cm = M.atto_recordrtc.commonmodule;
+var cm = M.atto_recordrtc.commonmodule,
+    am = M.atto_recordrtc.abstractmodule;
 
 M.atto_recordrtc.commonmodule = {
     // Unitialized variables to be used by the other modules.
@@ -61,116 +62,9 @@ M.atto_recordrtc.commonmodule = {
     olderMoodle: null,
     maxUploadSize: null,
 
-    // A helper for making a Moodle alert appear.
-    // Subject is the content of the alert (which error ther alert is for).
-    // Possibility to add on-alert-close event.
-    show_alert: function(subject, onCloseEvent) {
-        Y.use('moodle-core-notification-alert', function() {
-            var dialogue = new M.core.alert({
-                title: M.util.get_string(subject + '_title', 'atto_recordrtc'),
-                message: M.util.get_string(subject, 'atto_recordrtc')
-            });
-
-            if (onCloseEvent) {
-                dialogue.after('complete', onCloseEvent);
-            }
-        });
-    },
-
-    // Handle getUserMedia errors.
-    handle_gum_errors: function(error, commonConfig) {
-        var btnLabel = M.util.get_string('recordingfailed', 'atto_recordrtc'),
-            treatAsStopped = function() {
-                commonConfig.onMediaStopped(btnLabel);
-            };
-
-        // Changes 'CertainError' -> 'gumcertain' to match language string names.
-        var stringName = 'gum' + error.name.replace('Error', '').toLowerCase();
-
-        // After alert, proceed to treat as stopped recording, or close dialogue.
-        if (stringName !== 'gumsecurity') {
-            cm.show_alert(stringName, treatAsStopped);
-        } else {
-            cm.show_alert(stringName, function() {
-                cm.editorScope.closeDialogue(cm.editorScope);
-            });
-        }
-    },
-
-    // Show alert and close plugin if browser does not support WebRTC at all.
-    check_has_gum: function() {
-        if (!(navigator.mediaDevices && window.MediaRecorder)) {
-            cm.show_alert('nowebrtc', function() {
-                cm.editorScope.closeDialogue(cm.editorScope);
-            });
-        }
-    },
-
-    // Notify and redirect user if plugin is used from insecure location.
-    check_secure: function() {
-        var isSecureOrigin = (window.location.protocol === 'https:') ||
-                             (window.location.host.indexOf('localhost') !== -1);
-
-        if (!isSecureOrigin && (window.bowser.chrome || window.bowser.opera)) {
-            cm.show_alert('gumsecurity', function() {
-                cm.editorScope.closeDialogue(cm.editorScope);
-            });
-        } else if (!isSecureOrigin) {
-            cm.alertDanger.ancestor().ancestor().removeClass('hide');
-        }
-    },
-
-    // Display "consider switching browsers" message if not using:
-    // - Firefox 29+;
-    // - Chrome 49+;
-    // - Opera 36+.
-    check_browser: function() {
-        if (!((window.bowser.firefox && window.bowser.version >= 29) ||
-              (window.bowser.chrome && window.bowser.version >= 49) ||
-              (window.bowser.opera && window.bowser.version >= 36))) {
-            cm.alertWarning.ancestor().ancestor().removeClass('hide');
-        }
-    },
-
-
     // Capture webcam/microphone stream.
     capture_user_media: function(mediaConstraints, successCallback, errorCallback) {
         window.navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
-    },
-
-    // Select best options for the recording codec.
-    select_rec_options: function(recType) {
-        var types, options;
-
-        if (recType === 'audio') {
-            types = [
-                'audio/webm;codecs=opus',
-                'audio/ogg;codecs=opus'
-            ];
-            options = {
-                audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate'))
-            };
-        } else {
-            types = [
-                'video/webm;codecs=vp9,opus',
-                'video/webm;codecs=h264,opus',
-                'video/webm;codecs=vp8,opus'
-            ];
-            options = {
-                audioBitsPerSecond: window.parseInt(cm.editorScope.get('audiobitrate')),
-                videoBitsPerSecond: window.parseInt(cm.editorScope.get('videobitrate'))
-            };
-        }
-
-        var compatTypes = types.filter(function(type) {
-            return window.MediaRecorder.isTypeSupported(type);
-        });
-
-        if (compatTypes.length !== 0) {
-            options.mimeType = compatTypes[0];
-        }
-
-        return options;
     },
 
     // Add chunks of audio/video to array when made available.
@@ -185,7 +79,7 @@ M.atto_recordrtc.commonmodule = {
             window.localStorage.setItem('alerted', 'true');
 
             cm.startStopBtn.simulate('click');
-            cm.show_alert('nearingmaxsize');
+            am.show_alert('nearingmaxsize');
         } else if ((cm.blobSize >= cm.maxUploadSize) && (window.localStorage.getItem('alerted') === 'true')) {
             window.localStorage.removeItem('alerted');
         } else {
@@ -213,7 +107,7 @@ M.atto_recordrtc.commonmodule = {
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.
             if (!cm.player.get('src') || cm.chunks === []) {
-                cm.show_alert('norecordingfound');
+                am.show_alert('norecordingfound');
             } else {
                 cm.uploadBtn.set('disabled', true);
 
@@ -244,7 +138,7 @@ M.atto_recordrtc.commonmodule = {
     // Get everything set up to start recording.
     start_recording: function(type, stream) {
         // The options for the recording codecs and bitrates.
-        var options = cm.select_rec_options(type);
+        var options = am.select_rec_options(type);
         cm.mediaRecorder = new window.MediaRecorder(stream, options);
 
         // Initialize MediaRecorder events and start recording.

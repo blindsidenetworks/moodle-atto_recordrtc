@@ -33,8 +33,9 @@
 
 M.atto_recordrtc = M.atto_recordrtc || {};
 
-// Shorten access to M.atto_recordrtc.commonmodule namespace.
-var cm = M.atto_recordrtc.commonmodule;
+// Shorten access to module namespaces.
+var cm = M.atto_recordrtc.commonmodule,
+    ccm = M.atto_recordrtc.compatcheckmodule;
 
 M.atto_recordrtc.audiomodule = {
     init: function(scope) {
@@ -52,11 +53,11 @@ M.atto_recordrtc.audiomodule = {
         cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
 
         // Show alert and close plugin if WebRTC is not supported.
-        cm.check_has_gum();
+        ccm.check_has_gum();
         // Show alert and redirect user if connection is not secure.
-        cm.check_secure();
+        ccm.check_secure();
         // Show alert if using non-ideal browser.
-        cm.check_browser();
+        ccm.check_browser();
 
         // Run when user clicks on "record" button.
         cm.startStopBtn.on('click', function() {
@@ -100,7 +101,7 @@ M.atto_recordrtc.audiomodule = {
 
                     // Handle recording errors.
                     onMediaCapturingFailed: function(error) {
-                        cm.handle_gum_errors(error, commonConfig);
+                        am.handle_gum_errors(error, commonConfig);
                     }
                 };
 
