@@ -1,5 +1,8 @@
-/* eslint-env es6 */
-/* eslint-disable curly, no-mixed-spaces-and-tabs, no-tabs, no-unused-expressions, no-unused-vars, semi */
+// ESLint directives.
+/* eslint-disable */
+
+// JSHint directives.
+/* jshint ignore:start */
 
 /*!
  * Bowser - a browser detector
