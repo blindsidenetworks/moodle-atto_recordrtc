@@ -36,9 +36,9 @@ defined('MOODLE_INTERNAL') || die();
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
 
-    $moodleversion = $CFG->version;
-    $moodle32 = '2016120500';
-    $moodle33 = '2017051500';
+    $moodleversion = intval($CFG->version, 10);
+    $moodle32 = 2016120500;
+    $moodle33 = 2017051500;
 
     $context = $options['context'];
     if (!$context) {
