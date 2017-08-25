@@ -42,7 +42,7 @@ function xmldb_atto_recordrtc_install() {
         foreach ($groups as $i => $group) {
             $parts = explode('=', $group);
             if (trim($parts[0]) == 'files') {
-                $groups[$i] = 'files = ' . trim($parts[1]) . ', recordrtc';
+                $groups[$i] = 'files = '.trim($parts[1]).', recordrtc';
                 // Update config variable.
                 $toolbar = implode($glue, $groups);
                 set_config('toolbar', $toolbar, 'editor_atto');

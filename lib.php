@@ -36,9 +36,8 @@ defined('MOODLE_INTERNAL') || die();
 function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
 
-    $moodleversion = $CFG->version;
-    $moodle32 = '2016120500';
-    $moodle33 = '2017051500';
+    $moodleversion = intval($CFG->version, 10);
+    $moodle32 = 2016120500;
 
     $context = $options['context'];
     if (!$context) {
@@ -52,13 +51,8 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $audiortcicon = 'ed/audiortc';
     $videortcicon = 'ed/videortc';
     $maxrecsize = ini_get('upload_max_filesize');
-    if ($moodleversion >= $moodle33) {
-        $audiortcicon = 'i/audiortc';
-        $videortcicon = 'i/videortc';
-    }
     $params = array('contextid' => $context->id,
                     'sesskey' => $sesskey,
-                    'recordrtcroot' => $CFG->wwwroot.'/lib/editor/atto/plugins/recordrtc/',
                     'allowedtypes' => $allowedtypes,
                     'audiobitrate' => $audiobitrate,
                     'videobitrate' => $videobitrate,
@@ -119,14 +113,4 @@ function atto_recordrtc_strings_for_js() {
                );
 
     $PAGE->requires->strings_for_js($strings, 'atto_recordrtc');
-}
-
-/**
- * Map icons for font-awesome themes.
- */
-function atto_recordrtc_get_fontawesome_icon_map() {
-    return [
-        'atto_recordrtc:i/audiortc' => 'fa-file-audio-o',
-        'atto_recordrtc:i/videortc' => 'fa-file-video-o'
-    ];
 }

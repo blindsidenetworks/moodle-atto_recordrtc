@@ -34,6 +34,7 @@
 /*jshint shadow: true */
 
 // Scrutinizer CI directives.
+/** global: navigator */
 /** global: M */
 /** global: Y */
 
@@ -163,6 +164,17 @@ M.atto_recordrtc.commonmodule = {
 
         // Make button clickable again, to allow stopping recording.
         cm.startStopBtn.set('disabled', false);
+    },
+
+    stop_recording: function(stream) {
+        // Stop recording microphone stream.
+        cm.mediaRecorder.stop();
+
+        // Stop each individual MediaTrack.
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
     },
 
     // Upload recorded audio/video to server.
