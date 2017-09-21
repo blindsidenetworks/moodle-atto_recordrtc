@@ -36,10 +36,12 @@
  * @extends M.editor_atto.EditorPlugin
  */
 
+// ESLint directives.
+/* eslint-disable camelcase, spaced-comment */
+
 // JSHint directives.
-/*jshint onevar: false */
-/*jshint unused: false */
 /*global M */
+/*jshint onevar: false */
 
 // Scrutinizer CI directives.
 /** global: Y */
