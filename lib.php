@@ -49,13 +49,9 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $audiobitrate = get_config('atto_recordrtc', 'audiobitrate');
     $videobitrate = get_config('atto_recordrtc', 'videobitrate');
     $timelimit = get_config('atto_recordrtc', 'timelimit');
-    $audiortcicon = 'ed/audiortc';
-    $videortcicon = 'ed/videortc';
     $maxrecsize = ini_get('upload_max_filesize');
-    if ($moodleversion >= $moodle33) {
-        $audiortcicon = 'i/audiortc';
-        $videortcicon = 'i/videortc';
-    }
+    $audiortcicon = 'i/audiortc';
+    $videortcicon = 'i/videortc';
     $params = array('contextid' => $context->id,
                     'sesskey' => $sesskey,
                     'recordrtcroot' => $CFG->wwwroot.'/lib/editor/atto/plugins/recordrtc/',

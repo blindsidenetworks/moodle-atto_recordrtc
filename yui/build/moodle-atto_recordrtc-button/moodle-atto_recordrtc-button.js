@@ -117,7 +117,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             });
 
             // If dialogue is closed during recording, do the following.
-            var editor = this;
             dialogue.after('visibleChange', function() {
                 var closed = !dialogue.get('visible'),
                     m = M.atto_recordrtc.commonmodule;
