@@ -165,6 +165,18 @@ M.atto_recordrtc.commonmodule = {
         cm.startStopBtn.set('disabled', false);
     },
 
+    // Get everything set up to stop recording.
+    stop_recording: function(stream) {
+        // Stop recording stream.
+        cm.mediaRecorder.stop();
+
+        // Stop each individual MediaTrack.
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
+    },
+
     // Upload recorded audio/video to server.
     upload_to_server: function(type, callback) {
         var xhr = new window.XMLHttpRequest();

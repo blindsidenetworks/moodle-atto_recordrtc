@@ -167,6 +167,18 @@ M.atto_recordrtc.commonmodule = {
         cm.startStopBtn.set('disabled', false);
     },
 
+    // Get everything set up to stop recording.
+    stop_recording: function(stream) {
+        // Stop recording stream.
+        cm.mediaRecorder.stop();
+
+        // Stop each individual MediaTrack.
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            tracks[i].stop();
+        }
+    },
+
     // Upload recorded audio/video to server.
     upload_to_server: function(type, callback) {
         var xhr = new window.XMLHttpRequest();
@@ -301,17 +313,6 @@ M.atto_recordrtc.commonmodule = {
         } else {
             cm.editorScope.setLink(cm.editorScope, annotation);
         }
-    },
-
-    stop_recording: function(stream) {
-        // Stop recording stream.
-        cm.mediaRecorder.stop();
-
-        // Stop each individual MediaTrack.
-        var tracks = stream.getTracks();
-        for (var i = 0; i < tracks.length; i++) {
-            tracks[i].stop();
-        }
     }
 };
 // This file is part of Moodle - http://moodle.org/
@@ -369,6 +370,7 @@ M.atto_recordrtc.compatcheckmodule = {
 
         if (!isSecureOrigin) {
             cm.alertDanger.ancestor().ancestor().removeClass('hide');
+
             if (window.bowser.chrome || window.bowser.opera) {
                 am.show_alert('gumsecurity', function() {
                     cm.editorScope.closeDialogue(cm.editorScope);
