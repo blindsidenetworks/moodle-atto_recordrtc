@@ -290,16 +290,6 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
         },
 
         /**
-         * The root to use when loading the recordrtc.
-         *
-         * @attribute recordrtcroot
-         * @type String
-         */
-        recordrtcroot: {
-            value: null
-        },
-
-        /**
          * The allowedtypes to use when generating this recordrtc.
          *
          * @attribute allowedtypes

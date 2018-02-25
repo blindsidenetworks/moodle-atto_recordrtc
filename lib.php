@@ -38,7 +38,6 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
 
     $moodleversion = $CFG->version;
     $moodle32 = '2016120500';
-    $moodle33 = '2017051500';
 
     $context = $options['context'];
     if (!$context) {
@@ -54,7 +53,6 @@ function atto_recordrtc_params_for_js($elementid, $options, $fpoptions) {
     $videortcicon = 'i/videortc';
     $params = array('contextid' => $context->id,
                     'sesskey' => $sesskey,
-                    'recordrtcroot' => $CFG->wwwroot.'/lib/editor/atto/plugins/recordrtc/',
                     'allowedtypes' => $allowedtypes,
                     'audiobitrate' => $audiobitrate,
                     'videobitrate' => $videobitrate,

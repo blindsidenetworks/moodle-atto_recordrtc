@@ -608,7 +608,7 @@ M.atto_recordrtc.audiomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.audiomodule.stop_recording(cm.stream);
+                cm.stop_recording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -640,17 +640,6 @@ M.atto_recordrtc.audiomodule = {
                 config.onMediaCapturingFailed(error);
             }
         );
-    },
-
-    stop_recording: function(stream) {
-        // Stop recording microphone stream.
-        cm.mediaRecorder.stop();
-
-        // Stop each individual MediaTrack.
-        var tracks = stream.getTracks();
-        for (var i = 0; i < tracks.length; i++) {
-            tracks[i].stop();
-        }
     }
 };
 // This file is part of Moodle - http://moodle.org/
@@ -776,7 +765,7 @@ M.atto_recordrtc.videomodule = {
                 }, 1000);
 
                 // Stop recording.
-                M.atto_recordrtc.videomodule.stop_recording(cm.stream);
+                cm.stop_recording(cm.stream);
 
                 // Change button to offer to record again.
                 cm.startStopBtn.set('textContent', M.util.get_string('recordagain', 'atto_recordrtc'));
@@ -813,17 +802,6 @@ M.atto_recordrtc.videomodule = {
                 config.onMediaCapturingFailed(error);
             }
         );
-    },
-
-    stop_recording: function(stream) {
-        // Stop recording microphone stream.
-        cm.mediaRecorder.stop();
-
-        // Stop each individual MediaTrack.
-        var tracks = stream.getTracks();
-        for (var i = 0; i < tracks.length; i++) {
-            tracks[i].stop();
-        }
     }
 };
 
