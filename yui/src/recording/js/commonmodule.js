@@ -106,6 +106,9 @@ M.atto_recordrtc.commonmodule = {
         cm.uploadBtn.set('textContent', M.util.get_string('attachrecording', 'atto_recordrtc'));
         cm.uploadBtn.set('disabled', false);
 
+        // Get dialogue centered.
+        cm.editorScope.getDialogue().centered();
+
         // Handle when upload button is clicked.
         cm.uploadBtn.on('click', function() {
             // Trigger error if no recording has been made.

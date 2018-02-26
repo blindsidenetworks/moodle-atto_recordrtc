@@ -126,6 +126,9 @@ M.atto_recordrtc.audiomodule = {
                     cm.startStopBtn.replaceClass('btn-danger', 'btn-outline-danger');
                 }
             }
+
+            // Get dialogue centered.
+            cm.editorScope.getDialogue().centered();
         });
     },
 

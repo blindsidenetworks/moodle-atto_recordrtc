@@ -65,7 +65,7 @@ var PLUGINNAME = 'atto_recordrtc',
         '</div>' +
       '</div>' +
       '<div class="{{bs_row}} hide">' +
-        '{{#if audio}}' +
+        '{{#if isAudio}}' +
           '<div class="{{bs_col}}1"></div>' +
           '<div class="{{bs_col}}10">' +
             '<audio id="player"></audio>' +
@@ -136,6 +136,11 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
                         });
                     }
                 }
+
+            });
+
+            dialogue.on('click', function() {
+                this.centered();
             });
 
             // Require Bowser and adapter.js libraries.
@@ -211,7 +216,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
      * @private
      */
     _createContent: function(type) {
-        var audio = (type === 'audio'),
+        var isAudio = (type === 'audio'),
             bsRow = this.get('oldermoodle') ? 'row-fluid' : 'row',
             bsCol = this.get('oldermoodle') ? 'span' : 'col-xs-',
             bsAlWarn = this.get('oldermoodle') ? '' : 'alert-warning',
@@ -221,7 +226,7 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 
         var bodyContent = Y.Handlebars.compile(TEMPLATE)({
             PLUGINNAME: PLUGINNAME,
-            audio: audio,
+            isAudio: isAudio,
             bs_row: bsRow,
             bs_col: bsCol,
             bs_al_warn: bsAlWarn,
