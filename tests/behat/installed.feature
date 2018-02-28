@@ -1,4 +1,4 @@
-@editor @editor_atto @atto @recordrtc @atto_recordrtc_installed
+@editor @editor_atto @atto @recordrtc @atto_recordrtc @atto_recordrtc_installed
 Feature: Installation succeeds
   In order to use this plugin
   As a user
