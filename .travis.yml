@@ -20,6 +20,3 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
-
-install:
-  - moodle-plugin-ci install
