@@ -20,3 +20,6 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
+
+script:
+  - moodle-plugin-ci behat
