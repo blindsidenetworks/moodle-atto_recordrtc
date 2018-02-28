@@ -1,1 +1,27 @@
 language: php
+
+sudo: required
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - COVERAGE=false
+  matrix:
+    - MOODLE_BRANCH=MOODLE_34_STABLE DB=mysqli
+    - MOODLE_BRANCH=MOODLE_34_STABLE DB=pgsql
+    - MOODLE_BRANCH=master DB=mysqli
+    - MOODLE_BRANCH=master DB=pgsql
+
+before_install:
+  - phpenv config-rm xdebug.ini
+  - cd ../..
+  ## Standard script
+  - composer selfupdate
+  - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^${MOODLE_PLUGIN_CI}
+  - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
+
+install:
+  - moodle-plugin-ci install
