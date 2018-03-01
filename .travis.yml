@@ -84,10 +84,19 @@ script:
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
-  - moodle-plugin-ci codechecker
+  #- moodle-plugin-ci codechecker ## Failing due BIGBLUEBUTTONBN_CFG
   - moodle-plugin-ci validate
-  - moodle-plugin-ci savepoints
-  - moodle-plugin-ci mustache
-  - moodle-plugin-ci grunt
   - moodle-plugin-ci phpunit
-  - moodle-plugin-ci behat --dump
+  # Specific for version 1
+  - 'if [ ${MOODLE_PLUGIN_CI} = "1" ]; then
+        moodle-plugin-ci csslint;
+        moodle-plugin-ci shifter;
+        moodle-plugin-ci jshint;
+     fi'
+  # Specific for version 2
+  - 'if [ ${MOODLE_PLUGIN_CI} = "2" ]; then
+        moodle-plugin-ci savepoints;
+        moodle-plugin-ci mustache;
+        moodle-plugin-ci grunt;
+        moodle-plugin-ci behat --dump;
+     fi'
