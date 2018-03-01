@@ -24,15 +24,20 @@ php:
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_34_STABLE
+      - MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli
+      - MOODLE_BRANCH=MOODLE_32_STABLE DB=pgsql
+      - MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli
+      - MOODLE_BRANCH=MOODLE_33_STABLE DB=pgsql
+      - MOODLE_BRANCH=MOODLE_34_STABLE DB=mysqli
+      - MOODLE_BRANCH=MOODLE_34_STABLE DB=pgsql
+      - MOODLE_BRANCH=master DB=mysqli
+      - MOODLE_BRANCH=master DB=pgsql
  matrix:
   - DB=pgsql
   - DB=mysqli
 
 before_install:
   - phpenv config-rm xdebug.ini
-  - nvm install 8.9
-  - nvm use 8.9
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
@@ -46,6 +51,9 @@ script:
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate
+  - moodle-plugin-ci csslint
+  - moodle-plugin-ci shifter
+  - moodle-plugin-ci jshint
   - moodle-plugin-ci savepoints
   - moodle-plugin-ci mustache
   - moodle-plugin-ci grunt
