@@ -1,4 +1,4 @@
-YUI.add('recordrtc-button', function (Y, NAME) {
+YUI.add('moodle-atto_recordrtc-button', function (Y, NAME) {
 
 // This file is part of Moodle - http://moodle.org/
 //
@@ -146,10 +146,10 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
             });
 
             // Require Bowser and adapter.js libraries.
-            require(['atto_recordrtc/adapter'], function(adapter) {
+            window.require(['atto_recordrtc/adapter'], function(adapter) {
                 window.adapter = adapter;
             });
-            require(['atto_recordrtc/bowser'], function(bowser) {
+            window.require(['atto_recordrtc/bowser'], function(bowser) {
                 window.bowser = bowser;
             });
         }
@@ -377,4 +377,4 @@ Y.namespace('M.atto_recordrtc').Button = Y.Base.create('button', Y.M.editor_atto
 });
 
 
-}, '@VERSION@', {"requires": ["moodle-editor_atto-plugin", "recordrtc-recording"]});
+}, '@VERSION@', {"requires": ["moodle-editor_atto-plugin", "moodle-atto_recordrtc-recording"]});
