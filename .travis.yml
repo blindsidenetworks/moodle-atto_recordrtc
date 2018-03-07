@@ -85,7 +85,7 @@ before_install:
   - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^${MOODLE_PLUGIN_CI}
   # Specific for version 1
   - if [ ${MOODLE_PLUGIN_CI} = "1" ]; then
-        sudo sed -i "s/ignoreNewlines = false/ignoreNewlines = true" "$(find ./ci/vendor -name 'OperatorSpacingSniff.php' )";
+        sudo sed -i "s/ignoreNewlines = false/ignoreNewlines = true/g" "$(find ./ci/vendor -name 'OperatorSpacingSniff.php' )";
     fi
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
