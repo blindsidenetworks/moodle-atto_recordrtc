@@ -51,7 +51,7 @@ M.atto_recordrtc.audiomodule = {
         cm.recType = 'audio';
         cm.olderMoodle = scope.get('oldermoodle');
         // Extract the numbers from the string, and convert to bytes.
-        cm.maxUploadSize = window.parseInt(scope.get('maxrecsize').match(/\d+/)[0], 10) * Math.pow(1024, 2);
+        cm.maxUploadSize = scope.get('maxrecsize');
 
         // Show alert and close plugin if WebRTC is not supported.
         ccm.check_has_gum();
